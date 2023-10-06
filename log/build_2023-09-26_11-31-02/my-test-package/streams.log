@@ -1,0 +1,40 @@
+[1.488s] Invoking command in '/home/victor/USV-DOCK/ws/build/my-test-package': PYTHONPATH=/home/victor/USV-DOCK/ws/build/my-test-package/prefix_override:/home/victor/USV-DOCK/ws/install/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/victor/USV-DOCK/ws/build/my-test-package/build --no-deps
+[1.891s] running develop
+[1.891s] /home/victor/.local/lib/python3.8/site-packages/setuptools/command/develop.py:40: EasyInstallDeprecationWarning: easy_install command is deprecated.
+[1.891s] !!
+[1.891s] 
+[1.892s]         ********************************************************************************
+[1.892s]         Please avoid running ``setup.py`` and ``easy_install``.
+[1.892s]         Instead, use pypa/build, pypa/installer, pypa/build or
+[1.892s]         other standards-based tools.
+[1.892s] 
+[1.892s]         See https://github.com/pypa/setuptools/issues/917 for details.
+[1.892s]         ********************************************************************************
+[1.893s] 
+[1.893s] !!
+[1.893s]   easy_install.initialize_options(self)
+[1.937s] /home/victor/.local/lib/python3.8/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+[1.937s] !!
+[1.937s] 
+[1.937s]         ********************************************************************************
+[1.937s]         Please avoid running ``setup.py`` directly.
+[1.937s]         Instead, use pypa/build, pypa/installer, pypa/build or
+[1.938s]         other standards-based tools.
+[1.938s] 
+[1.938s]         See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+[1.938s]         ********************************************************************************
+[1.938s] 
+[1.938s] !!
+[1.938s]   self.initialize_options()
+[2.160s] running egg_info
+[2.160s] creating my_test_package.egg-info
+[2.181s] writing my_test_package.egg-info/PKG-INFO
+[2.181s] writing dependency_links to my_test_package.egg-info/dependency_links.txt
+[2.181s] writing top-level names to my_test_package.egg-info/top_level.txt
+[2.183s] writing manifest file 'my_test_package.egg-info/SOURCES.txt'
+[2.222s] reading manifest file 'my_test_package.egg-info/SOURCES.txt'
+[2.223s] writing manifest file 'my_test_package.egg-info/SOURCES.txt'
+[2.281s] running build_ext
+[2.281s] Creating /home/victor/USV-DOCK/ws/install/lib/python3.8/site-packages/my-test-package.egg-link (link to .)
+[2.282s] 
+[2.282s] Installed /home/victor/USV-DOCK/ws/build/my-test-package

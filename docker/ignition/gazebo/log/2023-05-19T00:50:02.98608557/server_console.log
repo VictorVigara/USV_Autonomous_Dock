@@ -1,0 +1,410 @@
+(2023-05-19T00:50:02.203370307) (2023-05-19T00:50:02.203382667) [Msg] Ignition Gazebo Server v6.11.0
+(2023-05-19T00:50:02.206446679) (2023-05-19T00:50:02.206468049) [Msg] Loading SDF world file[/home/developer/mbzirc_ws/install/share/mbzirc_ign/worlds/simple_demo.sdf].
+(2023-05-19T00:50:02.516532186) (2023-05-19T00:50:02.516545836) [Msg] Serving entity system service on [/entity/system/add]
+(2023-05-19T00:50:02.551379302) (2023-05-19T00:50:02.551397592) [Dbg] [Physics.cc:803] Loaded [ignition::physics::dartsim::Plugin] from library [/usr/lib/x86_64-linux-gnu/ign-physics-5/engine-plugins/libignition-physics-dartsim-plugin.so]
+(2023-05-19T00:50:02.551472832) (2023-05-19T00:50:02.551486132) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Physics] for entity [1]
+(2023-05-19T00:50:02.553035623) (2023-05-19T00:50:02.553049473) [Msg] Create service on [/world/simple_demo/create]
+(2023-05-19T00:50:02.553163653) (2023-05-19T00:50:02.553175723) [Msg] Remove service on [/world/simple_demo/remove]
+(2023-05-19T00:50:02.553300083) (2023-05-19T00:50:02.553313693) [Msg] Pose service on [/world/simple_demo/set_pose]
+(2023-05-19T00:50:02.553423493) (2023-05-19T00:50:02.553435463) [Msg] Pose service on [/world/simple_demo/set_pose_vector]
+(2023-05-19T00:50:02.553565823) (2023-05-19T00:50:02.553577583) [Msg] Light configuration service on [/world/simple_demo/light_config]
+(2023-05-19T00:50:02.553812083) (2023-05-19T00:50:02.553823513) [Msg] Physics service on [/world/simple_demo/set_physics]
+(2023-05-19T00:50:02.553937233) (2023-05-19T00:50:02.553948303) [Msg] SphericalCoordinates service on [/world/simple_demo/set_spherical_coordinates]
+(2023-05-19T00:50:02.554017743) (2023-05-19T00:50:02.554027353) [Msg] Enable collision service on [/world/simple_demo/enable_collision]
+(2023-05-19T00:50:02.554107313) (2023-05-19T00:50:02.554116123) [Msg] Disable collision service on [/world/simple_demo/disable_collision]
+(2023-05-19T00:50:02.554250613) (2023-05-19T00:50:02.554259953) [Msg] Material service on [/world/simple_demo/visual_config]
+(2023-05-19T00:50:02.554354813) (2023-05-19T00:50:02.554365413) [Msg] Material service on [/world/simple_demo/wheel_slip]
+(2023-05-19T00:50:02.554404583) (2023-05-19T00:50:02.554413203) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::UserCommands] for entity [1]
+(2023-05-19T00:50:02.575283434) (2023-05-19T00:50:02.575294154) [Dbg] [Sensors.cc:479] Configuring Sensors system
+(2023-05-19T00:50:02.575359654) (2023-05-19T00:50:02.575367964) [Dbg] [Sensors.cc:398] SensorsPrivate::Run
+(2023-05-19T00:50:02.575451064) (2023-05-19T00:50:02.575461884) [Dbg] [SystemManager.cc:58] Loaded system [(ignition::gazebo::systems::Sensors] for entity [1]
+2023-05-19T00:50:02.575519014) (2023-05-19T00:50:02.575559454) [Dbg] [Sensors.cc:378] SensorsPrivate::RenderThread started
+(2023-05-19T00:50:02.575607834) (2023-05-19T00:50:02.575625194) [Dbg] [Sensors.cc:228] Waiting for init
+(2023-05-19T00:50:02.576977644) (2023-05-19T00:50:02.576991814) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::AirPressure] for entity [1]
+(2023-05-19T00:50:02.578484495) (2023-05-19T00:50:02.578497685) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Altimeter] for entity [1]
+(2023-05-19T00:50:02.579986356) (2023-05-19T00:50:02.579997186) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Imu] for entity [1]
+(2023-05-19T00:50:02.581449567) (2023-05-19T00:50:02.581462477) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Magnetometer] for entity [1]
+(2023-05-19T00:50:02.582935428) (2023-05-19T00:50:02.582948808) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::ForceTorque] for entity [1]
+(2023-05-19T00:50:02.584052938) (2023-05-19T00:50:02.584068178) [Msg] Serving particle emitter information on [/world/simple_demo/particle_emitters]
+(2023-05-19T00:50:02.584120758) (2023-05-19T00:50:02.584130728) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::ParticleEmitter2] for entity [1]
+(2023-05-19T00:50:02.585378698) (2023-05-19T00:50:02.585399328) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SceneBroadcaster] for entity [1]
+(2023-05-19T00:50:02.586421319) (2023-05-19T00:50:02.586432989) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Contact] for entity [1]
+(2023-05-19T00:50:02.587486500) (2023-05-19T00:50:02.587498530) [Dbg] [RFComms.cc:385] Range configuration:
+RF Configuration (range-based)
+-- max_range: 500000
+-- fading_exponent: 2.6
+-- l0: 40
+-- sigma: 10
+
+(2023-05-19T00:50:02.587589700) (2023-05-19T00:50:02.587598810) [Dbg] [RFComms.cc:388] Radio configuration:
+Radio Configuration
+-- capacity: 1e+06
+-- tx_power: 25
+-- noise_floor: -90
+-- modulation: QPSK
+
+(2023-05-19T00:50:02.587820830) (2023-05-19T00:50:02.587831090) [Dbg] [Broker.cc:113] Broker services:
+(2023-05-19T00:50:02.587854730) (2023-05-19T00:50:02.587864090) [Dbg] [Broker.cc:114]   Bind: [/broker/bind]
+(2023-05-19T00:50:02.587893320) (2023-05-19T00:50:02.587900940) [Dbg] [Broker.cc:115]   Unbind: [/broker/unbind]
+(2023-05-19T00:50:02.587930010) (2023-05-19T00:50:02.587939600) [Dbg] [Broker.cc:116] Broker topics:
+(2023-05-19T00:50:02.587961820) (2023-05-19T00:50:02.587971510) [Dbg] [Broker.cc:117]   Incoming messages: [/broker/msgs]
+(2023-05-19T00:50:02.588004310) (2023-05-19T00:50:02.588013170) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::RFComms] for entity [1]
+(2023-05-19T00:50:02.590159071) (2023-05-19T00:50:02.590171831) [Dbg] [RFRange.cc:339] RFRange sensor range configuration:
+RF Configuration (range-based)
+-- max_range: 500000
+-- fading_exponent: 2.6
+-- l0: 40
+-- sigma: 0.005
+-- rssi_1: -15
+
+(2023-05-19T00:50:02.590278931) (2023-05-19T00:50:02.590289891) [Dbg] [RFRange.cc:342] RFRange sensor radio configuration:
+Radio Configuration
+-- tx_power: 25
+-- noise_floor: -90
+
+(2023-05-19T00:50:02.590362121) (2023-05-19T00:50:02.590370722) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::RFRange] for entity [1]
+(2023-05-19T00:50:02.593794112) (2023-05-19T00:50:02.593804692) [Msg] Overwriting existing file [/tmp/ign/mbzirc/playback/state.tlog]
+(2023-05-19T00:50:02.598195004) (2023-05-19T00:50:02.598204044) [Msg] Recording to log file [/tmp/ign/mbzirc/playback/state.tlog]
+(2023-05-19T00:50:02.598235354) (2023-05-19T00:50:02.598244054) [Dbg] [LogRecord.cc:334] Recording default topic[/playback/sdf].
+(2023-05-19T00:50:02.598270084) (2023-05-19T00:50:02.598279904) [Dbg] [LogRecord.cc:335] Recording default topic[/world/simple_demo/changed_state].
+(2023-05-19T00:50:02.635647262) (2023-05-19T00:50:02.635669432) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::LogRecord] for entity [1]
+(2023-05-19T00:50:02.638247863) (2023-05-19T00:50:02.638270733) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::WindEffects] for entity [1]
+(2023-05-19T00:50:02.643157736) (2023-05-19T00:50:02.643178416) [Msg] MBZIRC log path: /tmp/ign/mbzirc/logs
+(2023-05-19T00:50:02.643663536) (2023-05-19T00:50:02.643680966) [Msg] Run duration set to 3600 seconds.
+(2023-05-19T00:50:02.643782656) (2023-05-19T00:50:02.643799536) [Msg] Geofence boundary min: -70 -70 -25, max: 70 70 121.92
+(2023-05-19T00:50:02.643947586) (2023-05-19T00:50:02.643965706) [Msg] Start area boundary min: -15 -15 -5, max: 15 15 5
+(2023-05-19T00:50:02.644095026) (2023-05-19T00:50:02.644111576) [Msg] Setup duration set to 600 seconds.
+(2023-05-19T00:50:02.644164806) (2023-05-19T00:50:02.644181296) [Msg] Target vessel: Vessel A
+(2023-05-19T00:50:02.644272557) (2023-05-19T00:50:02.644290547) [Msg]   Small object: small_blue_box_a
+(2023-05-19T00:50:02.644339327) (2023-05-19T00:50:02.644358757) [Msg]   Small object: small_blue_box_a_duplicate
+(2023-05-19T00:50:02.644438847) (2023-05-19T00:50:02.644457907) [Msg]   Large object: large_dry_box_a
+(2023-05-19T00:50:02.644515827) (2023-05-19T00:50:02.644536647) [Msg]   Large object: large_dry_box_a_duplicate
+(2023-05-19T00:50:02.646395467) (2023-05-19T00:50:02.646406807) [Msg] Starting MBZIRC
+(2023-05-19T00:50:02.646511718) (2023-05-19T00:50:02.646521978) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::GameLogicPlugin] for entity [1]
+(2023-05-19T00:50:02.651678620) (2023-05-19T00:50:02.651689880) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:50:02.651956060) (2023-05-19T00:50:02.651965580) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:50:03.102756413) (2023-05-19T00:50:03.102786753) [Msg] Input Parameters:
+(2023-05-19T00:50:03.102850373) (2023-05-19T00:50:03.102875653) [Msg] model:     PMS
+(2023-05-19T00:50:03.102955083) (2023-05-19T00:50:03.102980343) [Msg] number:     3
+(2023-05-19T00:50:03.103054104) (2023-05-19T00:50:03.103080994) [Msg] scale:      1.1
+(2023-05-19T00:50:03.103163434) (2023-05-19T00:50:03.103189934) [Msg] angle:      0.4
+(2023-05-19T00:50:03.103266424) (2023-05-19T00:50:03.103287124) [Msg] steepness:  0
+(2023-05-19T00:50:03.103338044) (2023-05-19T00:50:03.103354764) [Msg] amplitude:  0
+(2023-05-19T00:50:03.103404964) (2023-05-19T00:50:03.103421364) [Msg] period:     5
+(2023-05-19T00:50:03.103470244) (2023-05-19T00:50:03.103488724) [Msg] direction:  1 0
+(2023-05-19T00:50:03.103561204) (2023-05-19T00:50:03.103578414) [Msg] tau:  2
+(2023-05-19T00:50:03.103629804) (2023-05-19T00:50:03.103647104) [Msg] gain:  0.3
+(2023-05-19T00:50:03.103693264) (2023-05-19T00:50:03.103710934) [Msg] Derived Parameters:
+(2023-05-19T00:50:03.103752654) (2023-05-19T00:50:03.103769884) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T00:50:03.103878544) (2023-05-19T00:50:03.103896054) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T00:50:03.103979194) (2023-05-19T00:50:03.103994794) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T00:50:03.104075114) (2023-05-19T00:50:03.104091024) [Msg] periods:     (2023-05-19T00:50:03.104130814) (2023-05-19T00:50:03.104147124) [Msg] 5.5, (2023-05-19T00:50:03.104190164) (2023-05-19T00:50:03.104207524) [Msg] 5, (2023-05-19T00:50:03.104247564) (2023-05-19T00:50:03.104265404) [Msg] 4.54545, (2023-05-19T00:50:03.104307584) (2023-05-19T00:50:03.104324404) [Msg] 
+(2023-05-19T00:50:03.104357844) (2023-05-19T00:50:03.104375874) [Msg] phases:      0, 0, 0, 
+(2023-05-19T00:50:03.104461055) (2023-05-19T00:50:03.104478205) [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T00:50:03.104563595) (2023-05-19T00:50:03.104581265) [Msg] directions:  (2023-05-19T00:50:03.104621625) (2023-05-19T00:50:03.104638805) [Msg] 0.921061 -0.389418; (2023-05-19T00:50:03.104696965) (2023-05-19T00:50:03.104714675) [Msg] 1 0; (2023-05-19T00:50:03.104769355) (2023-05-19T00:50:03.104786565) [Msg] 0.921061 0.389418; (2023-05-19T00:50:03.104842775) (2023-05-19T00:50:03.104859795) [Msg] 
+(2023-05-19T00:50:03.105529745) (2023-05-19T00:50:03.105551345) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23]
+(2023-05-19T00:50:03.109996547) (2023-05-19T00:50:03.110018947) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:50:03.110271427) (2023-05-19T00:50:03.110281357) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:50:03.110321687) (2023-05-19T00:50:03.110330767) [Msg] Input Parameters:
+(2023-05-19T00:50:03.110352287) (2023-05-19T00:50:03.110361807) [Msg] model:     PMS
+(2023-05-19T00:50:03.110385467) (2023-05-19T00:50:03.110394297) [Msg] number:     3
+(2023-05-19T00:50:03.110418417) (2023-05-19T00:50:03.110426727) [Msg] scale:      1.1
+(2023-05-19T00:50:03.110456567) (2023-05-19T00:50:03.110465707) [Msg] angle:      0.4
+(2023-05-19T00:50:03.110490217) (2023-05-19T00:50:03.110498297) [Msg] steepness:  0
+(2023-05-19T00:50:03.110524107) (2023-05-19T00:50:03.110533357) [Msg] amplitude:  0
+(2023-05-19T00:50:03.110557757) (2023-05-19T00:50:03.110567557) [Msg] period:     5
+(2023-05-19T00:50:03.110590707) (2023-05-19T00:50:03.110600227) [Msg] direction:  1 0
+(2023-05-19T00:50:03.110630917) (2023-05-19T00:50:03.110640437) [Msg] tau:  2
+(2023-05-19T00:50:03.110666237) (2023-05-19T00:50:03.110675077) [Msg] gain:  0.3
+(2023-05-19T00:50:03.110700267) (2023-05-19T00:50:03.110708977) [Msg] Derived Parameters:
+(2023-05-19T00:50:03.110741197) (2023-05-19T00:50:03.110750877) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T00:50:03.110796297) (2023-05-19T00:50:03.110804627) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T00:50:03.110848457) (2023-05-19T00:50:03.110857957) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T00:50:03.110902557) (2023-05-19T00:50:03.110911737) [Msg] periods:     (2023-05-19T00:50:03.110930317) (2023-05-19T00:50:03.110939747) [Msg] 5.5, (2023-05-19T00:50:03.110960457) (2023-05-19T00:50:03.110969397) [Msg] 5, (2023-05-19T00:50:03.110989937) (2023-05-19T00:50:03.110998637) [Msg] 4.54545, (2023-05-19T00:50:03.111020167) (2023-05-19T00:50:03.111029447) [Msg] 
+(2023-05-19T00:50:03.111046207) (2023-05-19T00:50:03.111054167) [Msg] phases:      0, 0, 0, 
+(2023-05-19T00:50:03.111097677) (2023-05-19T00:50:03.111106787) [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T00:50:03.111150408) (2023-05-19T00:50:03.111159368) [Msg] directions:  (2023-05-19T00:50:03.111175138) (2023-05-19T00:50:03.111184008) [Msg] 0.921061 -0.389418; (2023-05-19T00:50:03.111212718) (2023-05-19T00:50:03.111222238) [Msg] 1 0; (2023-05-19T00:50:03.111253128) (2023-05-19T00:50:03.111260668) [Msg] 0.921061 0.389418; (2023-05-19T00:50:03.111289048) (2023-05-19T00:50:03.111297328) [Msg] 
+(2023-05-19T00:50:03.111333538) (2023-05-19T00:50:03.111341778) [Dbg] [Surface.cc:161] Surface plugin successfully configured with the following parameters:
+(2023-05-19T00:50:03.111369068) (2023-05-19T00:50:03.111378368) [Dbg] [Surface.cc:163]   <link_name>: link
+(2023-05-19T00:50:03.111403438) (2023-05-19T00:50:03.111412848) [Dbg] [Surface.cc:164]   <vehicle_length>: 6
+(2023-05-19T00:50:03.111441198) (2023-05-19T00:50:03.111449248) [Dbg] [Surface.cc:165]   <vehicle_width>: 3.3
+(2023-05-19T00:50:03.111473208) (2023-05-19T00:50:03.111480748) [Dbg] [Surface.cc:166]   <hull_radius>: 1.9
+(2023-05-19T00:50:03.111510828) (2023-05-19T00:50:03.111521078) [Dbg] [Surface.cc:167]   <num_samples>: 2
+(2023-05-19T00:50:03.111555208) (2023-05-19T00:50:03.111566398) [Dbg] [Surface.cc:168]   <fluid_level>: 0.45
+(2023-05-19T00:50:03.111594348) (2023-05-19T00:50:03.111602518) [Dbg] [Surface.cc:169]   <fluid_density>: 997.774
+(2023-05-19T00:50:03.111656058) (2023-05-19T00:50:03.111665458) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Surface] for entity [24]
+(2023-05-19T00:50:03.113641739) (2023-05-19T00:50:03.113654879) [Dbg] [SimpleHydrodynamics.cc:167] SimpleHydrodynamics plugin successfully configured with the following parameters:
+(2023-05-19T00:50:03.113683779) (2023-05-19T00:50:03.113691409) [Dbg] [SimpleHydrodynamics.cc:169]   <link_name>: link
+(2023-05-19T00:50:03.113718429) (2023-05-19T00:50:03.113727239) [Dbg] [SimpleHydrodynamics.cc:170]   <xDotU>: 0
+(2023-05-19T00:50:03.113755939) (2023-05-19T00:50:03.113764899) [Dbg] [SimpleHydrodynamics.cc:171]   <yDotV>: 0
+(2023-05-19T00:50:03.113792019) (2023-05-19T00:50:03.113800639) [Dbg] [SimpleHydrodynamics.cc:172]   <zDotW>: 0.1
+(2023-05-19T00:50:03.113828589) (2023-05-19T00:50:03.113837609) [Dbg] [SimpleHydrodynamics.cc:173]   <kDotP>: 0.1
+(2023-05-19T00:50:03.113863999) (2023-05-19T00:50:03.113872649) [Dbg] [SimpleHydrodynamics.cc:174]   <mDotQ>: 0.1
+(2023-05-19T00:50:03.113898379) (2023-05-19T00:50:03.113907489) [Dbg] [SimpleHydrodynamics.cc:175]   <nDotR>: 0
+(2023-05-19T00:50:03.113932949) (2023-05-19T00:50:03.113942549) [Dbg] [SimpleHydrodynamics.cc:176]   <xU>: 510.3
+(2023-05-19T00:50:03.113970249) (2023-05-19T00:50:03.113978729) [Dbg] [SimpleHydrodynamics.cc:177]   <xUU>: 720.4
+(2023-05-19T00:50:03.114007089) (2023-05-19T00:50:03.114016579) [Dbg] [SimpleHydrodynamics.cc:178]   <yV>: 400
+(2023-05-19T00:50:03.114043919) (2023-05-19T00:50:03.114052629) [Dbg] [SimpleHydrodynamics.cc:179]   <yVV>: 0
+(2023-05-19T00:50:03.114079059) (2023-05-19T00:50:03.114087769) [Dbg] [SimpleHydrodynamics.cc:180]   <zW>: 5000
+(2023-05-19T00:50:03.114114249) (2023-05-19T00:50:03.114124089) [Dbg] [SimpleHydrodynamics.cc:181]   <zWW>: 0
+(2023-05-19T00:50:03.114150449) (2023-05-19T00:50:03.114158929) [Dbg] [SimpleHydrodynamics.cc:182]   <kP>: 500
+(2023-05-19T00:50:03.114190159) (2023-05-19T00:50:03.114198819) [Dbg] [SimpleHydrodynamics.cc:183]   <kPP>: 0
+(2023-05-19T00:50:03.114223629) (2023-05-19T00:50:03.114232189) [Dbg] [SimpleHydrodynamics.cc:184]   <mQ>: 500
+(2023-05-19T00:50:03.114260359) (2023-05-19T00:50:03.114268379) [Dbg] [SimpleHydrodynamics.cc:185]   <mQQ>: 0
+(2023-05-19T00:50:03.114294359) (2023-05-19T00:50:03.114303649) [Dbg] [SimpleHydrodynamics.cc:186]   <nR>: 15000
+(2023-05-19T00:50:03.114329859) (2023-05-19T00:50:03.114339019) [Dbg] [SimpleHydrodynamics.cc:187]   <nRR>: 0
+(2023-05-19T00:50:03.114367939) (2023-05-19T00:50:03.114376019) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SimpleHydrodynamics] for entity [24]
+(2023-05-19T00:50:03.115858910) (2023-05-19T00:50:03.115871150) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [28]
+(2023-05-19T00:50:03.116364620) (2023-05-19T00:50:03.116376270) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [44]
+(2023-05-19T00:50:03.117181530) (2023-05-19T00:50:03.117191890) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [60]
+(2023-05-19T00:50:03.117984361) (2023-05-19T00:50:03.117995831) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [112]
+(2023-05-19T00:50:03.119185061) (2023-05-19T00:50:03.119195461) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [164]
+(2023-05-19T00:50:03.119379802) (2023-05-19T00:50:03.119393932) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [164]
+(2023-05-19T00:50:03.120896623) (2023-05-19T00:50:03.120908473) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::BaseStation] for entity [164]
+(2023-05-19T00:50:03.122898083) (2023-05-19T00:50:03.122912294) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/dropped]
+(2023-05-19T00:50:03.123092924) (2023-05-19T00:50:03.123104004) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [168]
+(2023-05-19T00:50:03.123193784) (2023-05-19T00:50:03.123202524) [Msg] Loaded level [3]
+(2023-05-19T00:50:03.123494024) (2023-05-19T00:50:03.123504294) [Msg] Serving world controls on [/world/simple_demo/control], [/world/simple_demo/control/state] and [/world/simple_demo/playback/control]
+(2023-05-19T00:50:03.123621754) (2023-05-19T00:50:03.123633074) [Msg] Serving GUI information on [/world/simple_demo/gui/info]
+(2023-05-19T00:50:03.123673264) (2023-05-19T00:50:03.123682934) [Msg] World [simple_demo] initialized with [4ms] physics profile.
+(2023-05-19T00:50:03.123811934) (2023-05-19T00:50:03.123823294) [Msg] Serving world SDF generation service on [/world/simple_demo/generate_world_sdf]
+(2023-05-19T00:50:03.123912474) (2023-05-19T00:50:03.123923314) [Msg] Serving world names on [/gazebo/worlds]
+(2023-05-19T00:50:03.123998374) (2023-05-19T00:50:03.124009374) [Msg] Resource path add service on [/gazebo/resource_paths/add].
+(2023-05-19T00:50:03.124091284) (2023-05-19T00:50:03.124102904) [Msg] Resource path get service on [/gazebo/resource_paths/get].
+(2023-05-19T00:50:03.224417591) (2023-05-19T00:50:03.224443161) [Msg] Resource path resolve service on [/gazebo/resource_paths/resolve].
+(2023-05-19T00:50:03.224637761) (2023-05-19T00:50:03.224661522) [Msg] Resource paths published on [/gazebo/resource_paths].
+(2023-05-19T00:50:03.224940962) (2023-05-19T00:50:03.224962942) [Msg] Server control service on [/server_control].
+(2023-05-19T00:50:03.225200472) (2023-05-19T00:50:03.225220582) [Msg] Found no publishers on /stats, adding root stats topic
+(2023-05-19T00:50:03.225411062) (2023-05-19T00:50:03.225432122) [Msg] Found no publishers on /clock, adding root clock topic
+(2023-05-19T00:50:03.225801002) (2023-05-19T00:50:03.225822592) [Dbg] [SimulationRunner.cc:491] Creating PostUpdate worker threads: 13
+(2023-05-19T00:50:03.225880022) (2023-05-19T00:50:03.225908692) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (0)
+(2023-05-19T00:50:03.226053032) (2023-05-19T00:50:03.226076922) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (1)
+(2023-05-19T00:50:03.226175432) (2023-05-19T00:50:03.226194232) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (2)
+(2023-05-19T00:50:03.226286742) (2023-05-19T00:50:03.226305992) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (3)
+(2023-05-19T00:50:03.226398652) (2023-05-19T00:50:03.226417812) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (4)
+(2023-05-19T00:50:03.226512022) (2023-05-19T00:50:03.226529682) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (5)
+(2023-05-19T00:50:03.226620972) (2023-05-19T00:50:03.226638602) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (6)
+(2023-05-19T00:50:03.226729352) (2023-05-19T00:50:03.226748572) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (7)
+(2023-05-19T00:50:03.226833653) (2023-05-19T00:50:03.226850603) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (8)
+(2023-05-19T00:50:03.226939603) (2023-05-19T00:50:03.226956423) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (9)
+(2023-05-19T00:50:03.227055593) (2023-05-19T00:50:03.227074403) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (10)
+(2023-05-19T00:50:03.227164363) (2023-05-19T00:50:03.227182973) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (11)
+(2023-05-19T00:50:03.325898870) (2023-05-19T00:50:03.325922230) [Msg] Particle emitter[simple_demo::dust_storm::link::dust_storm] subscribed to command messages on topic[/model/dust_storm/link/link/particle_emitter/dust_storm/cmd]
+(2023-05-19T00:50:03.326124510) (2023-05-19T00:50:03.326142640) [Msg] Particle emitter[simple_demo::fog::link::fog] subscribed to command messages on topic[/model/fog/link/link/particle_emitter/fog/cmd]
+(2023-05-19T00:50:03.328275371) (2023-05-19T00:50:03.328296881) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-05-19T00:50:03.328449851) (2023-05-19T00:50:03.328469641) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-05-19T00:50:03.328612231) (2023-05-19T00:50:03.328632711) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-05-19T00:50:03.328776971) (2023-05-19T00:50:03.328796171) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-05-19T00:50:03.329005031) (2023-05-19T00:50:03.329024861) [Msg] Address [base_station/target] bound to model [base_station] on topic [base_station/target]
+(2023-05-19T00:50:03.329118291) (2023-05-19T00:50:03.329135601) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [base_station/target] on topic [base_station/target]
+(2023-05-19T00:50:03.329278671) (2023-05-19T00:50:03.329299251) [Msg] Address [base_station/video] bound to model [base_station] on topic [base_station/video]
+(2023-05-19T00:50:03.329387181) (2023-05-19T00:50:03.329405401) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [base_station/video] on topic [base_station/video]
+(2023-05-19T00:50:03.405716187) (2023-05-19T00:50:03.405731867) [Dbg] [Physics.cc:1593] Creating detachable joint [170]
+(2023-05-19T00:50:03.405881938) (2023-05-19T00:50:03.405891658) [Dbg] [Physics.cc:1593] Creating detachable joint [171]
+(2023-05-19T00:50:03.406009308) (2023-05-19T00:50:03.406020148) [Dbg] [Physics.cc:1593] Creating detachable joint [172]
+(2023-05-19T00:50:03.406336688) (2023-05-19T00:50:03.406349768) [Dbg] [Physics.cc:1593] Creating detachable joint [173]
+(2023-05-19T00:50:03.407721938) (2023-05-19T00:50:03.407735578) [Dbg] [SimulationFeatures.cc:63] Simulation timestep set to: 0.004
+(2023-05-19T00:50:03.418000063) (2023-05-19T00:50:03.418025473) [Msg] Serving scene information on [/world/simple_demo/scene/info]
+(2023-05-19T00:50:03.418198953) (2023-05-19T00:50:03.418227933) [Msg] Serving graph information on [/world/simple_demo/scene/graph]
+(2023-05-19T00:50:03.418398693) (2023-05-19T00:50:03.418431403) [Msg] Serving full state on [/world/simple_demo/state]
+(2023-05-19T00:50:03.418601273) (2023-05-19T00:50:03.418625503) [Msg] (2023-05-19T00:50:03.418672643) (2023-05-19T00:50:03.418691463) Serving full state (async) on [[Wrn] [Model.hh:69] /Skipping serialization / deserialization for models state_asyncSkipping serialization / deserialization for models state_asyncwith //pose/@relative_to attribute.
+]
+(2023-05-19T00:50:03.418893333) (2023-05-19T00:50:03.418915613) [Msg] Publishing scene information on [/world/simple_demo/scene/info]
+(2023-05-19T00:50:03.419116503) (2023-05-19T00:50:03.419139494) [Msg] Publishing entity deletions on [/world/simple_demo/scene/deletion]
+(2023-05-19T00:50:03.419274324) (2023-05-19T00:50:03.419295784) [Msg] Publishing state changes on [/world/simple_demo/state]
+(2023-05-19T00:50:03.419460944) (2023-05-19T00:50:03.419482654) [Msg] Publishing pose messages on [(/world/simple_demo2023-05-19T00:50:03.419524554/2023-05-19T00:50:03.419524554/) (2023-05-19T00:50:03.419553414) pose/infoTrying to serialize component with data type []Trying to serialize component with data type []
+N3sdf3v125WorldE], which doesn't have `operator<<`. Component will not be serialized.
+(2023-05-19T00:50:03.419686864) (2023-05-19T00:50:03.419707684) [Msg] Publishing dynamic pose messages on [/world/simple_demo/dynamic_pose/info]
+(2023-05-19T00:50:03.420107854) (2023-05-19T00:50:03.420131884) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 8 entities each.
+(2023-05-19T00:50:03.444561926) (2023-05-19T00:50:03.444588336) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 8 entities each.
+(2023-05-19T00:51:02.11563499) (2023-05-19T00:51:02.11577819) [Msg] Linear velocity initialized to [0 0 0]
+(2023-05-19T00:51:02.11643979) (2023-05-19T00:51:02.11655619) [Msg] Angular velocity initialized to [0 0 0]
+(2023-05-19T00:51:02.11855649) (2023-05-19T00:51:02.11866519) [Msg] VelocityControl subscribing to twist messages on [/model/usv/cmd_vel]
+(2023-05-19T00:51:02.11908299) (2023-05-19T00:51:02.11918149) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::VelocityControl] for entity [174]
+(2023-05-19T00:51:02.12939619) (2023-05-19T00:51:02.12950189) [Dbg] [OdometryPublisher.cc:191] OdometryPublisher system plugin missing <dimensions>, defaults to "2"
+(2023-05-19T00:51:02.13110809) (2023-05-19T00:51:02.13124499) [Msg] OdometryPublisher publishing odometry on [/model/usv/odometry]
+(2023-05-19T00:51:02.13243379) (2023-05-19T00:51:02.13255269) [Msg] OdometryPublisher publishing odometry with covariance on [/model/usv/odometry_with_covariance]
+(2023-05-19T00:51:02.13341399) (2023-05-19T00:51:02.13351149) [Msg] OdometryPublisher publishing Pose_V (TF) on [/model/usv/pose]
+(2023-05-19T00:51:02.13385519) (2023-05-19T00:51:02.13395009) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::OdometryPublisher] for entity [174]
+(2023-05-19T00:51:02.14766790) (2023-05-19T00:51:02.14778730) [Msg] Thruster listening to commands in [/model/usv/joint/left_engine_propeller_joint/cmd_thrust]
+(2023-05-19T00:51:02.14851890) (2023-05-19T00:51:02.14863930) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-05-19T00:51:02.14895960) (2023-05-19T00:51:02.14905720) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [174]
+(2023-05-19T00:51:02.15986841) (2023-05-19T00:51:02.16001191) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-05-19T00:51:02.16036121) (2023-05-19T00:51:02.16047561) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-05-19T00:51:02.16091721) (2023-05-19T00:51:02.16104911) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-05-19T00:51:02.16151511) (2023-05-19T00:51:02.16164051) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-05-19T00:51:02.16203351) (2023-05-19T00:51:02.16215131) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-05-19T00:51:02.16249971) (2023-05-19T00:51:02.16265861) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-05-19T00:51:02.16304161) (2023-05-19T00:51:02.16312711) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-05-19T00:51:02.16340421) (2023-05-19T00:51:02.16348181) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-05-19T00:51:02.16375761) (2023-05-19T00:51:02.16383761) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-05-19T00:51:02.16412841) (2023-05-19T00:51:02.16421031) [Dbg] [JointPositionController.cc:214] Topic: [usv/left/thruster/joint/cmd_pos]
+(2023-05-19T00:51:02.16449101) (2023-05-19T00:51:02.16458991) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-05-19T00:51:02.16492341) (2023-05-19T00:51:02.16502161) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [174]
+(2023-05-19T00:51:02.16811132) (2023-05-19T00:51:02.16823322) [Msg] Thruster listening to commands in [/model/usv/joint/right_engine_propeller_joint/cmd_thrust]
+(2023-05-19T00:51:02.16872792) (2023-05-19T00:51:02.16882722) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-05-19T00:51:02.16908492) (2023-05-19T00:51:02.16918642) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [174]
+(2023-05-19T00:51:02.17171242) (2023-05-19T00:51:02.17184742) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-05-19T00:51:02.17207842) (2023-05-19T00:51:02.17217252) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-05-19T00:51:02.17249172) (2023-05-19T00:51:02.17257912) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-05-19T00:51:02.17289632) (2023-05-19T00:51:02.17298632) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-05-19T00:51:02.17329922) (2023-05-19T00:51:02.17338942) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-05-19T00:51:02.17366172) (2023-05-19T00:51:02.17374432) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-05-19T00:51:02.17402262) (2023-05-19T00:51:02.17411592) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-05-19T00:51:02.17442422) (2023-05-19T00:51:02.17452572) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-05-19T00:51:02.17483512) (2023-05-19T00:51:02.17492602) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-05-19T00:51:02.17523762) (2023-05-19T00:51:02.17531962) [Dbg] [JointPositionController.cc:214] Topic: [usv/right/thruster/joint/cmd_pos]
+(2023-05-19T00:51:02.17561862) (2023-05-19T00:51:02.17571632) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-05-19T00:51:02.17616432) (2023-05-19T00:51:02.17625132) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [174]
+(2023-05-19T00:51:02.17866702) (2023-05-19T00:51:02.17877682) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:51:02.18009412) (2023-05-19T00:51:02.18019992) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T00:51:02.18089862) (2023-05-19T00:51:02.18101992) [Msg] Input Parameters:
+(2023-05-19T00:51:02.18124242) (2023-05-19T00:51:02.18132462) [Msg] model:     PMS
+(2023-05-19T00:51:02.18163713) (2023-05-19T00:51:02.18176143) [Msg] number:     3
+(2023-05-19T00:51:02.18205083) (2023-05-19T00:51:02.18216823) [Msg] scale:      1.1
+(2023-05-19T00:51:02.18249863) (2023-05-19T00:51:02.18261843) [Msg] angle:      0.4
+(2023-05-19T00:51:02.18294683) (2023-05-19T00:51:02.18305143) [Msg] steepness:  0
+(2023-05-19T00:51:02.18339043) (2023-05-19T00:51:02.18349893) [Msg] amplitude:  0
+(2023-05-19T00:51:02.18383733) (2023-05-19T00:51:02.18394693) [Msg] period:     5
+(2023-05-19T00:51:02.18427983) (2023-05-19T00:51:02.18439443) [Msg] direction:  1 0
+(2023-05-19T00:51:02.18486683) (2023-05-19T00:51:02.18498783) [Msg] tau:  2
+(2023-05-19T00:51:02.18528453) (2023-05-19T00:51:02.18540183) [Msg] gain:  0.3
+(2023-05-19T00:51:02.18571903) (2023-05-19T00:51:02.18580813) [Msg] Derived Parameters:
+(2023-05-19T00:51:02.18601163) (2023-05-19T00:51:02.18615683) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T00:51:02.18659723) (2023-05-19T00:51:02.18670283) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T00:51:02.18729513) (2023-05-19T00:51:02.18738543) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T00:51:02.18795873) (2023-05-19T00:51:02.18807023) [Msg] periods:     (2023-05-19T00:51:02.18826543) (2023-05-19T00:51:02.18835193) [Msg] 5.5, (2023-05-19T00:51:02.18858853) (2023-05-19T00:51:02.18868393) [Msg] 5, (2023-05-19T00:51:02.18891103) (2023-05-19T00:51:02.18901513) [Msg] 4.54545, (2023-05-19T00:51:02.18926633) (2023-05-19T00:51:02.18937283) [Msg] 
+(2023-05-19T00:51:02.18961463) (2023-05-19T00:51:02.18973913) [Msg] phases:      0, 0, 0, 
+(2023-05-19T00:51:02.19022463) (2023-05-19T00:51:02.19032003) [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T00:51:02.19078903) (2023-05-19T00:51:02.19089023) [Msg] directions:  (2023-05-19T00:51:02.19106413) (2023-05-19T00:51:02.19116253) [Msg] 0.921061 -0.389418; (2023-05-19T00:51:02.19154133) (2023-05-19T00:51:02.19163463) [Msg] 1 0; (2023-05-19T00:51:02.19193373) (2023-05-19T00:51:02.19202383) [Msg] 0.921061 0.389418; (2023-05-19T00:51:02.19232573) (2023-05-19T00:51:02.19240833) [Msg] 
+(2023-05-19T00:51:02.19271443) (2023-05-19T00:51:02.19283273) [Dbg] [Surface.cc:161] Surface plugin successfully configured with the following parameters:
+(2023-05-19T00:51:02.19314943) (2023-05-19T00:51:02.19324603) [Dbg] [Surface.cc:163]   <link_name>: base_link
+(2023-05-19T00:51:02.19350563) (2023-05-19T00:51:02.19359423) [Dbg] [Surface.cc:164]   <vehicle_length>: 6
+(2023-05-19T00:51:02.19386873) (2023-05-19T00:51:02.19395053) [Dbg] [Surface.cc:165]   <vehicle_width>: 3.3
+(2023-05-19T00:51:02.19422473) (2023-05-19T00:51:02.19431553) [Dbg] [Surface.cc:166]   <hull_radius>: 0.27
+(2023-05-19T00:51:02.19458083) (2023-05-19T00:51:02.19467303) [Dbg] [Surface.cc:167]   <num_samples>: 2
+(2023-05-19T00:51:02.19494003) (2023-05-19T00:51:02.19502993) [Dbg] [Surface.cc:168]   <fluid_level>: 0.45
+(2023-05-19T00:51:02.19529343) (2023-05-19T00:51:02.19538103) [Dbg] [Surface.cc:169]   <fluid_density>: 997.774
+(2023-05-19T00:51:02.19571184) (2023-05-19T00:51:02.19580264) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Surface] for entity [174]
+(2023-05-19T00:51:02.19894504) (2023-05-19T00:51:02.19906694) [Dbg] [SimpleHydrodynamics.cc:167] SimpleHydrodynamics plugin successfully configured with the following parameters:
+(2023-05-19T00:51:02.19935384) (2023-05-19T00:51:02.19944844) [Dbg] [SimpleHydrodynamics.cc:169]   <link_name>: base_link
+(2023-05-19T00:51:02.19972394) (2023-05-19T00:51:02.19982314) [Dbg] [SimpleHydrodynamics.cc:170]   <xDotU>: 0
+(2023-05-19T00:51:02.20010494) (2023-05-19T00:51:02.20019714) [Dbg] [SimpleHydrodynamics.cc:171]   <yDotV>: 0
+(2023-05-19T00:51:02.20047744) (2023-05-19T00:51:02.20056554) [Dbg] [SimpleHydrodynamics.cc:172]   <zDotW>: 0.1
+(2023-05-19T00:51:02.20085444) (2023-05-19T00:51:02.20095084) [Dbg] [SimpleHydrodynamics.cc:173]   <kDotP>: 0.1
+(2023-05-19T00:51:02.20122484) (2023-05-19T00:51:02.20131134) [Dbg] [SimpleHydrodynamics.cc:174]   <mDotQ>: 0.1
+(2023-05-19T00:51:02.20158674) (2023-05-19T00:51:02.20168904) [Dbg] [SimpleHydrodynamics.cc:175]   <nDotR>: 0
+(2023-05-19T00:51:02.20205354) (2023-05-19T00:51:02.20218074) [Dbg] [SimpleHydrodynamics.cc:176]   <xU>: 51.3
+(2023-05-19T00:51:02.20252064) (2023-05-19T00:51:02.20263304) [Dbg] [SimpleHydrodynamics.cc:177]   <xUU>: 72.4
+(2023-05-19T00:51:02.20301134) (2023-05-19T00:51:02.20313004) [Dbg] [SimpleHydrodynamics.cc:178]   <yV>: 40
+(2023-05-19T00:51:02.20348984) (2023-05-19T00:51:02.20359684) [Dbg] [SimpleHydrodynamics.cc:179]   <yVV>: 0
+(2023-05-19T00:51:02.20391994) (2023-05-19T00:51:02.20401894) [Dbg] [SimpleHydrodynamics.cc:180]   <zW>: 500
+(2023-05-19T00:51:02.20428144) (2023-05-19T00:51:02.20436934) [Dbg] [SimpleHydrodynamics.cc:181]   <zWW>: 0
+(2023-05-19T00:51:02.20469114) (2023-05-19T00:51:02.20477324) [Dbg] [SimpleHydrodynamics.cc:182]   <kP>: 100
+(2023-05-19T00:51:02.20519174) (2023-05-19T00:51:02.20533824) [Dbg] [SimpleHydrodynamics.cc:183]   <kPP>: 0
+(2023-05-19T00:51:02.20568874) (2023-05-19T00:51:02.20579024) [Dbg] [SimpleHydrodynamics.cc:184]   <mQ>: 100
+(2023-05-19T00:51:02.20610694) (2023-05-19T00:51:02.20621354) [Dbg] [SimpleHydrodynamics.cc:185]   <mQQ>: 0
+(2023-05-19T00:51:02.20657244) (2023-05-19T00:51:02.20669694) [Dbg] [SimpleHydrodynamics.cc:186]   <nR>: 400
+(2023-05-19T00:51:02.20699194) (2023-05-19T00:51:02.20710014) [Dbg] [SimpleHydrodynamics.cc:187]   <nRR>: 0
+(2023-05-19T00:51:02.20749484) (2023-05-19T00:51:02.20763884) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SimpleHydrodynamics] for entity [174]
+(2023-05-19T00:51:02.22171035) (2023-05-19T00:51:02.22183145) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::PosePublisher] for entity [174]
+(2023-05-19T00:51:02.22426015) (2023-05-19T00:51:02.22436815) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-05-19T00:51:02.22571755) (2023-05-19T00:51:02.22584135) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-05-19T00:51:02.22804735) (2023-05-19T00:51:02.22816135) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-05-19T00:51:02.22947955) (2023-05-19T00:51:02.22961635) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-05-19T00:51:02.23204425) (2023-05-19T00:51:02.23219075) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-05-19T00:51:02.23367995) (2023-05-19T00:51:02.23381135) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-05-19T00:51:02.23630755) (2023-05-19T00:51:02.23642165) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-05-19T00:51:02.23791546) (2023-05-19T00:51:02.23802246) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-05-19T00:51:02.24008646) (2023-05-19T00:51:02.24019596) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [174]
+(2023-05-19T00:51:02.24500186) (2023-05-19T00:51:02.24509956) [Dbg] [UserCommands.cc:1303] Created entity [174] named [usv]
+(2023-05-19T00:51:02.33670450) (2023-05-19T00:51:02.33703380) [Dbg] [Sensors.cc:584] Initialization needed
+(2023-05-19T00:51:02.33791130) (2023-05-19T00:51:02.33813520) [Dbg] [Sensors.cc:240] Initializing render context
+(2023-05-19T00:51:02.33948780) (2023-05-19T00:51:02.33966080) [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T00:51:02.34307070) (2023-05-19T00:51:02.34323650) [Dbg] [GameLogicPlugin.cc:1991] New Competitor Platform: usv with 0sensors
+(2023-05-19T00:51:02.34602831) (2023-05-19T00:51:02.34633031) [Dbg] [ImuSensor.cc:148] IMU data for [usv::base_link::imu_sensor] advertised on [world/simple_demo/model/usv/link/base_link/sensor/imu_sensor/imu]
+(((((((((((((((2023-05-19T00:51:02.36412142) (2023-05-19T00:51:02.36435232) [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ((7(7(()) (2023-05-19T00:51:02.36565942) 2023-05-19T00:51:02.36525952) (2023-05-19T00:51:02.36615682) 2023-05-19T00:51:02.364847922023-05-19T00:51:02.365328222023-05-19T00:51:02.366477922023-05-19T00:51:02.365328222023-05-19T00:51:02.36647792) (2023-05-19T00:51:02.36663032) ) ) (2023-05-19T00:51:02.36709852) (2023-05-19T00:51:02.36740022) (2023-05-19T00:51:02.36758562) () (2023-05-19T00:51:02.36827902) ) (2023-05-19T00:51:02.36867052) 2023-05-19T00:51:02.36803282) (2023-05-19T00:51:02.36911422) 2023-05-19T00:51:02.36649692) (2023-05-19T00:51:02.36871402) (2023-05-19T00:51:02.36996252) ) 2023-05-19T00:51:02.36965642) 
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (10)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (6)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (8)
+Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] 4[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ()[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] 
+Exiting postupdate worker thread (1)
+
+Exiting postupdate worker thread (11)
+Exiting postupdate worker thread (Exiting postupdate worker thread (0)
+Exiting postupdate worker thread (2)
+59)
+
+3)
+(2023-05-19T00:51:02.38044553) (2023-05-19T00:51:02.38057823) [Dbg] [SimulationRunner.cc:491] Creating PostUpdate worker threads: 22
+(2023-05-19T00:51:02.38091543) (2023-05-19T00:51:02.38100753) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (0)
+(2023-05-19T00:51:02.38158563) (2023-05-19T00:51:02.38167783) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (1)
+(2023-05-19T00:51:02.38213423) (2023-05-19T00:51:02.38222433) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (2)
+(2023-05-19T00:51:02.38278173) (2023-05-19T00:51:02.38287483) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (3)
+(2023-05-19T00:51:02.38339293) (2023-05-19T00:51:02.38348193) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (4)
+(2023-05-19T00:51:02.38409263) (2023-05-19T00:51:02.38418603) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (5)
+(2023-05-19T00:51:02.38470163) (2023-05-19T00:51:02.38479953) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (6)
+(2023-05-19T00:51:02.38537083) (2023-05-19T00:51:02.38551973) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (7)
+(2023-05-19T00:51:02.38620223) (2023-05-19T00:51:02.38634483) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (8)
+(2023-05-19T00:51:02.38706973) (2023-05-19T00:51:02.38720083) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (9)
+(2023-05-19T00:51:02.38775893) (2023-05-19T00:51:02.38785393) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (10)
+(2023-05-19T00:51:02.38841933) (2023-05-19T00:51:02.38852283) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (11)
+(2023-05-19T00:51:02.38903723) (2023-05-19T00:51:02.38912683) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (12)
+(2023-05-19T00:51:02.38972163) (2023-05-19T00:51:02.38984013) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (13)
+(2023-05-19T00:51:02.39055293) (2023-05-19T00:51:02.39064683) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (14)
+(2023-05-19T00:51:02.39114133) (2023-05-19T00:51:02.39124963) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (15)
+(2023-05-19T00:51:02.39176803) (2023-05-19T00:51:02.39185733) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (16)
+(2023-05-19T00:51:02.39237583) (2023-05-19T00:51:02.39248213) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (17)
+(2023-05-19T00:51:02.39299433) (2023-05-19T00:51:02.39310533) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (18)
+(2023-05-19T00:51:02.39360153) (2023-05-19T00:51:02.39373823) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (19)
+(2023-05-19T00:51:02.39426363) (2023-05-19T00:51:02.39437563) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (20)
+(2023-05-19T00:51:02.39944433) (2023-05-19T00:51:02.39959423) [Msg] Address [usv] bound to model [usv] on topic [model/usv/rx]
+(2023-05-19T00:51:02.40036953) (2023-05-19T00:51:02.40050003) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-05-19T00:51:02.390562776) (2023-05-19T00:51:02.390575206) [Dbg] [RenderUtil.cc:2529] Create scene [scene]
+(2023-05-19T00:51:02.428798964) (2023-05-19T00:51:02.428817364) [Dbg] [Sensors.cc:254] Rendering Thread initialized
+(2023-05-19T00:51:02.433450507) (2023-05-19T00:51:02.433461277) [Wrn] [Ogre2Heightmap.cc:125] Heightmap final sampling should be 2^n
+ which differs from ogre1's 2^n+1
+The last row and column will be cropped
+size = (width * sampling) - sampling + 1
+[257] = ([257] * [1]) - [1] + 1
+(2023-05-19T00:51:02.438146619) (2023-05-19T00:51:02.438159299) [Msg] Loading heightmap: scene::Heightmap(65478)
+(2023-05-19T00:51:02.438188129) (2023-05-19T00:51:02.438197269) [Msg] Heightmap loaded. Process took 0 ms.
+(2023-05-19T00:51:06.129569978) (2023-05-19T00:51:06.129601708) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.129847468) (2023-05-19T00:51:06.129864778) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.130089058) (2023-05-19T00:51:06.130103948) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.687665123) (2023-05-19T00:51:06.687679643) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.687854233) (2023-05-19T00:51:06.687864573) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.687989153) (2023-05-19T00:51:06.687999913) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T00:51:06.697798188) (2023-05-19T00:51:06.697813778) [Dbg] [Lidar.cc:122] Laser scans for [usv::sensor_6::sensor_link::lidar] advertised on [world/simple_demo/model/usv/model/sensor_6/link/sensor_link/sensor/lidar/scan]
+(2023-05-19T00:51:06.698044378) (2023-05-19T00:51:06.698054818) [Dbg] [GpuLidarSensor.cc:164] Lidar points for [usv::sensor_6::sensor_link::lidar] advertised on [world/simple_demo/model/usv/model/sensor_6/link/sensor_link/sensor/lidar/scan/points]
+(2023-05-19T00:51:06.698310738) (2023-05-19T00:51:06.698320848) [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T00:51:06.829543573) (2023-05-19T00:51:06.829575243) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 10 entities each.
+(2023-05-19T00:51:41.337891123) (2023-05-19T00:51:41.337911023) [Dbg] [SignalHandler.cc:141] Received signal[2].
+(2023-05-19T00:51:41.337952823) (2023-05-19T00:51:41.337966783) [Dbg] [ServerPrivate.cc:110] Server received signal[2]
+(2023-05-19T00:51:41.338012943) (2023-05-19T00:51:41.338026353) [Dbg] [Sensors.cc:406] SensorsPrivate::Stop
+(2023-05-19T00:51:41.340740355) (2023-05-19T00:51:41.340769495) [Dbg] [Sensors.cc:392] SensorsPrivate::RenderThread stopped
+(2023-05-19T00:51:41.350482710) (2023-05-19T00:51:41.350511320) [Dbg] [ign.cc:410] Shutting down ign-gazebo-server
+((((2023-05-19T00:51:41.354159871) (2023-05-19T00:51:41.354179501) ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (16)
+
+((2023-05-19T00:51:41.354251491) ((2023-05-19T00:51:41.354275501) (((2023-05-19T00:51:41.354336111) (2023-05-19T00:51:41.354359581) (((2023-05-19T00:51:41.353889851) (2023-05-19T00:51:41.354489371) (() ((2023-05-19T00:51:41.354410461((2023-05-19T00:51:41.354410461((2023-05-19T00:51:41.354410461((2023-05-19T00:51:41.3544104612023-05-19T00:51:41.354457291(2023-05-19T00:51:41.3546017312023-05-19T00:51:41.354621281) (2023-05-19T00:51:41.354641401) ) (2023-05-19T00:51:41.354679261) ) () ) 2023-05-19T00:51:41.354435401) 2023-05-19T00:51:41.354313981) ) 2023-05-19T00:51:41.354777842) (2023-05-19T00:51:41.354802432) ) (2023-05-19T00:51:41.354836762) 2023-05-19T00:51:41.354659181) ) () 2023-05-19T00:51:41.354820082) (2023-05-19T00:51:41.354956662) (2023-05-19T00:51:41.355004842) ) (2023-05-19T00:51:41.3545310312023-05-19T00:51:41.355046402) 2023-05-19T00:51:41.355069302) (2023-05-19T00:51:41.355277752) 2023-05-19T00:51:41.355291752) 2023-05-19T00:51:41.354658761) (2023-05-19T00:51:41.355347392(2023-05-19T00:51:41.355347392(2023-05-19T00:51:41.355366682) [Dbg] [SimulationRunner.cc:518] 2023-05-19T00:51:41.3553862422023-05-19T00:51:41.355400242) ) 2023-05-19T00:51:41.355295862) (2023-05-19T00:51:41.3546066612023-05-19T00:51:41.355470502) ) ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (2023-05-19T00:51:41.355518572) [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] ) (2023-05-19T00:51:41.355577992) [Dbg] [SimulationRunner.cc:518] ) [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (9)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (Exiting postupdate worker thread (15)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (14)
+3)
+10)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (2)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (18)
+12)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (11)
+Exiting postupdate worker thread (Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] 7)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (4)
+Exiting postupdate worker thread (17)
+Exiting postupdate worker thread (0)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (6)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (20)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (13)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (Exiting postupdate worker thread (Exiting postupdate worker thread (5)
+19)
+Exiting postupdate worker thread (8)
+Exiting postupdate worker thread (Exiting postupdate worker thread (51
+(2023-05-19T00:51:41.391441011) (2023-05-19T00:51:41.391459211) [Dbg] [Sensors.cc:406] SensorsPrivate::Stop
+(2023-05-19T00:51:41.412584161) (2023-05-19T00:51:41.412608151) [Msg] Stopping recording

@@ -1,0 +1,245 @@
+(2023-05-19T13:17:48.820946635) (2023-05-19T13:17:48.820959085) [Dbg] [ign.cc:161] Subscribing to [/g(2023-05-19T13:17:48.823013569) (2023-05-19T13:17:48.823027139) [Dbg] [Gui.cc:253] Waiting for subscribers to [/gazebo/starting_world]...
+(2023-05-19T13:17:48.935637657) (2023-05-19T13:17:48.935653717) [Dbg] [Application.cc:92] Initializing application.
+(2023-05-19T13:17:48.937674600) (2023-05-19T13:17:48.937685720) [GUI] [Dbg] [Application.cc:555] Create main window
+(2023-05-19T13:17:49.304179716) (2023-05-19T13:17:49.304190296) [GUI] [Dbg] [PathManager.cc:66] Requesting resource paths through [/gazebo/resource_paths/get]
+(2023-05-19T13:17:49.359500130) (2023-05-19T13:17:49.359514330) [GUI] [Wrn] [Application.cc:797] [QT] file::/Gazebo/GazeboDrawer.qml:147:3: QML Dialog: Binding loop detected for property "implicitHeight"
+(2023-05-19T13:17:49.361286192) (2023-05-19T13:17:49.361300052) [GUI] [Wrn] [Application.cc:797] [QT] file::/Gazebo/GazeboDrawer.qml:147:3: QML Dialog: Binding loop detected for property "implicitHeight"
+(2023-05-19T13:17:49.361412453) (2023-05-19T13:17:49.361423923) [GUI] [Dbg] [Gui.cc:333] GUI requesting list of world names. The server may be busy downloading resources. Please be patient.
+(2023-05-19T13:17:49.943928311) (2023-05-19T13:17:49.943947542) [GUI] [Dbg] [Gui.cc:391] Requesting GUI from [/world/simple_demo/gui/info]...
+((2023-05-19T13:17:49.944043502) (2023-05-19T13:17:49.944071462) [GUI] [Dbg] [PathManager.cc:55] Received resource paths.
+(2023-05-19T13:17:49.944704613) (2023-05-19T13:17:49.944727643) [GUI] [Dbg] [GuiRunner.cc:145] Requesting initial state from [/world/simple_demo/state]...
+(2023-05-19T13:17:49.953464677) (2023-05-19T13:17:49.953471917) [GUI] [Msg] Loading config [/home/developer/.ignition/gazebo/6/gui.config]
+(2023-05-19T13:17:49.953501657) (2023-05-19T13:17:49.953507227) [GUI] [Dbg] [Application.cc:426] Loading plugin [MinimalScene]
+(2023-05-19T13:17:50.30619397) (2023-05-19T13:17:50.30630927) [GUI] [Msg] Added plugin [3D View] to main window
+(2023-05-19T13:17:50.30777258) (2023-05-19T13:17:50.30785218) [GUI] [Msg] Loaded plugin [MinimalScene] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libMinimalScene.so]
+(2023-05-19T13:17:50.30826718) (2023-05-19T13:17:50.30832078) [GUI] [Dbg] [Application.cc:426] Loading plugin [EntityContextMenuPlugin]
+(2023-05-19T13:17:50.46002872) (2023-05-19T13:17:50.46015452) [GUI] [Wrn] [Application.cc:797] [QT] file::/EntityContextMenuPlugin/EntityContextMenuPlugin.qml:52:3: QML RenderWindowOverlay: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+(2023-05-19T13:17:50.46066253) (2023-05-19T13:17:50.46075243) [GUI] [Wrn] [Application.cc:797] [QT] file::/EntityContextMenuPlugin/EntityContextMenuPlugin.qml:67:3: QML EntityContextMenu: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+(2023-05-19T13:17:50.60722278) (2023-05-19T13:17:50.60732838) [GUI] [Msg] Added plugin [Entity Context Menu] to main window
+(2023-05-19T13:17:50.60772038) (2023-05-19T13:17:50.60777488) [GUI] [Msg] Loaded plugin [EntityContextMenuPlugin] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libEntityContextMenuPlugin.so]
+(2023-05-19T13:17:50.60810928) (2023-05-19T13:17:50.60817168) [GUI] [Dbg] [Application.cc:426] Loading plugin [GzSceneManager]
+(2023-05-19T13:17:50.80713291) (2023-05-19T13:17:50.80726941) [GUI] [Msg] Added plugin [Scene Manager] to main window
+(2023-05-19T13:17:50.80775731) (2023-05-19T13:17:50.80782021) [GUI] [Msg] Loaded plugin [GzSceneManager] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libGzSceneManager.so]
+(2023-05-19T13:17:50.80819451) (2023-05-19T13:17:50.80825911) [GUI] [Dbg] [Application.cc:426] Loading plugin [InteractiveViewControl]
+(2023-05-19T13:17:50.84835749) (2023-05-19T13:17:50.84845129) [GUI] [Msg] Camera view controller topic advertised on [/gui/camera/view_control]
+(2023-05-19T13:17:50.97429059) (2023-05-19T13:17:50.97442499) [GUI] [Msg] Added plugin [Interactive view control] to main window
+(2023-05-19T13:17:50.97500780) (2023-05-19T13:17:50.97506790) [GUI] [Msg] Loaded plugin [InteractiveViewControl] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libInteractiveViewControl.so]
+(2023-05-19T13:17:50.97544480) (2023-05-19T13:17:50.97549810) [GUI] [Dbg] [Application.cc:426] Loading plugin [CameraTracking]
+(2023-05-19T13:17:50.112169384) (2023-05-19T13:17:50.112181764) [GUI] [Msg] Added plugin [Camera tracking] to main window
+(2023-05-19T13:17:50.112223404) (2023-05-19T13:17:50.112229084) [GUI] [Msg] Loaded plugin [CameraTracking] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libCameraTracking.so]
+(2023-05-19T13:17:50.112266754) (2023-05-19T13:17:50.112272114) [GUI] [Dbg] [Application.cc:426] Loading plugin [MarkerManager]
+(2023-05-19T13:17:50.116402952) (2023-05-19T13:17:50.116412182) [GUI] [Msg] Listening to stats on [/world/simple_demo/stats]
+(2023-05-19T13:17:50.127664910) (2023-05-19T13:17:50.127676980) [GUI] [Msg] Added plugin [Marker Manager] to main window
+(2023-05-19T13:17:50.127728640) (2023-05-19T13:17:50.127736520) [GUI] [Msg] Loaded plugin [MarkerManager] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libMarkerManager.so]
+(2023-05-19T13:17:50.127786620) (2023-05-19T13:17:50.127794180) [GUI] [Dbg] [Application.cc:426] Loading plugin [SelectEntities]
+(2023-05-19T13:17:50.144081339) (2023-05-19T13:17:50.144093709) [GUI] [Msg] Added plugin [Select entities] to main window
+(2023-05-19T13:17:50.144137909) (2023-05-19T13:17:50.144145199) [GUI] [Msg] Loaded plugin [SelectEntities] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libSelectEntities.so]
+(2023-05-19T13:17:50.144187369) (2023-05-19T13:17:50.144192849) [GUI] [Dbg] [Application.cc:426] Loading plugin [Spawn]
+(2023-05-19T13:17:50.159631244) (2023-05-19T13:17:50.159644104) [GUI] [Msg] Added plugin [Spawn] to main window
+(2023-05-19T13:17:50.159690324) (2023-05-19T13:17:50.159696654) [GUI] [Msg] Loaded plugin [Spawn] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libSpawn.so]
+(2023-05-19T13:17:50.159733374) (2023-05-19T13:17:50.159738564) [GUI] [Dbg] [Application.cc:426] Loading plugin [VisualizationCapabilities]
+(2023-05-19T13:17:50.164385182) (2023-05-19T13:17:50.164397282) [GUI] [Msg] View as transparent service on [/gui/view/transparent]
+(2023-05-19T13:17:50.164491492) (2023-05-19T13:17:50.164501822) [GUI] [Msg] View as wireframes service on [/gui/view/wireframes]
+(2023-05-19T13:17:50.164580402) (2023-05-19T13:17:50.164590582) [GUI] [Msg] View center of mass service on [/gui/view/com]
+(2023-05-19T13:17:50.164679612) (2023-05-19T13:17:50.164691212) [GUI] [Msg] View inertia service on [/gui/view/inertia]
+(2023-05-19T13:17:50.164775452) (2023-05-19T13:17:50.164782592) [GUI] [Msg] View collisions service on [/gui/view/collisions]
+(2023-05-19T13:17:50.164841942) (2023-05-19T13:17:50.164848312) [GUI] [Msg] View joints service on [/gui/view/joints]
+(2023-05-19T13:17:50.164906152) (2023-05-19T13:17:50.164916152) [GUI] [Msg] View frames service on [/gui/view/frames]
+(2023-05-19T13:17:50.175728242) (2023-05-19T13:17:50.175739542) [GUI] [Msg] Added plugin [Visualization capabilities] to main window
+(2023-05-19T13:17:50.175788332) (2023-05-19T13:17:50.175795552) [GUI] [Msg] Loaded plugin [VisualizationCapabilities] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libVisualizationCapabilities.so]
+(2023-05-19T13:17:50.175830802) (2023-05-19T13:17:50.175836582) [GUI] [Dbg] [Application.cc:426] Loading plugin [WorldControl]
+(2023-05-19T13:17:50.186724920) (2023-05-19T13:17:50.186739430) [GUI] [Msg] Using world control service [/world/simple_demo/control]
+(2023-05-19T13:17:50.187077220) (2023-05-19T13:17:50.187089160) [GUI] [Msg] Listening to stats on [/world/simple_demo/stats]
+(2023-05-19T13:17:50.187131230) (2023-05-19T13:17:50.187141230) [GUI] [Dbg] [WorldControl.cc:246] Using an event to share WorldControl msgs with the server
+(2023-05-19T13:17:50.203791638) (2023-05-19T13:17:50.203804928) [GUI] [Msg] Added plugin [World control] to main window
+(2023-05-19T13:17:50.203852748) (2023-05-19T13:17:50.203868178) [GUI] [Msg] Loaded plugin [WorldControl] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libWorldControl.so]
+(2023-05-19T13:17:50.203905658) (2023-05-19T13:17:50.203911018) [GUI] [Dbg] [Application.cc:426] Loading plugin [WorldStats]
+(2023-05-19T13:17:50.212732974) (2023-05-19T13:17:50.212746544) [GUI] [Msg] Listening to stats on [/world/simple_demo/stats]
+(2023-05-19T13:17:50.226586196) (2023-05-19T13:17:50.226597686) [GUI] [Msg] Added plugin [World stats] to main window
+(2023-05-19T13:17:50.226639506) (2023-05-19T13:17:50.226645726) [GUI] [Msg] Loaded plugin [WorldStats] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libWorldStats.so]
+(2023-05-19T13:17:50.226687246) (2023-05-19T13:17:50.226692526) [GUI] [Dbg] [Application.cc:426] Loading plugin [Shapes]
+(2023-05-19T13:17:50.242864354) (2023-05-19T13:17:50.242875954) [GUI] [Msg] Added plugin [Shapes] to main window
+(2023-05-19T13:17:50.242920694) (2023-05-19T13:17:50.242926324) [GUI] [Msg] Loaded plugin [Shapes] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libShapes.so]
+(2023-05-19T13:17:50.242967894) (2023-05-19T13:17:50.242973204) [GUI] [Dbg] [Application.cc:426] Loading plugin [Lights]
+(2023-05-19T13:17:50.262420366) (2023-05-19T13:17:50.262434376) [GUI] [Msg] Added plugin [Lights] to main window
+(2023-05-19T13:17:50.262480156) (2023-05-19T13:17:50.262486236) [GUI] [Msg] Loaded plugin [Lights] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libLights.so]
+(2023-05-19T13:17:50.262523546) (2023-05-19T13:17:50.262528866) [GUI] [Dbg] [Application.cc:426] Loading plugin [TransformControl]
+(2023-05-19T13:17:50.294081699) (2023-05-19T13:17:50.294092949) [GUI] [Dbg] [TransformControl.cc:219] Legacy mode is disabled; this plugin must be used with MinimalScene.
+(2023-05-19T13:17:50.304690778) (2023-05-19T13:17:50.304703898) [GUI] [Msg] Added plugin [Transform control] to main window
+(2023-05-19T13:17:50.304745238) (2023-05-19T13:17:50.304751078) [GUI] [Msg] Loaded plugin [TransformControl] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libTransformControl.so]
+(2023-05-19T13:17:50.304789518) (2023-05-19T13:17:50.304795238) [GUI] [Dbg] [Application.cc:426] Loading plugin [Screenshot]
+(2023-05-19T13:17:50.312152050) (2023-05-19T13:17:50.312160030) [GUI] [Msg] Screenshot service on [/gui/screenshot]
+(2023-05-19T13:17:50.322542757) (2023-05-19T13:17:50.322553647) [GUI] [Msg] Added plugin [Screenshot] to main window
+(2023-05-19T13:17:50.322593907) (2023-05-19T13:17:50.322599797) [GUI] [Msg] Loaded plugin [Screenshot] from path [/usr/lib/x86_64-linux-gnu/ign-gui-6/plugins/libScreenshot.so]
+(2023-05-19T13:17:50.322637677) (2023-05-19T13:17:50.322643647) [GUI] [Dbg] [Application.cc:426] Loading plugin [CopyPaste]
+(2023-05-19T13:17:50.337807164) (2023-05-19T13:17:50.337818084) [GUI] [Msg] Added plugin [Copy/Paste] to main window
+(2023-05-19T13:17:50.337859134) (2023-05-19T13:17:50.337865164) [GUI] [Msg] Loaded plugin [CopyPaste] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libCopyPaste.so]
+(2023-05-19T13:17:50.337900314) (2023-05-19T13:17:50.337905904) [GUI] [Dbg] [Application.cc:426] Loading plugin [ComponentInspector]
+(2023-05-19T13:17:50.392327596) (2023-05-19T13:17:50.392341526) [GUI] [Msg] Added plugin [Component inspector] to main window
+(2023-05-19T13:17:50.392385126) (2023-05-19T13:17:50.392391106) [GUI] [Msg] Loaded plugin [ComponentInspector] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libComponentInspector.so]
+(2023-05-19T13:17:50.392432266) (2023-05-19T13:17:50.392437766) [GUI] [Dbg] [Application.cc:426] Loading plugin [EntityTree]
+(2023-05-19T13:17:50.417236067) (2023-05-19T13:17:50.417247957) [GUI] [Wrn] [Application.cc:797] [QT] file::/EntityTree/EntityTree.qml:148:7: QML ToolButton: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+(2023-05-19T13:17:50.426928524) (2023-05-19T13:17:50.426940074) [GUI] [Msg] Added plugin [Entity tree] to main window
+(2023-05-19T13:17:50.426982074) (2023-05-19T13:17:50.426996434) [GUI] [Msg] Loaded plugin [EntityTree] from path [/usr/lib/x86_64-linux-gnu/ign-gazebo-6/plugins/gui/libEntityTree.so]
+(2023-05-19T13:17:50.427035164) (2023-05-19T13:17:50.427040954) [GUI] [Dbg] [Application.cc:296] Loading window config
+(2023-05-19T13:17:50.427090234) (2023-05-19T13:17:50.427095714) [GUI] [Msg] Using server control service [/server_control]
+(2023-05-19T13:17:50.427118734) (2023-05-19T13:17:50.427124954) [GUI] [Dbg] [Application.cc:569] Applying config
+(2023-05-19T13:17:50.467338391) (2023-05-19T13:17:50.467349401) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.503446161) (2023-05-19T13:17:50.503454341) [GUI] [Wrn] [Component.hh:189] Trying to deserialize component with data type [N3sdf3v125WorldE], which doesn't have `operator>>`. Component will not be deserialized.
+(2023-05-19T13:17:50.534516933) (2023-05-19T13:17:50.534524233) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.566835428) (2023-05-19T13:17:50.566842978) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.599100302) (2023-05-19T13:17:50.599107832) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.669833392) (2023-05-19T13:17:50.669842962) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.703840689) (2023-05-19T13:17:50.703848619) [GUI] [Wrn] [EntityComponentManager.cc:1819] Component type [9569684444871203505] has not been registered in this process, so it can't be deserialized.
+(2023-05-19T13:17:50.734808441) (2023-05-19T13:17:50.734815601) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.767240315) (2023-05-19T13:17:50.767248365) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.799841150) (2023-05-19T13:17:50.799848910) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.833255966) (2023-05-19T13:17:50.833263516) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.866097211) (2023-05-19T13:17:50.866104891) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.873911844) (2023-05-19T13:17:50.873919764) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.874168034) (2023-05-19T13:17:50.874174534) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.874277854) (2023-05-19T13:17:50.874284044) [GUI] [Msg] Input Parameters:
+(2023-05-19T13:17:50.874301124) (2023-05-19T13:17:50.874307334) [GUI] [Msg] model:     PMS
+(2023-05-19T13:17:50.874328674) (2023-05-19T13:17:50.874334724) [GUI] [Msg] number:     3
+(2023-05-19T13:17:50.874357314) (2023-05-19T13:17:50.874363584) [GUI] [Msg] scale:      1.1
+(2023-05-19T13:17:50.874386054) (2023-05-19T13:17:50.874391434) [GUI] [Msg] angle:      0.4
+(2023-05-19T13:17:50.874413444) (2023-05-19T13:17:50.874418614) [GUI] [Msg] steepness:  0
+(2023-05-19T13:17:50.874443114) (2023-05-19T13:17:50.874448744) [GUI] [Msg] amplitude:  0
+(2023-05-19T13:17:50.874468754) (2023-05-19T13:17:50.874474414) [GUI] [Msg] period:     5
+(2023-05-19T13:17:50.874494835) (2023-05-19T13:17:50.874500645) [GUI] [Msg] direction:  1 0
+(2023-05-19T13:17:50.874528805) (2023-05-19T13:17:50.874534965) [GUI] [Msg] tau:  2
+(2023-05-19T13:17:50.874554315) (2023-05-19T13:17:50.874560485) [GUI] [Msg] gain:  0.3
+(2023-05-19T13:17:50.874581735) (2023-05-19T13:17:50.874588355) [GUI] [Msg] Derived Parameters:
+(2023-05-19T13:17:50.874605675) (2023-05-19T13:17:50.874611825) [GUI] [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T13:17:50.874657115) (2023-05-19T13:17:50.874663895) [GUI] [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T13:17:50.874698655) (2023-05-19T13:17:50.874704425) [GUI] [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T13:17:50.874741695) (2023-05-19T13:17:50.874748245) [GUI] [Msg] periods:     (2023-05-19T13:17:50.874770945) (2023-05-19T13:17:50.874776785) [GUI] [Msg] 5.5, (2023-05-19T13:17:50.874795565) (2023-05-19T13:17:50.874811445) [GUI] [Msg] 5, (2023-05-19T13:17:50.874829845) (2023-05-19T13:17:50.874835595) [GUI] [Msg] 4.54545, (2023-05-19T13:17:50.874852775) (2023-05-19T13:17:50.874859005) [GUI] [Msg] 
+(2023-05-19T13:17:50.874873165) (2023-05-19T13:17:50.874879515) [GUI] [Msg] phases:      0, 0, 0, 
+(2023-05-19T13:17:50.874914735) (2023-05-19T13:17:50.874920335) [GUI] [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T13:17:50.874953685) (2023-05-19T13:17:50.874959855) [GUI] [Msg] directions:  (2023-05-19T13:17:50.874977655) (2023-05-19T13:17:50.874983225) [GUI] [Msg] 0.921061 -0.389418; (2023-05-19T13:17:50.875007805) (2023-05-19T13:17:50.875013795) [GUI] [Msg] 1 0; (2023-05-19T13:17:50.875035535) (2023-05-19T13:17:50.875041835) [GUI] [Msg] 0.921061 0.389418; (2023-05-19T13:17:50.875063925) (2023-05-19T13:17:50.875069665) [GUI] [Msg] 
+(2023-05-19T13:17:50.875401796) (2023-05-19T13:17:50.875408026) [GUI] [Dbg] [GuiRunner.cc:375] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23] in GUI
+(2023-05-19T13:17:50.875618987) (2023-05-19T13:17:50.875625747) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.875701657) (2023-05-19T13:17:50.875707387) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.875753897) (2023-05-19T13:17:50.875759717) [GUI] [Msg] Input Parameters:
+(2023-05-19T13:17:50.875777337) (2023-05-19T13:17:50.875783337) [GUI] [Msg] model:     PMS
+(2023-05-19T13:17:50.875803557) (2023-05-19T13:17:50.875809217) [GUI] [Msg] number:     3
+(2023-05-19T13:17:50.875829717) (2023-05-19T13:17:50.875836177) [GUI] [Msg] scale:      1.1
+(2023-05-19T13:17:50.875857357) (2023-05-19T13:17:50.875863007) [GUI] [Msg] angle:      0.4
+(2023-05-19T13:17:50.875883607) (2023-05-19T13:17:50.875889307) [GUI] [Msg] steepness:  0
+(2023-05-19T13:17:50.875909117) (2023-05-19T13:17:50.875915657) [GUI] [Msg] amplitude:  0
+(2023-05-19T13:17:50.875936867) (2023-05-19T13:17:50.875943137) [GUI] [Msg] period:     5
+(2023-05-19T13:17:50.875962457) (2023-05-19T13:17:50.875968667) [GUI] [Msg] direction:  1 0
+(2023-05-19T13:17:50.875993607) (2023-05-19T13:17:50.875999677) [GUI] [Msg] tau:  2
+(2023-05-19T13:17:50.876019797) (2023-05-19T13:17:50.876026497) [GUI] [Msg] gain:  0.3
+(2023-05-19T13:17:50.876047067) (2023-05-19T13:17:50.876052967) [GUI] [Msg] Derived Parameters:
+(2023-05-19T13:17:50.876070317) (2023-05-19T13:17:50.876075507) [GUI] [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T13:17:50.876109778) (2023-05-19T13:17:50.876115798) [GUI] [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T13:17:50.876152628) (2023-05-19T13:17:50.876158818) [GUI] [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T13:17:50.876191968) (2023-05-19T13:17:50.876198078) [GUI] [Msg] periods:     (2023-05-19T13:17:50.876212708) (2023-05-19T13:17:50.876218508) [GUI] [Msg] 5.5, (2023-05-19T13:17:50.876236468) (2023-05-19T13:17:50.876242188) [GUI] [Msg] 5, (2023-05-19T13:17:50.876259828) (2023-05-19T13:17:50.876265858) [GUI] [Msg] 4.54545, (2023-05-19T13:17:50.876283528) (2023-05-19T13:17:50.876289428) [GUI] [Msg] 
+(2023-05-19T13:17:50.876305558) (2023-05-19T13:17:50.876311658) [GUI] [Msg] phases:      0, 0, 0, 
+(2023-05-19T13:17:50.876344108) (2023-05-19T13:17:50.876350078) [GUI] [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T13:17:50.876382958) (2023-05-19T13:17:50.876388708) [GUI] [Msg] directions:  (2023-05-19T13:17:50.876403368) (2023-05-19T13:17:50.876409618) [GUI] [Msg] 0.921061 -0.389418; (2023-05-19T13:17:50.876432848) (2023-05-19T13:17:50.876439278) [GUI] [Msg] 1 0; (2023-05-19T13:17:50.876462228) (2023-05-19T13:17:50.876468568) [GUI] [Msg] 0.921061 0.389418; (2023-05-19T13:17:50.876491658) (2023-05-19T13:17:50.876497498) [GUI] [Msg] 
+(2023-05-19T13:17:50.876547448) (2023-05-19T13:17:50.876553448) [GUI] [Dbg] [GuiRunner.cc:375] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23] in GUI
+(2023-05-19T13:17:50.876779829) (2023-05-19T13:17:50.876786829) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.876859879) (2023-05-19T13:17:50.876871079) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.876917369) (2023-05-19T13:17:50.876922829) [GUI] [Msg] Input Parameters:
+(2023-05-19T13:17:50.876940349) (2023-05-19T13:17:50.876945489) [GUI] [Msg] model:     PMS
+(2023-05-19T13:17:50.876964229) (2023-05-19T13:17:50.876969489) [GUI] [Msg] number:     3
+(2023-05-19T13:17:50.876988189) (2023-05-19T13:17:50.876993399) [GUI] [Msg] scale:      1.1
+(2023-05-19T13:17:50.877014579) (2023-05-19T13:17:50.877020419) [GUI] [Msg] angle:      0.4
+(2023-05-19T13:17:50.877040979) (2023-05-19T13:17:50.877047599) [GUI] [Msg] steepness:  0
+(2023-05-19T13:17:50.877069050) (2023-05-19T13:17:50.877075210) [GUI] [Msg] amplitude:  0
+(2023-05-19T13:17:50.877095610) (2023-05-19T13:17:50.877101130) [GUI] [Msg] period:     5
+(2023-05-19T13:17:50.877119870) (2023-05-19T13:17:50.877125860) [GUI] [Msg] direction:  1 0
+(2023-05-19T13:17:50.877150770) (2023-05-19T13:17:50.877157410) [GUI] [Msg] tau:  2
+(2023-05-19T13:17:50.877178320) (2023-05-19T13:17:50.877184230) [GUI] [Msg] gain:  0.3
+(2023-05-19T13:17:50.877204570) (2023-05-19T13:17:50.877210470) [GUI] [Msg] Derived Parameters:
+(2023-05-19T13:17:50.877227180) (2023-05-19T13:17:50.877232770) [GUI] [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T13:17:50.877268100) (2023-05-19T13:17:50.877273270) [GUI] [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T13:17:50.877306990) (2023-05-19T13:17:50.877313360) [GUI] [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T13:17:50.877348670) (2023-05-19T13:17:50.877355000) [GUI] [Msg] periods:     (2023-05-19T13:17:50.877370500) (2023-05-19T13:17:50.877376280) [GUI] [Msg] 5.5, (2023-05-19T13:17:50.877393280) (2023-05-19T13:17:50.877399270) [GUI] [Msg] 5, (2023-05-19T13:17:50.877415380) (2023-05-19T13:17:50.877421470) [GUI] [Msg] 4.54545, (2023-05-19T13:17:50.877438750) (2023-05-19T13:17:50.877444930) [GUI] [Msg] 
+(2023-05-19T13:17:50.877460530) (2023-05-19T13:17:50.877466340) [GUI] [Msg] phases:      0, 0, 0, 
+(2023-05-19T13:17:50.877499030) (2023-05-19T13:17:50.877504820) [GUI] [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T13:17:50.877537290) (2023-05-19T13:17:50.877543621) [GUI] [Msg] directions:  (2023-05-19T13:17:50.877557511) (2023-05-19T13:17:50.877563031) [GUI] [Msg] 0.921061 -0.389418; (2023-05-19T13:17:50.877586021) (2023-05-19T13:17:50.877591441) [GUI] [Msg] 1 0; (2023-05-19T13:17:50.877614681) (2023-05-19T13:17:50.877620431) [GUI] [Msg] 0.921061 0.389418; (2023-05-19T13:17:50.877643411) (2023-05-19T13:17:50.877649341) [GUI] [Msg] 
+(2023-05-19T13:17:50.877687471) (2023-05-19T13:17:50.877695511) [GUI] [Dbg] [GuiRunner.cc:375] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23] in GUI
+(2023-05-19T13:17:50.877919121) (2023-05-19T13:17:50.877926281) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.877997211) (2023-05-19T13:17:50.878004191) [GUI] [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-05-19T13:17:50.878049642) (2023-05-19T13:17:50.878055842) [GUI] [Msg] Input Parameters:
+(2023-05-19T13:17:50.878073682) (2023-05-19T13:17:50.878079522) [GUI] [Msg] model:     PMS
+(2023-05-19T13:17:50.878102442) (2023-05-19T13:17:50.878108522) [GUI] [Msg] number:     3
+(2023-05-19T13:17:50.878129132) (2023-05-19T13:17:50.878134982) [GUI] [Msg] scale:      1.1
+(2023-05-19T13:17:50.878154902) (2023-05-19T13:17:50.878161362) [GUI] [Msg] angle:      0.4
+(2023-05-19T13:17:50.878182502) (2023-05-19T13:17:50.878188382) [GUI] [Msg] steepness:  0
+(2023-05-19T13:17:50.878208982) (2023-05-19T13:17:50.878214952) [GUI] [Msg] amplitude:  0
+(2023-05-19T13:17:50.878235122) (2023-05-19T13:17:50.878241542) [GUI] [Msg] period:     5
+(2023-05-19T13:17:50.878261692) (2023-05-19T13:17:50.878267742) [GUI] [Msg] direction:  1 0
+(2023-05-19T13:17:50.878293992) (2023-05-19T13:17:50.878300352) [GUI] [Msg] tau:  2
+(2023-05-19T13:17:50.878321312) (2023-05-19T13:17:50.878328052) [GUI] [Msg] gain:  0.3
+(2023-05-19T13:17:50.878348352) (2023-05-19T13:17:50.878354142) [GUI] [Msg] Derived Parameters:
+(2023-05-19T13:17:50.878377062) (2023-05-19T13:17:50.878383202) [GUI] [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-05-19T13:17:50.878417712) (2023-05-19T13:17:50.878423702) [GUI] [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-05-19T13:17:50.878456712) (2023-05-19T13:17:50.878462752) [GUI] [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-05-19T13:17:50.878498302) (2023-05-19T13:17:50.878504743) [GUI] [Msg] periods:     (2023-05-19T13:17:50.878518933) (2023-05-19T13:17:50.878525543) [GUI] [Msg] 5.5, (2023-05-19T13:17:50.878543733) (2023-05-19T13:17:50.878549823) [GUI] [Msg] 5, (2023-05-19T13:17:50.878567783) (2023-05-19T13:17:50.878573903) [GUI] [Msg] 4.54545, (2023-05-19T13:17:50.878591513) (2023-05-19T13:17:50.878598023) [GUI] [Msg] 
+(2023-05-19T13:17:50.878613133) (2023-05-19T13:17:50.878618813) [GUI] [Msg] phases:      0, 0, 0, 
+(2023-05-19T13:17:50.878653683) (2023-05-19T13:17:50.878659843) [GUI] [Msg] steepnesses: 0, 0, 0, 
+(2023-05-19T13:17:50.878699243) (2023-05-19T13:17:50.878704903) [GUI] [Msg] directions:  (2023-05-19T13:17:50.878719783) (2023-05-19T13:17:50.878725413) [GUI] [Msg] 0.921061 -0.389418; (2023-05-19T13:17:50.878749413) (2023-05-19T13:17:50.878755363) [GUI] [Msg] 1 0; (2023-05-19T13:17:50.878777093) (2023-05-19T13:17:50.878783133) [GUI] [Msg] 0.921061 0.389418; (2023-05-19T13:17:50.878805673) (2023-05-19T13:17:50.878811773) [GUI] [Msg] 
+(2023-05-19T13:17:50.878844793) (2023-05-19T13:17:50.878850433) [GUI] [Dbg] [GuiRunner.cc:375] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23] in GUI
+(2023-05-19T13:17:50.910421706) (2023-05-19T13:17:50.910429246) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.943054611) (2023-05-19T13:17:50.943062621) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:50.976753138) (2023-05-19T13:17:50.976762358) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.9660833) (2023-05-19T13:17:51.9668873) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.77056586) (2023-05-19T13:17:51.77064916) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.109363920) (2023-05-19T13:17:51.109371250) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.141897224) (2023-05-19T13:17:51.141904834) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.213672125) (2023-05-19T13:17:51.213681445) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.279108406) (2023-05-19T13:17:51.279118416) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.312280581) (2023-05-19T13:17:51.312290651) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:17:51.752217840) (2023-05-19T13:17:51.752236790) [GUI] [Wrn] [Application.cc:797] [QT] file::/Gazebo/GazeboDrawer.qml:147:3: QML Dialog: Binding loop detected for property "implicitHeight"
+(2023-05-19T13:17:51.856421816) (2023-05-19T13:17:51.856435006) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.29450206) (2023-05-19T13:17:52.29458866) [GUI] [Dbg] [MinimalScene.cc:560] Create scene [scene]
+(2023-05-19T13:17:52.87388673) (2023-05-19T13:17:52.87400423) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.87544534) (2023-05-19T13:17:52.87551354) [GUI] [Dbg] [TransformControl.cc:528] TransformControl plugin is using camera [scene::Camera(65527)]
+(2023-05-19T13:17:52.87600804) (2023-05-19T13:17:52.87607274) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.87682374) (2023-05-19T13:17:52.87689484) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.87761774) (2023-05-19T13:17:52.87769314) [GUI] [Dbg] [Spawn.cc:289] Spawn plugin is using camera [scene::Camera(65527)]
+(2023-05-19T13:17:52.87797564) (2023-05-19T13:17:52.87803574) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.87872704) (2023-05-19T13:17:52.87886564) [GUI] [Dbg] [SelectEntities.cc:451] SelectEntities plugin is using camera [scene::Camera(65527)]
+(2023-05-19T13:17:52.87918564) (2023-05-19T13:17:52.87925104) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.88171065) (2023-05-19T13:17:52.88179005) [GUI] [Dbg] [MarkerManager.cc:173] Advertise /marker/list service.
+(2023-05-19T13:17:52.88313555) (2023-05-19T13:17:52.88324315) [GUI] [Dbg] [MarkerManager.cc:183] Advertise /marker/list.
+(2023-05-19T13:17:52.88395795) (2023-05-19T13:17:52.88407195) [GUI] [Dbg] [MarkerManager.cc:193] Advertise /marker_array.
+(2023-05-19T13:17:52.88435345) (2023-05-19T13:17:52.88441125) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.88526005) (2023-05-19T13:17:52.88533165) [GUI] [Dbg] [CameraTracking.cc:181] CameraTrackingPrivate plugin is moving camera [scene::Camera(65527)]
+(2023-05-19T13:17:52.88633505) (2023-05-19T13:17:52.88642025) [GUI] [Msg] Move to service on [/gui/move_to]
+(2023-05-19T13:17:52.88717846) (2023-05-19T13:17:52.88729076) [GUI] [Msg] Follow service on [/gui/follow]
+(2023-05-19T13:17:52.88831586) (2023-05-19T13:17:52.88842286) [GUI] [Msg] Move to pose service on [/gui/move_to/pose]
+(2023-05-19T13:17:52.88936636) (2023-05-19T13:17:52.88944266) [GUI] [Msg] Camera pose topic advertised on [/gui/camera/pose]
+(2023-05-19T13:17:52.89037176) (2023-05-19T13:17:52.89049306) [GUI] [Msg] Follow offset service on [/gui/follow/offset]
+(2023-05-19T13:17:52.89083766) (2023-05-19T13:17:52.89089796) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.89169596) (2023-05-19T13:17:52.89176156) [GUI] [Dbg] [InteractiveViewControl.cc:130] InteractiveViewControl plugin is moving camera [scene::Camera(65527)]
+(2023-05-19T13:17:52.89205806) (2023-05-19T13:17:52.89212446) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:52.90639859) (2023-05-19T13:17:52.90648289) [GUI] [Wrn] [Ogre2Heightmap.cc:125] Heightmap final sampling should be 2^n
+ which differs from ogre1's 2^n+1
+The last row and column will be cropped
+size = (width * sampling) - sampling + 1
+[257] = ([257] * [1]) - [1] + 1
+(2023-05-19T13:17:52.100400266) (2023-05-19T13:17:52.100410846) [GUI] [Msg] Loading heightmap: scene::Heightmap(65480)
+(2023-05-19T13:17:52.100435636) (2023-05-19T13:17:52.100442686) [GUI] [Msg] Heightmap loaded. Process took 0 ms.
+(2023-05-19T13:17:55.197816273) (2023-05-19T13:17:55.197828293) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.197952433) (2023-05-19T13:17:55.197959353) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.198094803) (2023-05-19T13:17:55.198101943) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.210495855) (2023-05-19T13:17:55.210506085) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.210663265) (2023-05-19T13:17:55.210669975) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.210785396) (2023-05-19T13:17:55.210792396) [GUI] [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-05-19T13:17:55.221534013) (2023-05-19T13:17:55.221545273) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:55.222869415) (2023-05-19T13:17:55.222878065) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:55.223606106) (2023-05-19T13:17:55.223614476) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:55.224307068) (2023-05-19T13:17:55.224315028) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:55.225049149) (2023-05-19T13:17:55.225057439) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:17:55.225140749) (2023-05-19T13:17:55.225148249) [GUI] [Dbg] [EntityContextMenuPlugin.cc:79] Entity context menu plugin is using camera [scene::Camera(65527)]
+(2023-05-19T13:17:59.645519065) (2023-05-19T13:17:59.645529465) [GUI] [Wrn] [Model.hh:98] Unable to deserialize sdf::Model
+(2023-05-19T13:18:52.698607774) (2023-05-19T13:18:52.698624094) [GUI] [Dbg] [SignalHandler.cc:141] Received signal[2].
+(2023-05-19T13:18:52.700310088) (2023-05-19T13:18:52.700321098) [GUI] [Dbg] [Gui.cc:472] Shutting down ign-gazebo-gui
+(2023-05-19T13:18:52.700360758) (2023-05-19T13:18:52.700371138) [GUI] [Dbg] [Application.cc:140] Terminating application.
+(2023-05-19T13:18:52.707661201) (2023-05-19T13:18:52.707677511) [GUI] [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-05-19T13:18:52.707896361) (2023-05-19T13:18:52.707908051) [GUI] [Dbg] [MinimalScene.cc:615] Destroy scene [scene]

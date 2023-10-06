@@ -1,0 +1,54 @@
+[1.522s] Invoking command in '/home/victor/USV-DOCK/ws/build/mbzirc_dock': PYTHONPATH=/home/victor/USV-DOCK/ws/build/mbzirc_dock/prefix_override:/home/victor/USV-DOCK/ws/install/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/victor/USV-DOCK/ws/build/mbzirc_dock/build --no-deps install_data
+[1.985s] running develop
+[1.985s] /home/victor/.local/lib/python3.8/site-packages/setuptools/command/develop.py:40: EasyInstallDeprecationWarning: easy_install command is deprecated.
+[1.985s] !!
+[1.985s] 
+[1.985s]         ********************************************************************************
+[1.986s]         Please avoid running ``setup.py`` and ``easy_install``.
+[1.986s]         Instead, use pypa/build, pypa/installer, pypa/build or
+[1.986s]         other standards-based tools.
+[1.986s] 
+[1.986s]         See https://github.com/pypa/setuptools/issues/917 for details.
+[1.986s]         ********************************************************************************
+[1.986s] 
+[1.986s] !!
+[1.986s]   easy_install.initialize_options(self)
+[2.027s] /home/victor/.local/lib/python3.8/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+[2.027s] !!
+[2.028s] 
+[2.028s]         ********************************************************************************
+[2.028s]         Please avoid running ``setup.py`` directly.
+[2.028s]         Instead, use pypa/build, pypa/installer, pypa/build or
+[2.028s]         other standards-based tools.
+[2.028s] 
+[2.028s]         See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+[2.028s]         ********************************************************************************
+[2.029s] 
+[2.029s] !!
+[2.029s]   self.initialize_options()
+[2.248s] running egg_info
+[2.248s] creating mbzirc_dock.egg-info
+[2.266s] writing mbzirc_dock.egg-info/PKG-INFO
+[2.267s] writing dependency_links to mbzirc_dock.egg-info/dependency_links.txt
+[2.267s] writing entry points to mbzirc_dock.egg-info/entry_points.txt
+[2.267s] writing requirements to mbzirc_dock.egg-info/requires.txt
+[2.267s] writing top-level names to mbzirc_dock.egg-info/top_level.txt
+[2.268s] writing manifest file 'mbzirc_dock.egg-info/SOURCES.txt'
+[2.307s] reading manifest file 'mbzirc_dock.egg-info/SOURCES.txt'
+[2.308s] writing manifest file 'mbzirc_dock.egg-info/SOURCES.txt'
+[2.368s] running build_ext
+[2.368s] Creating /home/victor/USV-DOCK/ws/install/lib/python3.8/site-packages/mbzirc-dock.egg-link (link to .)
+[2.369s] Installing dock_server script to /home/victor/USV-DOCK/ws/install/lib/mbzirc_dock
+[2.369s] 
+[2.370s] Installed /home/victor/USV-DOCK/ws/build/mbzirc_dock
+[2.370s] running install_data
+[2.370s] creating /home/victor/USV-DOCK/ws/install/share/ament_index
+[2.370s] creating /home/victor/USV-DOCK/ws/install/share/ament_index/resource_index
+[2.370s] creating /home/victor/USV-DOCK/ws/install/share/ament_index/resource_index/packages
+[2.370s] copying resource/mbzirc_dock -> /home/victor/USV-DOCK/ws/install/share/ament_index/resource_index/packages
+[2.370s] copying package.xml -> /home/victor/USV-DOCK/ws/install/share/mbzirc_dock
+[2.371s] copying launch/dock_launch.py -> /home/victor/USV-DOCK/ws/install/share/mbzirc_dock
+[2.371s] creating /home/victor/USV-DOCK/ws/install/share/mbzirc_dock/config
+[2.371s] copying config/laser_odom_map.yaml -> /home/victor/USV-DOCK/ws/install/share/mbzirc_dock/config
+[2.371s] copying config/scan_filter_chain.yaml -> /home/victor/USV-DOCK/ws/install/share/mbzirc_dock/config
+[2.371s] copying config/usv.yaml -> /home/victor/USV-DOCK/ws/install/share/mbzirc_dock/config

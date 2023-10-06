@@ -1,0 +1,1 @@
+ros2 launch mbzirc_ign spawn_config.launch.py world:=simple_demo config_file:=`ros2 pkg prefix mbzirc_dock`/share/mbzirc_dock/config/usv.yaml

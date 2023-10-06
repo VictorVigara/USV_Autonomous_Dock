@@ -1,0 +1,53 @@
+[0.033s] Invoking command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install
+[0.256s] -- The C compiler identification is GNU 9.4.0
+[0.270s] -- The CXX compiler identification is GNU 9.4.0
+[0.283s] -- Detecting C compiler ABI info
+[0.342s] -- Detecting C compiler ABI info - done
+[0.357s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.357s] -- Detecting C compile features
+[0.358s] -- Detecting C compile features - done
+[0.362s] -- Detecting CXX compiler ABI info
+[0.430s] -- Detecting CXX compiler ABI info - done
+[0.454s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.454s] -- Detecting CXX compile features
+[0.455s] -- Detecting CXX compile features - done
+[0.458s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.489s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.489s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.724s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.769s] -- Looking for ignition-math6 -- found version 6.14.0
+[0.782s] -- Searching for dependencies of ignition-math6
+[0.786s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.869s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.878s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.972s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[1.012s] -- Found FastRTPS: /opt/ros/foxy/include  
+[1.111s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.183s] -- Found rmw_implementation_cmake: 1.0.4 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[1.185s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.187s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.251s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[1.251s] -- Looking for pthread_create in pthreads
+[1.293s] -- Looking for pthread_create in pthreads - not found
+[1.294s] -- Looking for pthread_create in pthread
+[1.348s] -- Looking for pthread_create in pthread - found
+[1.349s] -- Found Threads: TRUE  
+[1.615s] [31mCMake Error at CMakeLists.txt:32 (find_package):
+[1.615s]   By not providing "Findignition-transport10.cmake" in CMAKE_MODULE_PATH this
+[1.615s]   project has asked CMake to find a package configuration file provided by
+[1.616s]   "ignition-transport10", but CMake did not find one.
+[1.616s] 
+[1.616s]   Could not find a package configuration file provided by
+[1.616s]   "ignition-transport10" with any of the following names:
+[1.616s] 
+[1.616s]     ignition-transport10Config.cmake
+[1.616s]     ignition-transport10-config.cmake
+[1.616s] 
+[1.616s]   Add the installation prefix of "ignition-transport10" to CMAKE_PREFIX_PATH
+[1.617s]   or set "ignition-transport10_DIR" to a directory containing one of the
+[1.617s]   above files.  If "ignition-transport10" provides a separate development
+[1.617s]   package or SDK, be sure it has been installed.
+[1.617s] 
+[1.617s] [0m
+[1.617s] -- Configuring incomplete, errors occurred!
+[1.632s] Invoked command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo' returned '1': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install

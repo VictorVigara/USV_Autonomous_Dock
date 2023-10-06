@@ -1,0 +1,3 @@
+source;share/ros_ign_interfaces/hook/pythonpath.ps1
+source;share/ros_ign_interfaces/hook/pythonpath.dsv
+source;share/ros_ign_interfaces/hook/pythonpath.sh

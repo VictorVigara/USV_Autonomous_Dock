@@ -1,0 +1,4 @@
+source;share/mbzirc_interfaces/local_setup.bash
+source;share/mbzirc_interfaces/local_setup.dsv
+source;share/mbzirc_interfaces/local_setup.sh
+source;share/mbzirc_interfaces/local_setup.zsh

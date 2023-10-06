@@ -1,0 +1,21 @@
+[0.045s] Invoking command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo': /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install
+[0.541s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.541s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.542s] -- Configuring incomplete, errors occurred!
+[0.543s] Traceback (most recent call last):
+[0.545s]   File "/opt/ros/foxy/share/ament_cmake_core/cmake/package_templates/templates_2_cmake.py", line 21, in <module>
+[0.545s]     from ament_package.templates import get_environment_hook_template_path
+[0.547s] ModuleNotFoundError: No module named 'ament_package'
+[0.547s] [31mCMake Error at /opt/ros/foxy/share/ament_cmake_core/cmake/ament_cmake_package_templates-extras.cmake:41 (message):
+[0.548s]   execute_process(/usr/bin/python3
+[0.550s]   /opt/ros/foxy/share/ament_cmake_core/cmake/package_templates/templates_2_cmake.py
+[0.551s]   /home/victor/USV-DOCK/ws/build/ros_ign_gazebo/ament_cmake_package_templates/templates.cmake)
+[0.551s]   returned error code 1
+[0.551s] Call Stack (most recent call first):
+[0.551s]   /opt/ros/foxy/share/ament_cmake_core/cmake/ament_cmake_coreConfig.cmake:41 (include)
+[0.552s]   /opt/ros/foxy/share/ament_cmake/cmake/ament_cmake_export_dependencies-extras.cmake:15 (find_package)
+[0.552s]   /opt/ros/foxy/share/ament_cmake/cmake/ament_cmakeConfig.cmake:41 (include)
+[0.554s]   CMakeLists.txt:13 (find_package)
+[0.555s] 
+[0.556s] [0m
+[0.563s] Invoked command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo' returned '1': /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install

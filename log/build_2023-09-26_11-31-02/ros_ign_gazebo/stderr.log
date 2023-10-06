@@ -1,0 +1,17 @@
+[31mCMake Error at CMakeLists.txt:32 (find_package):
+  By not providing "Findignition-transport10.cmake" in CMAKE_MODULE_PATH this
+  project has asked CMake to find a package configuration file provided by
+  "ignition-transport10", but CMake did not find one.
+
+  Could not find a package configuration file provided by
+  "ignition-transport10" with any of the following names:
+
+    ignition-transport10Config.cmake
+    ignition-transport10-config.cmake
+
+  Add the installation prefix of "ignition-transport10" to CMAKE_PREFIX_PATH
+  or set "ignition-transport10_DIR" to a directory containing one of the
+  above files.  If "ignition-transport10" provides a separate development
+  package or SDK, be sure it has been installed.
+
+[0m

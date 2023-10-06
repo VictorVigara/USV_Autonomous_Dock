@@ -1,0 +1,1371 @@
+(2023-02-28T22:46:16.764156950) (2023-02-28T22:46:16.764172652) [Msg] Ignition Gazebo Server v6.11.0
+(2023-02-28T22:46:16.767742764) (2023-02-28T22:46:16.767757305) [Msg] Loading SDF world file[/home/developer/mbzirc_ws/install/share/mbzirc_ign/worlds/simple_demo.sdf].
+(2023-02-28T22:46:17.80724953) (2023-02-28T22:46:17.80743515) [Msg] Serving entity system service on [/entity/system/add]
+(2023-02-28T22:46:17.116702213) (2023-02-28T22:46:17.116715604) [Dbg] [Physics.cc:803] Loaded [ignition::physics::dartsim::Plugin] from library [/usr/lib/x86_64-linux-gnu/ign-physics-5/engine-plugins/libignition-physics-dartsim-plugin.so]
+(2023-02-28T22:46:17.116775659) (2023-02-28T22:46:17.116787740) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Physics] for entity [1]
+(2023-02-28T22:46:17.118334918) (2023-02-28T22:46:17.118344969) [Msg] Create service on [/world/simple_demo/create]
+(2023-02-28T22:46:17.118467598) (2023-02-28T22:46:17.118477239) [Msg] Remove service on [/world/simple_demo/remove]
+(2023-02-28T22:46:17.118590658) (2023-02-28T22:46:17.118601268) [Msg] Pose service on [/world/simple_demo/set_pose]
+(2023-02-28T22:46:17.118700836) (2023-02-28T22:46:17.118711717) [Msg] Pose service on [/world/simple_demo/set_pose_vector]
+(2023-02-28T22:46:17.118843257) (2023-02-28T22:46:17.118854448) [Msg] Light configuration service on [/world/simple_demo/light_config]
+(2023-02-28T22:46:17.119037942) (2023-02-28T22:46:17.119049473) [Msg] Physics service on [/world/simple_demo/set_physics]
+(2023-02-28T22:46:17.119160351) (2023-02-28T22:46:17.119171622) [Msg] SphericalCoordinates service on [/world/simple_demo/set_spherical_coordinates]
+(2023-02-28T22:46:17.119250858) (2023-02-28T22:46:17.119261789) [Msg] Enable collision service on [/world/simple_demo/enable_collision]
+(2023-02-28T22:46:17.119340255) (2023-02-28T22:46:17.119352396) [Msg] Disable collision service on [/world/simple_demo/disable_collision]
+(2023-02-28T22:46:17.119509708) (2023-02-28T22:46:17.119519148) [Msg] Material service on [/world/simple_demo/visual_config]
+(2023-02-28T22:46:17.119617406) (2023-02-28T22:46:17.119626637) [Msg] Material service on [/world/simple_demo/wheel_slip]
+(2023-02-28T22:46:17.119661399) (2023-02-28T22:46:17.119673150) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::UserCommands] for entity [1]
+(2023-02-28T22:46:17.138967949) (2023-02-28T22:46:17.138977550) [Dbg] [Sensors.cc:479] Configuring Sensors system
+(2023-02-28T22:46:17.139032684) (2023-02-28T22:46:17.139040624) [Dbg] [Sensors.cc:398] SensorsPrivate::Run
+(2023-02-28T22:46:17.139114890) (2023-02-28T22:46:17.139123711) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Sensors] for entity [1]
+(2023-02-28T22:46:17.139186035) (2023-02-28T22:46:17.139202817) [Dbg] [Sensors.cc:378] SensorsPrivate::RenderThread started
+(2023-02-28T22:46:17.139236879) (2023-02-28T22:46:17.139247340) [Dbg] [Sensors.cc:228] Waiting for init
+(2023-02-28T22:46:17.140576541) (2023-02-28T22:46:17.140585852) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::AirPressure] for entity [1]
+(2023-02-28T22:46:17.142051724) (2023-02-28T22:46:17.142061114) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Altimeter] for entity [1]
+(2023-02-28T22:46:17.143489443) (2023-02-28T22:46:17.143499964) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Imu] for entity [1]
+(2023-02-28T22:46:17.144931043) (2023-02-28T22:46:17.144940814) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Magnetometer] for entity [1]
+(2023-02-28T22:46:17.146402256) (2023-02-28T22:46:17.146411677) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::ForceTorque] for entity [1]
+(2023-02-28T22:46:17.147460657) (2023-02-28T22:46:17.147469967) [Msg] Serving particle emitter information on [/world/simple_demo/particle_emitters]
+(2023-02-28T22:46:17.147518291) (2023-02-28T22:46:17.147527422) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::ParticleEmitter2] for entity [1]
+(2023-02-28T22:46:17.148681670) (2023-02-28T22:46:17.148700111) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SceneBroadcaster] for entity [1]
+(2023-02-28T22:46:17.149589789) (2023-02-28T22:46:17.149599359) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Contact] for entity [1]
+(2023-02-28T22:46:17.150661560) (2023-02-28T22:46:17.150672701) [Dbg] [RFComms.cc:385] Range configuration:
+RF Configuration (range-based)
+-- max_range: 500000
+-- fading_exponent: 2.6
+-- l0: 40
+-- sigma: 10
+
+(2023-02-28T22:46:17.150767388) (2023-02-28T22:46:17.150777049) [Dbg] [RFComms.cc:388] Radio configuration:
+Radio Configuration
+-- capacity: 1e+06
+-- tx_power: 25
+-- noise_floor: -90
+-- modulation: QPSK
+
+(2023-02-28T22:46:17.151043449) (2023-02-28T22:46:17.151052720) [Dbg] [Broker.cc:113] Broker services:
+(2023-02-28T22:46:17.151083192) (2023-02-28T22:46:17.151092543) [Dbg] [Broker.cc:114]   Bind: [/broker/bind]
+(2023-02-28T22:46:17.151119735) (2023-02-28T22:46:17.151127415) [Dbg] [Broker.cc:115]   Unbind: [/broker/unbind]
+(2023-02-28T22:46:17.151159768) (2023-02-28T22:46:17.151167538) [Dbg] [Broker.cc:116] Broker topics:
+(2023-02-28T22:46:17.151187340) (2023-02-28T22:46:17.151195161) [Dbg] [Broker.cc:117]   Incoming messages: [/broker/msgs]
+(2023-02-28T22:46:17.151228563) (2023-02-28T22:46:17.151237804) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::RFComms] for entity [1]
+(2023-02-28T22:46:17.153402009) (2023-02-28T22:46:17.153412369) [Dbg] [RFRange.cc:339] RFRange sensor range configuration:
+RF Configuration (range-based)
+-- max_range: 500000
+-- fading_exponent: 2.6
+-- l0: 40
+-- sigma: 0.005
+-- rssi_1: -15
+
+(2023-02-28T22:46:17.153526728) (2023-02-28T22:46:17.153537909) [Dbg] [RFRange.cc:342] RFRange sensor radio configuration:
+Radio Configuration
+-- tx_power: 25
+-- noise_floor: -90
+
+(2023-02-28T22:46:17.153617285) (2023-02-28T22:46:17.153628156) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::RFRange] for entity [1]
+(2023-02-28T22:46:17.157085359) (2023-02-28T22:46:17.157096520) [Msg] Overwriting existing file [/tmp/ign/mbzirc/playback/state.tlog]
+(2023-02-28T22:46:17.202482997) (2023-02-28T22:46:17.202498498) [Msg] Recording to log file [/tmp/ign/mbzirc/playback/state.tlog]
+(2023-02-28T22:46:17.202543592) (2023-02-28T22:46:17.202551212) [Dbg] [LogRecord.cc:334] Recording default topic[/playback/sdf].
+(2023-02-28T22:46:17.202574694) (2023-02-28T22:46:17.202584185) [Dbg] [LogRecord.cc:335] Recording default topic[/world/simple_demo/changed_state].
+(2023-02-28T22:46:17.247923378) (2023-02-28T22:46:17.247946010) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::LogRecord] for entity [1]
+(2023-02-28T22:46:17.250620593) (2023-02-28T22:46:17.250648305) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::WindEffects] for entity [1]
+(2023-02-28T22:46:17.255552649) (2023-02-28T22:46:17.255574670) [Msg] MBZIRC log path: /tmp/ign/mbzirc/logs
+(2023-02-28T22:46:17.256103081) (2023-02-28T22:46:17.256125563) [Msg] Run duration set to 3600 seconds.
+(2023-02-28T22:46:17.256257253) (2023-02-28T22:46:17.256281894) [Msg] Geofence boundary min: -70 -70 -25, max: 70 70 121.92
+(2023-02-28T22:46:17.256497491) (2023-02-28T22:46:17.256523133) [Msg] Start area boundary min: -15 -15 -5, max: 15 15 5
+(2023-02-28T22:46:17.256703977) (2023-02-28T22:46:17.256726168) [Msg] Setup duration set to 600 seconds.
+(2023-02-28T22:46:17.256800894) (2023-02-28T22:46:17.256823716) [Msg] Target vessel: Vessel A
+(2023-02-28T22:46:17.256924663) (2023-02-28T22:46:17.256935624) [Msg]   Small object: small_blue_box_a
+(2023-02-28T22:46:17.256967317) (2023-02-28T22:46:17.256977627) [Msg]   Small object: small_blue_box_a_duplicate
+(2023-02-28T22:46:17.257009660) (2023-02-28T22:46:17.257017080) [Msg]   Large object: large_dry_box_a
+(2023-02-28T22:46:17.257047923) (2023-02-28T22:46:17.257057573) [Msg]   Large object: large_dry_box_a_duplicate
+(2023-02-28T22:46:17.258089602) (2023-02-28T22:46:17.258100253) [Msg] Starting MBZIRC
+(2023-02-28T22:46:17.258228922) (2023-02-28T22:46:17.258241793) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::GameLogicPlugin] for entity [1]
+(2023-02-28T22:46:17.263284147) (2023-02-28T22:46:17.263298638) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:17.263560758) (2023-02-28T22:46:17.263572459) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:17.663497660) (2023-02-28T22:46:17.663525872) [Msg] Input Parameters:
+(2023-02-28T22:46:17.663594457) (2023-02-28T22:46:17.663618259) [Msg] model:     PMS
+(2023-02-28T22:46:17.663687144) (2023-02-28T22:46:17.663709916) [Msg] number:     3
+(2023-02-28T22:46:17.663777631) (2023-02-28T22:46:17.663800683) [Msg] scale:      1.1
+(2023-02-28T22:46:17.663872609) (2023-02-28T22:46:17.663895790) [Msg] angle:      0.4
+(2023-02-28T22:46:17.663962235) (2023-02-28T22:46:17.663985147) [Msg] steepness:  0
+(2023-02-28T22:46:17.664051052) (2023-02-28T22:46:17.664073704) [Msg] amplitude:  0
+(2023-02-28T22:46:17.664141309) (2023-02-28T22:46:17.664164421) [Msg] period:     5
+(2023-02-28T22:46:17.664228996) (2023-02-28T22:46:17.664252208) [Msg] direction:  1 0
+(2023-02-28T22:46:17.664330934) (2023-02-28T22:46:17.664354465) [Msg] tau:  2
+(2023-02-28T22:46:17.664435802) (2023-02-28T22:46:17.664459623) [Msg] gain:  0.3
+(2023-02-28T22:46:17.664521948) (2023-02-28T22:46:17.664540250) [Msg] Derived Parameters:
+(2023-02-28T22:46:17.664595584) (2023-02-28T22:46:17.664617875) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-02-28T22:46:17.664761636) (2023-02-28T22:46:17.664786718) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-02-28T22:46:17.664928919) (2023-02-28T22:46:17.664956081) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-02-28T22:46:17.665096872) (2023-02-28T22:46:17.665124154) [Msg] periods:     (2023-02-28T22:46:17.665191469) (2023-02-28T22:46:17.665217791) [Msg] 5.5, (2023-02-28T22:46:17.665286986) (2023-02-28T22:46:17.665314188) [Msg] 5, (2023-02-28T22:46:17.665379593) (2023-02-28T22:46:17.665410706) [Msg] 4.54545, (2023-02-28T22:46:17.665470200) (2023-02-28T22:46:17.665492562) [Msg] 
+(2023-02-28T22:46:17.665540765) (2023-02-28T22:46:17.665561907) [Msg] phases:      0, 0, 0, 
+(2023-02-28T22:46:17.665684156) (2023-02-28T22:46:17.665714179) [Msg] steepnesses: 0, 0, 0, 
+(2023-02-28T22:46:17.665862840) (2023-02-28T22:46:17.665892472) [Msg] directions:  (2023-02-28T22:46:17.665959747) (2023-02-28T22:46:17.665990650) [Msg] 0.921061 -0.389418; (2023-02-28T22:46:17.666095538) (2023-02-28T22:46:17.666126480) [Msg] 1 0; (2023-02-28T22:46:17.666223177) (2023-02-28T22:46:17.666252910) [Msg] 0.921061 0.389418; (2023-02-28T22:46:17.666351157) (2023-02-28T22:46:17.666380879) [Msg] 
+(2023-02-28T22:46:17.667175660) (2023-02-28T22:46:17.667205192) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::WaveVisual] for entity [23]
+(2023-02-28T22:46:17.672439661) (2023-02-28T22:46:17.672475984) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:17.672882655) (2023-02-28T22:46:17.672903796) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:17.672972691) (2023-02-28T22:46:17.672980522) [Msg] Input Parameters:
+(2023-02-28T22:46:17.672999713) (2023-02-28T22:46:17.673007204) [Msg] model:     PMS
+(2023-02-28T22:46:17.673028446) (2023-02-28T22:46:17.673035826) [Msg] number:     3
+(2023-02-28T22:46:17.673057498) (2023-02-28T22:46:17.673065038) [Msg] scale:      1.1
+(2023-02-28T22:46:17.673087630) (2023-02-28T22:46:17.673094911) [Msg] angle:      0.4
+(2023-02-28T22:46:17.673123293) (2023-02-28T22:46:17.673132904) [Msg] steepness:  0
+(2023-02-28T22:46:17.673154445) (2023-02-28T22:46:17.673162026) [Msg] amplitude:  0
+(2023-02-28T22:46:17.673183877) (2023-02-28T22:46:17.673191528) [Msg] period:     5
+(2023-02-28T22:46:17.673212810) (2023-02-28T22:46:17.673221760) [Msg] direction:  1 0
+(2023-02-28T22:46:17.673249952) (2023-02-28T22:46:17.673257403) [Msg] tau:  2
+(2023-02-28T22:46:17.673278455) (2023-02-28T22:46:17.673285885) [Msg] gain:  0.3
+(2023-02-28T22:46:17.673307487) (2023-02-28T22:46:17.673314887) [Msg] Derived Parameters:
+(2023-02-28T22:46:17.673350100) (2023-02-28T22:46:17.673358251) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-02-28T22:46:17.673397264) (2023-02-28T22:46:17.673406584) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-02-28T22:46:17.673449008) (2023-02-28T22:46:17.673457548) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-02-28T22:46:17.673498931) (2023-02-28T22:46:17.673506812) [Msg] periods:     (2023-02-28T22:46:17.673523203) (2023-02-28T22:46:17.673530654) [Msg] 5.5, (2023-02-28T22:46:17.673548495) (2023-02-28T22:46:17.673556296) [Msg] 5, (2023-02-28T22:46:17.673574097) (2023-02-28T22:46:17.673581908) [Msg] 4.54545, (2023-02-28T22:46:17.673599339) (2023-02-28T22:46:17.673606820) [Msg] 
+(2023-02-28T22:46:17.673623391) (2023-02-28T22:46:17.673632411) [Msg] phases:      0, 0, 0, 
+(2023-02-28T22:46:17.673681265) (2023-02-28T22:46:17.673689226) [Msg] steepnesses: 0, 0, 0, 
+(2023-02-28T22:46:17.673739390) (2023-02-28T22:46:17.673747370) [Msg] directions:  (2023-02-28T22:46:17.673764782) (2023-02-28T22:46:17.673773022) [Msg] 0.921061 -0.389418; (2023-02-28T22:46:17.673798434) (2023-02-28T22:46:17.673805915) [Msg] 1 0; (2023-02-28T22:46:17.673831897) (2023-02-28T22:46:17.673839857) [Msg] 0.921061 0.389418; (2023-02-28T22:46:17.673865629) (2023-02-28T22:46:17.673873360) [Msg] 
+(2023-02-28T22:46:17.673906452) (2023-02-28T22:46:17.673914353) [Dbg] [Surface.cc:161] Surface plugin successfully configured with the following parameters:
+(2023-02-28T22:46:17.673938715) (2023-02-28T22:46:17.673946475) [Dbg] [Surface.cc:163]   <link_name>: link
+(2023-02-28T22:46:17.673968787) (2023-02-28T22:46:17.673976538) [Dbg] [Surface.cc:164]   <vehicle_length>: 6
+(2023-02-28T22:46:17.674000799) (2023-02-28T22:46:17.674008500) [Dbg] [Surface.cc:165]   <vehicle_width>: 3.3
+(2023-02-28T22:46:17.674031122) (2023-02-28T22:46:17.674038702) [Dbg] [Surface.cc:166]   <hull_radius>: 1.9
+(2023-02-28T22:46:17.674060514) (2023-02-28T22:46:17.674068235) [Dbg] [Surface.cc:167]   <num_samples>: 2
+(2023-02-28T22:46:17.674090316) (2023-02-28T22:46:17.674097727) [Dbg] [Surface.cc:168]   <fluid_level>: 0.45
+(2023-02-28T22:46:17.674119618) (2023-02-28T22:46:17.674126819) [Dbg] [Surface.cc:169]   <fluid_density>: 997.774
+(2023-02-28T22:46:17.674163402) (2023-02-28T22:46:17.674171232) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Surface] for entity [24]
+(2023-02-28T22:46:17.675884532) (2023-02-28T22:46:17.675893943) [Dbg] [SimpleHydrodynamics.cc:167] SimpleHydrodynamics plugin successfully configured with the following parameters:
+(2023-02-28T22:46:17.675919325) (2023-02-28T22:46:17.675927356) [Dbg] [SimpleHydrodynamics.cc:169]   <link_name>: link
+(2023-02-28T22:46:17.675950377) (2023-02-28T22:46:17.675958108) [Dbg] [SimpleHydrodynamics.cc:170]   <xDotU>: 0
+(2023-02-28T22:46:17.675981710) (2023-02-28T22:46:17.675989270) [Dbg] [SimpleHydrodynamics.cc:171]   <yDotV>: 0
+(2023-02-28T22:46:17.676011132) (2023-02-28T22:46:17.676019383) [Dbg] [SimpleHydrodynamics.cc:172]   <zDotW>: 0.1
+(2023-02-28T22:46:17.676043284) (2023-02-28T22:46:17.676051675) [Dbg] [SimpleHydrodynamics.cc:173]   <kDotP>: 0.1
+(2023-02-28T22:46:17.676076317) (2023-02-28T22:46:17.676083698) [Dbg] [SimpleHydrodynamics.cc:174]   <mDotQ>: 0.1
+(2023-02-28T22:46:17.676105429) (2023-02-28T22:46:17.676113610) [Dbg] [SimpleHydrodynamics.cc:175]   <nDotR>: 0
+(2023-02-28T22:46:17.676137582) (2023-02-28T22:46:17.676145422) [Dbg] [SimpleHydrodynamics.cc:176]   <xU>: 510.3
+(2023-02-28T22:46:17.676168154) (2023-02-28T22:46:17.676175985) [Dbg] [SimpleHydrodynamics.cc:177]   <xUU>: 720.4
+(2023-02-28T22:46:17.676198516) (2023-02-28T22:46:17.676206427) [Dbg] [SimpleHydrodynamics.cc:178]   <yV>: 400
+(2023-02-28T22:46:17.676228599) (2023-02-28T22:46:17.676236699) [Dbg] [SimpleHydrodynamics.cc:179]   <yVV>: 0
+(2023-02-28T22:46:17.676258751) (2023-02-28T22:46:17.676266861) [Dbg] [SimpleHydrodynamics.cc:180]   <zW>: 5000
+(2023-02-28T22:46:17.676289103) (2023-02-28T22:46:17.676298184) [Dbg] [SimpleHydrodynamics.cc:181]   <zWW>: 0
+(2023-02-28T22:46:17.676320286) (2023-02-28T22:46:17.676327646) [Dbg] [SimpleHydrodynamics.cc:182]   <kP>: 500
+(2023-02-28T22:46:17.676354038) (2023-02-28T22:46:17.676361879) [Dbg] [SimpleHydrodynamics.cc:183]   <kPP>: 0
+(2023-02-28T22:46:17.676384820) (2023-02-28T22:46:17.676392461) [Dbg] [SimpleHydrodynamics.cc:184]   <mQ>: 500
+(2023-02-28T22:46:17.676427954) (2023-02-28T22:46:17.676437034) [Dbg] [SimpleHydrodynamics.cc:185]   <mQQ>: 0
+(2023-02-28T22:46:17.676462106) (2023-02-28T22:46:17.676470977) [Dbg] [SimpleHydrodynamics.cc:186]   <nR>: 15000
+(2023-02-28T22:46:17.676496759) (2023-02-28T22:46:17.676505270) [Dbg] [SimpleHydrodynamics.cc:187]   <nRR>: 0
+(2023-02-28T22:46:17.676533092) (2023-02-28T22:46:17.676541532) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SimpleHydrodynamics] for entity [24]
+(2023-02-28T22:46:17.677838561) (2023-02-28T22:46:17.677849132) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [28]
+(2023-02-28T22:46:17.678314018) (2023-02-28T22:46:17.678323578) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [44]
+(2023-02-28T22:46:17.679078826) (2023-02-28T22:46:17.679088257) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [60]
+(2023-02-28T22:46:17.679824253) (2023-02-28T22:46:17.679833804) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::DetachableJoint] for entity [112]
+(2023-02-28T22:46:17.681176346) (2023-02-28T22:46:17.681185237) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [164]
+(2023-02-28T22:46:17.681354399) (2023-02-28T22:46:17.681363380) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [164]
+(2023-02-28T22:46:17.683333710) (2023-02-28T22:46:17.683351001) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::BaseStation] for entity [164]
+(2023-02-28T22:46:17.685621904) (2023-02-28T22:46:17.685631315) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/dropped]
+(2023-02-28T22:46:17.685779756) (2023-02-28T22:46:17.685791377) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [168]
+(2023-02-28T22:46:17.685878924) (2023-02-28T22:46:17.685887434) [Msg] Loaded level [3]
+(2023-02-28T22:46:17.686136573) (2023-02-28T22:46:17.686145184) [Msg] Serving world controls on [/world/simple_demo/control], [/world/simple_demo/control/state] and [/world/simple_demo/playback/control]
+(2023-02-28T22:46:17.686250162) (2023-02-28T22:46:17.686259413) [Msg] Serving GUI information on [/world/simple_demo/gui/info]
+(2023-02-28T22:46:17.686296005) (2023-02-28T22:46:17.686303866) [Msg] World [simple_demo] initialized with [4ms] physics profile.
+(2023-02-28T22:46:17.686412824) (2023-02-28T22:46:17.686422125) [Msg] Serving world SDF generation service on [/world/simple_demo/generate_world_sdf]
+(2023-02-28T22:46:17.686506862) (2023-02-28T22:46:17.686520253) [Msg] Serving world names on [/gazebo/worlds]
+(2023-02-28T22:46:17.686610439) (2023-02-28T22:46:17.686621560) [Msg] Resource path add service on [/gazebo/resource_paths/add].
+(2023-02-28T22:46:17.686694246) (2023-02-28T22:46:17.686706597) [Msg] Resource path get service on [/gazebo/resource_paths/get].
+(2023-02-28T22:46:17.786995625) (2023-02-28T22:46:17.787017827) [Msg] Resource path resolve service on [/gazebo/resource_paths/resolve].
+(2023-02-28T22:46:17.787143466) (2023-02-28T22:46:17.787165488) [Msg] Resource paths published on [/gazebo/resource_paths].
+(2023-02-28T22:46:17.787373214) (2023-02-28T22:46:17.787401266) [Msg] Server control service on [/server_control].
+(2023-02-28T22:46:17.787620373) (2023-02-28T22:46:17.787639644) [Msg] Found no publishers on /stats, adding root stats topic
+(2023-02-28T22:46:17.787785915) (2023-02-28T22:46:17.787805497) [Msg] Found no publishers on /clock, adding root clock topic
+(2023-02-28T22:46:17.788071687) (2023-02-28T22:46:17.788093759) [Dbg] [SimulationRunner.cc:491] Creating PostUpdate worker threads: 13
+(2023-02-28T22:46:17.788149653) (2023-02-28T22:46:17.788173535) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (0)
+(2023-02-28T22:46:17.788334287) (2023-02-28T22:46:17.788363529) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (1)
+(2023-02-28T22:46:17.788500420) (2023-02-28T22:46:17.788524642) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (2)
+(2023-02-28T22:46:17.788639971) (2023-02-28T22:46:17.788659172) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (3)
+(2023-02-28T22:46:17.788750309) (2023-02-28T22:46:17.788769040) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (4)
+(2023-02-28T22:46:17.788859967) (2023-02-28T22:46:17.788877889) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (5)
+(2023-02-28T22:46:17.788964885) (2023-02-28T22:46:17.788983027) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (6)
+(2023-02-28T22:46:17.789067443) (2023-02-28T22:46:17.789082824) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (7)
+(2023-02-28T22:46:17.789168431) (2023-02-28T22:46:17.789186372) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (8)
+(2023-02-28T22:46:17.789277889) (2023-02-28T22:46:17.789296491) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (9)
+(2023-02-28T22:46:17.789379357) (2023-02-28T22:46:17.789397418) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (10)
+(2023-02-28T22:46:17.789482735) (2023-02-28T22:46:17.789501866) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (11)
+(2023-02-28T22:46:17.888406569) (2023-02-28T22:46:17.888430191) [Msg] Particle emitter[simple_demo::dust_storm::link::dust_storm] subscribed to command messages on topic[/model/dust_storm/link/link/particle_emitter/dust_storm/cmd]
+(2023-02-28T22:46:17.888628776) (2023-02-28T22:46:17.888647397) [Msg] Particle emitter[simple_demo::fog::link::fog] subscribed to command messages on topic[/model/fog/link/link/particle_emitter/fog/cmd]
+(2023-02-28T22:46:17.890493888) (2023-02-28T22:46:17.890515790) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-02-28T22:46:17.890666141) (2023-02-28T22:46:17.890685263) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-02-28T22:46:17.890821823) (2023-02-28T22:46:17.890840555) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-02-28T22:46:17.890977915) (2023-02-28T22:46:17.890996767) [Msg] DetachableJoint subscribing to messages on [/Vessel_A/detach]
+(2023-02-28T22:46:17.891190191) (2023-02-28T22:46:17.891210953) [Msg] Address [base_station/target] bound to model [base_station] on topic [base_station/target]
+(2023-02-28T22:46:17.891300050) (2023-02-28T22:46:17.891318071) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [base_station/target] on topic [base_station/target]
+(2023-02-28T22:46:17.891462352) (2023-02-28T22:46:17.891480933) [Msg] Address [base_station/video] bound to model [base_station] on topic [base_station/video]
+(2023-02-28T22:46:17.891569350) (2023-02-28T22:46:17.891587312) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [base_station/video] on topic [base_station/video]
+(2023-02-28T22:46:17.967301029) (2023-02-28T22:46:17.967315240) [Dbg] [Physics.cc:1593] Creating detachable joint [170]
+(2023-02-28T22:46:17.967463161) (2023-02-28T22:46:17.967472762) [Dbg] [Physics.cc:1593] Creating detachable joint [171]
+(2023-02-28T22:46:17.967587600) (2023-02-28T22:46:17.967598301) [Dbg] [Physics.cc:1593] Creating detachable joint [172]
+(2023-02-28T22:46:17.967883023) (2023-02-28T22:46:17.967897644) [Dbg] [Physics.cc:1593] Creating detachable joint [173]
+(2023-02-28T22:46:17.969043641) (2023-02-28T22:46:17.969052722) [Dbg] [SimulationFeatures.cc:63] Simulation timestep set to: 0.004
+(2023-02-28T22:46:17.978835146) (2023-02-28T22:46:17.978856628) [Msg] Serving scene information on [/world/simple_demo/scene/info]
+(2023-02-28T22:46:17.978985038) (2023-02-28T22:46:17.979000439) [Msg] Serving graph information on [/world/simple_demo/scene/graph]
+(2023-02-28T22:46:17.979118648) (2023-02-28T22:46:17.979133259) [Msg] Serving full state on [/world/simple_demo/state]
+(2023-02-28T22:46:17.979251888) (2023-02-28T22:46:17.979267579) [Msg] Serving full state (async) on [/world/simple_demo/state_async]
+(2023-02-28T22:46:17.979395929) (2023-02-28T22:46:17.979411740) [Msg] Publishing scene information on [/world/simple_demo/scene/info]
+(2023-02-28T22:46:17.979539140) (2023-02-28T22:46:17.979555161) [Msg] Publishing entity deletions on [/world/simple_demo/scene/deletion]
+(2023-02-28T22:46:17.979649108) (2023-02-28T22:46:17.979663769) [Msg] Publishing state changes on [/world/simple_demo/state]
+((2023-02-28T22:46:17.979778188) (2023-02-28T22:46:17.979796739) [Msg] 2023-02-28T22:46:17.979766307) (2023-02-28T22:46:17.979830772) Publishing pose messages on [[Wrn] [Model.hh:69] /pose/info]
+Skipping serialization / deserialization for models with //pose/@relative_to attribute.
+(2023-02-28T22:46:17.979945951) (2023-02-28T22:46:17.979960952) [Msg] Publishing dynamic pose messages on [/world/simple_demo/dynamic_pose/info]
+(2023-02-28T22:46:17.980254734) (2023-02-28T22:46:17.980274466) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 8 entities each.
+(2023-02-28T22:46:17.980670856) (2023-02-28T22:46:17.980681837) [Wrn] [Component.hh:144] Trying to serialize component with data type [N3sdf3v125WorldE], which doesn't have `operator<<`. Component will not be serialized.
+(2023-02-28T22:46:18.4018035) (2023-02-28T22:46:18.4046487) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 8 entities each.
+(2023-02-28T22:46:24.754676471) (2023-02-28T22:46:24.754690042) [Msg] Linear velocity initialized to [0 0 0]
+(2023-02-28T22:46:24.754742605) (2023-02-28T22:46:24.754750486) [Msg] Angular velocity initialized to [0 0 0]
+(2023-02-28T22:46:24.754927779) (2023-02-28T22:46:24.754936920) [Msg] VelocityControl subscribing to twist messages on [/model/usv/cmd_vel]
+(2023-02-28T22:46:24.754970722) (2023-02-28T22:46:24.754979843) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::VelocityControl] for entity [174]
+(2023-02-28T22:46:24.760068468) (2023-02-28T22:46:24.760078788) [Dbg] [OdometryPublisher.cc:150] OdometryPublisher system plugin missing <odom_frame>, defaults to "usv/odom"
+(2023-02-28T22:46:24.760118141) (2023-02-28T22:46:24.760127542) [Dbg] [OdometryPublisher.cc:191] OdometryPublisher system plugin missing <dimensions>, defaults to "2"
+(2023-02-28T22:46:24.760269672) (2023-02-28T22:46:24.760279313) [Msg] OdometryPublisher publishing odometry on [/model/usv/odometry]
+(2023-02-28T22:46:24.760379121) (2023-02-28T22:46:24.760387981) [Msg] OdometryPublisher publishing odometry with covariance on [/model/usv/odometry_with_covariance]
+(2023-02-28T22:46:24.760480798) (2023-02-28T22:46:24.760492149) [Msg] OdometryPublisher publishing Pose_V (TF) on [/model/usv/pose]
+(2023-02-28T22:46:24.760530662) (2023-02-28T22:46:24.760540112) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::OdometryPublisher] for entity [174]
+(2023-02-28T22:46:24.761969718) (2023-02-28T22:46:24.761981219) [Msg] Thruster listening to commands in [/model/usv/joint/left_engine_propeller_joint/cmd_thrust]
+(2023-02-28T22:46:24.762053935) (2023-02-28T22:46:24.762062805) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-02-28T22:46:24.762087807) (2023-02-28T22:46:24.762096068) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [174]
+(2023-02-28T22:46:24.763187149) (2023-02-28T22:46:24.763197299) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-02-28T22:46:24.763221501) (2023-02-28T22:46:24.763229672) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-02-28T22:46:24.763259774) (2023-02-28T22:46:24.763267725) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-02-28T22:46:24.763295267) (2023-02-28T22:46:24.763303507) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-02-28T22:46:24.763331109) (2023-02-28T22:46:24.763339170) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-02-28T22:46:24.763370512) (2023-02-28T22:46:24.763378883) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-02-28T22:46:24.763409235) (2023-02-28T22:46:24.763418086) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-02-28T22:46:24.763449688) (2023-02-28T22:46:24.763459039) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-02-28T22:46:24.763489381) (2023-02-28T22:46:24.763498962) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-02-28T22:46:24.763530114) (2023-02-28T22:46:24.763539005) [Dbg] [JointPositionController.cc:214] Topic: [usv/left/thruster/joint/cmd_pos]
+(2023-02-28T22:46:24.763567947) (2023-02-28T22:46:24.763576337) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-02-28T22:46:24.763609880) (2023-02-28T22:46:24.763619121) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [174]
+(2023-02-28T22:46:24.763917853) (2023-02-28T22:46:24.763927963) [Msg] Thruster listening to commands in [/model/usv/joint/right_engine_propeller_joint/cmd_thrust]
+(2023-02-28T22:46:24.763977387) (2023-02-28T22:46:24.763985658) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-02-28T22:46:24.764009610) (2023-02-28T22:46:24.764017990) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [174]
+(2023-02-28T22:46:24.764260518) (2023-02-28T22:46:24.764270429) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-02-28T22:46:24.764291990) (2023-02-28T22:46:24.764300311) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-02-28T22:46:24.764329523) (2023-02-28T22:46:24.764339904) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-02-28T22:46:24.764371376) (2023-02-28T22:46:24.764380647) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-02-28T22:46:24.764420540) (2023-02-28T22:46:24.764429861) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-02-28T22:46:24.764461473) (2023-02-28T22:46:24.764470254) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-02-28T22:46:24.764499896) (2023-02-28T22:46:24.764507796) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-02-28T22:46:24.764537089) (2023-02-28T22:46:24.764546479) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-02-28T22:46:24.764578972) (2023-02-28T22:46:24.764587242) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-02-28T22:46:24.764614124) (2023-02-28T22:46:24.764622105) [Dbg] [JointPositionController.cc:214] Topic: [usv/right/thruster/joint/cmd_pos]
+(2023-02-28T22:46:24.764652707) (2023-02-28T22:46:24.764661798) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-02-28T22:46:24.764695870) (2023-02-28T22:46:24.764704561) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [174]
+(2023-02-28T22:46:24.764967380) (2023-02-28T22:46:24.764981551) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:24.765135553) (2023-02-28T22:46:24.765149244) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:46:24.765231950) (2023-02-28T22:46:24.765246341) [Msg] Input Parameters:
+(2023-02-28T22:46:24.765271163) (2023-02-28T22:46:24.765280903) [Msg] model:     PMS
+(2023-02-28T22:46:24.765317736) (2023-02-28T22:46:24.765327847) [Msg] number:     3
+(2023-02-28T22:46:24.765356139) (2023-02-28T22:46:24.765365680) [Msg] scale:      1.1
+(2023-02-28T22:46:24.765401812) (2023-02-28T22:46:24.765410433) [Msg] angle:      0.4
+(2023-02-28T22:46:24.765441515) (2023-02-28T22:46:24.765455136) [Msg] steepness:  0
+(2023-02-28T22:46:24.765484118) (2023-02-28T22:46:24.765494029) [Msg] amplitude:  0
+(2023-02-28T22:46:24.765520121) (2023-02-28T22:46:24.765529482) [Msg] period:     5
+(2023-02-28T22:46:24.765555474) (2023-02-28T22:46:24.765564604) [Msg] direction:  1 0
+(2023-02-28T22:46:24.765600057) (2023-02-28T22:46:24.765609258) [Msg] tau:  2
+(2023-02-28T22:46:24.765636430) (2023-02-28T22:46:24.765650141) [Msg] gain:  0.3
+(2023-02-28T22:46:24.765677913) (2023-02-28T22:46:24.765688323) [Msg] Derived Parameters:
+(2023-02-28T22:46:24.765711125) (2023-02-28T22:46:24.765720296) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-02-28T22:46:24.765769269) (2023-02-28T22:46:24.765779100) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-02-28T22:46:24.765824973) (2023-02-28T22:46:24.765834404) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-02-28T22:46:24.765880327) (2023-02-28T22:46:24.765889908) [Msg] periods:     (2023-02-28T22:46:24.765907019) (2023-02-28T22:46:24.765915780) [Msg] 5.5, (2023-02-28T22:46:24.765936592) (2023-02-28T22:46:24.765945802) [Msg] 5, (2023-02-28T22:46:24.765967184) (2023-02-28T22:46:24.765976335) [Msg] 4.54545, (2023-02-28T22:46:24.765998006) (2023-02-28T22:46:24.766006797) [Msg] 
+(2023-02-28T22:46:24.766024028) (2023-02-28T22:46:24.766033339) [Msg] phases:      0, 0, 0, 
+(2023-02-28T22:46:24.766081492) (2023-02-28T22:46:24.766091513) [Msg] steepnesses: 0, 0, 0, 
+(2023-02-28T22:46:24.766136706) (2023-02-28T22:46:24.766146307) [Msg] directions:  (2023-02-28T22:46:24.766165018) (2023-02-28T22:46:24.766174219) [Msg] 0.921061 -0.389418; (2023-02-28T22:46:24.766205931) (2023-02-28T22:46:24.766215272) [Msg] 1 0; (2023-02-28T22:46:24.766245814) (2023-02-28T22:46:24.766254945) [Msg] 0.921061 0.389418; (2023-02-28T22:46:24.766284127) (2023-02-28T22:46:24.766293138) [Msg] 
+(2023-02-28T22:46:24.766321940) (2023-02-28T22:46:24.766330941) [Dbg] [Surface.cc:161] Surface plugin successfully configured with the following parameters:
+(2023-02-28T22:46:24.766357813) (2023-02-28T22:46:24.766366653) [Dbg] [Surface.cc:163]   <link_name>: base_link
+(2023-02-28T22:46:24.766393175) (2023-02-28T22:46:24.766402036) [Dbg] [Surface.cc:164]   <vehicle_length>: 6
+(2023-02-28T22:46:24.766429338) (2023-02-28T22:46:24.766439119) [Dbg] [Surface.cc:165]   <vehicle_width>: 3.3
+(2023-02-28T22:46:24.766470091) (2023-02-28T22:46:24.766479912) [Dbg] [Surface.cc:166]   <hull_radius>: 0.27
+(2023-02-28T22:46:24.766506114) (2023-02-28T22:46:24.766514424) [Dbg] [Surface.cc:167]   <num_samples>: 2
+(2023-02-28T22:46:24.766539896) (2023-02-28T22:46:24.766548667) [Dbg] [Surface.cc:168]   <fluid_level>: 0.45
+(2023-02-28T22:46:24.766574479) (2023-02-28T22:46:24.766583389) [Dbg] [Surface.cc:169]   <fluid_density>: 997.774
+(2023-02-28T22:46:24.766614742) (2023-02-28T22:46:24.766623992) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Surface] for entity [174]
+(2023-02-28T22:46:24.766932815) (2023-02-28T22:46:24.766943276) [Dbg] [SimpleHydrodynamics.cc:167] SimpleHydrodynamics plugin successfully configured with the following parameters:
+(2023-02-28T22:46:24.766972038) (2023-02-28T22:46:24.766981849) [Dbg] [SimpleHydrodynamics.cc:169]   <link_name>: base_link
+(2023-02-28T22:46:24.767010071) (2023-02-28T22:46:24.767018911) [Dbg] [SimpleHydrodynamics.cc:170]   <xDotU>: 0
+(2023-02-28T22:46:24.767045533) (2023-02-28T22:46:24.767055754) [Dbg] [SimpleHydrodynamics.cc:171]   <yDotV>: 0
+(2023-02-28T22:46:24.767083506) (2023-02-28T22:46:24.767092847) [Dbg] [SimpleHydrodynamics.cc:172]   <zDotW>: 0.1
+(2023-02-28T22:46:24.767120819) (2023-02-28T22:46:24.767129639) [Dbg] [SimpleHydrodynamics.cc:173]   <kDotP>: 0.1
+(2023-02-28T22:46:24.767156661) (2023-02-28T22:46:24.767165232) [Dbg] [SimpleHydrodynamics.cc:174]   <mDotQ>: 0.1
+(2023-02-28T22:46:24.767193234) (2023-02-28T22:46:24.767202605) [Dbg] [SimpleHydrodynamics.cc:175]   <nDotR>: 0
+(2023-02-28T22:46:24.767229137) (2023-02-28T22:46:24.767238628) [Dbg] [SimpleHydrodynamics.cc:176]   <xU>: 51.3
+(2023-02-28T22:46:24.767269120) (2023-02-28T22:46:24.767278380) [Dbg] [SimpleHydrodynamics.cc:177]   <xUU>: 72.4
+(2023-02-28T22:46:24.767305512) (2023-02-28T22:46:24.767314863) [Dbg] [SimpleHydrodynamics.cc:178]   <yV>: 40
+(2023-02-28T22:46:24.767341165) (2023-02-28T22:46:24.767350476) [Dbg] [SimpleHydrodynamics.cc:179]   <yVV>: 0
+(2023-02-28T22:46:24.767378138) (2023-02-28T22:46:24.767387879) [Dbg] [SimpleHydrodynamics.cc:180]   <zW>: 500
+(2023-02-28T22:46:24.767423191) (2023-02-28T22:46:24.767439862) [Dbg] [SimpleHydrodynamics.cc:181]   <zWW>: 0
+(2023-02-28T22:46:24.767474135) (2023-02-28T22:46:24.767486776) [Dbg] [SimpleHydrodynamics.cc:182]   <kP>: 100
+(2023-02-28T22:46:24.767527989) (2023-02-28T22:46:24.767541930) [Dbg] [SimpleHydrodynamics.cc:183]   <kPP>: 0
+(2023-02-28T22:46:24.767576792) (2023-02-28T22:46:24.767585683) [Dbg] [SimpleHydrodynamics.cc:184]   <mQ>: 100
+(2023-02-28T22:46:24.767614705) (2023-02-28T22:46:24.767628316) [Dbg] [SimpleHydrodynamics.cc:185]   <mQQ>: 0
+(2023-02-28T22:46:24.767669469) (2023-02-28T22:46:24.767681830) [Dbg] [SimpleHydrodynamics.cc:186]   <nR>: 400
+(2023-02-28T22:46:24.767718383) (2023-02-28T22:46:24.767730664) [Dbg] [SimpleHydrodynamics.cc:187]   <nRR>: 0
+(2023-02-28T22:46:24.767766616) (2023-02-28T22:46:24.767777227) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SimpleHydrodynamics] for entity [174]
+(2023-02-28T22:46:24.769075183) (2023-02-28T22:46:24.769085624) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::PosePublisher] for entity [174]
+(2023-02-28T22:46:24.769364644) (2023-02-28T22:46:24.769379785) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:46:24.769535367) (2023-02-28T22:46:24.769545427) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-02-28T22:46:24.769773834) (2023-02-28T22:46:24.769784775) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:46:24.769931286) (2023-02-28T22:46:24.769941987) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-02-28T22:46:24.770183544) (2023-02-28T22:46:24.770194595) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:46:24.770337226) (2023-02-28T22:46:24.770346946) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-02-28T22:46:24.770568213) (2023-02-28T22:46:24.770578473) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:46:24.770729935) (2023-02-28T22:46:24.770742636) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [174]
+(2023-02-28T22:46:24.770985593) (2023-02-28T22:46:24.770994974) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [174]
+(2023-02-28T22:46:24.771440407) (2023-02-28T22:46:24.771453328) [Dbg] [UserCommands.cc:1303] Created entity [174] named [usv]
+(2023-02-28T22:46:24.780348145) (2023-02-28T22:46:24.780389528) [Dbg] [Sensors.cc:584] Initialization needed
+(2023-02-28T22:46:24.780514257) (2023-02-28T22:46:24.780537559) [Dbg] [Sensors.cc:240] Initializing render context
+(2023-02-28T22:46:24.780658368) (2023-02-28T22:46:24.780675949) [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-02-28T22:46:24.780930178) (2023-02-28T22:46:24.780951879) [Dbg] [ImuSensor.cc:148] IMU data for [usv::base_link::imu_sensor] advertised on [world/simple_demo/model/usv/link/base_link/sensor/imu_sensor/imu]
+(2023-02-28T22:46:24.781109721) (2023-02-28T22:46:24.781129322) [Dbg] [GameLogicPlugin.cc:1991] New Competitor Platform: usv with 0sensors
+(((((((((((((((((2023-02-28T22:46:24.7828584002023-02-28T22:46:24.7828584002023-02-28T22:46:24.782914854) (2023-02-28T22:46:24.782959487) ) () ((2023-02-28T22:46:24.783037473) (2023-02-28T22:46:24.783062565) ) (2023-02-28T22:46:24.7828301982023-02-28T22:46:24.783098717) (2023-02-28T22:46:24.783137610) 2023-02-28T22:46:24.783003920) (2023-02-28T22:46:24.783184004) [Dbg] [SimulationRunner.cc:518] (Exiting postupdate worker thread (8)
+2023-02-28T22:46:24.7831957442023-02-28T22:46:24.782908903) (2023-02-28T22:46:24.783274120) 2023-02-28T22:46:24.783287891[Dbg] [SimulationRunner.cc:518] ) (2023-02-28T22:46:24.783324344) ) (2023-02-28T22:46:24.783364337) 2023-02-28T22:46:24.782865550) ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (Exiting postupdate worker thread (5) ) ) () 2023-02-28T22:46:24.783487406) (2023-02-28T22:46:24.783529109) )
+[Dbg] [SimulationRunner.cc:518] 2023-02-28T22:46:24.783563111) ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (2023-02-28T22:46:24.783628676) 9)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (6)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (0Exiting postupdate worker thread (Exiting postupdate worker thread (3)4
+7)
+2)
+Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] 1Exiting postupdate worker thread ()
+)1Exiting postupdate worker thread (11)
+)
+10
+)
+(2023-02-28T22:46:24.784350329) (2023-02-28T22:46:24.784362250) [Dbg] [SimulationRunner.cc:491] Creating PostUpdate worker threads: 22
+(2023-02-28T22:46:24.784393513) (2023-02-28T22:46:24.784411314) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (0)
+(2023-02-28T22:46:24.784481929) (2023-02-28T22:46:24.784491490) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (1)
+(2023-02-28T22:46:24.784557245) (2023-02-28T22:46:24.784568546) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (2)
+(2023-02-28T22:46:24.784627010) (2023-02-28T22:46:24.784640211) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (3)
+(2023-02-28T22:46:24.784700395) (2023-02-28T22:46:24.784710266) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (4)
+(2023-02-28T22:46:24.784782201) (2023-02-28T22:46:24.784797223) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (5)
+(2023-02-28T22:46:24.784893500) (2023-02-28T22:46:24.784905831) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (6)
+(2023-02-28T22:46:24.784969655) (2023-02-28T22:46:24.784981726) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (7)
+(2023-02-28T22:46:24.785034240) (2023-02-28T22:46:24.785047771) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (8)
+(2023-02-28T22:46:24.785104865) (2023-02-28T22:46:24.785115656) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (9)
+(2023-02-28T22:46:24.785180221) (2023-02-28T22:46:24.785191022) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (10)
+(2023-02-28T22:46:24.785239045) (2023-02-28T22:46:24.785249586) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (11)
+(2023-02-28T22:46:24.785308330) (2023-02-28T22:46:24.785318901) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (12)
+(2023-02-28T22:46:24.785371525) (2023-02-28T22:46:24.785384006) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (13)
+(2023-02-28T22:46:24.785436270) (2023-02-28T22:46:24.785453281) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (14)
+(2023-02-28T22:46:24.785525687) (2023-02-28T22:46:24.785538507) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (15)
+(2023-02-28T22:46:24.785605942) (2023-02-28T22:46:24.785617423) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (16)
+(2023-02-28T22:46:24.785678398) (2023-02-28T22:46:24.785691149) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (17)
+(2023-02-28T22:46:24.785760744) (2023-02-28T22:46:24.785774355) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (18)
+(2023-02-28T22:46:24.785844550) (2023-02-28T22:46:24.785858371) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (19)
+(2023-02-28T22:46:24.785931667) (2023-02-28T22:46:24.785947288) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (20)
+(2023-02-28T22:46:24.786482827) (2023-02-28T22:46:24.786493708) [Msg] Address [usv] bound to model [usv] on topic [model/usv/rx]
+(2023-02-28T22:46:24.786540112) (2023-02-28T22:46:24.786550182) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:46:25.220243792) (2023-02-28T22:46:25.220255923) [Dbg] [RenderUtil.cc:2529] Create scene [scene]
+(2023-02-28T22:46:25.260612698) (2023-02-28T22:46:25.260630519) [Dbg] [Sensors.cc:254] Rendering Thread initialized
+(2023-02-28T22:46:25.265301521) (2023-02-28T22:46:25.265312332) [Wrn] [Ogre2Heightmap.cc:125] Heightmap final sampling should be 2^n
+ which differs from ogre1's 2^n+1
+The last row and column will be cropped
+size = (width * sampling) - sampling + 1
+[257] = ([257] * [1]) - [1] + 1
+(2023-02-28T22:46:25.270967329) (2023-02-28T22:46:25.270983140) [Msg] Loading heightmap: scene::Heightmap(65478)
+(2023-02-28T22:46:25.271014592) (2023-02-28T22:46:25.271024663) [Msg] Heightmap loaded. Process took 0 ms.
+(2023-02-28T22:46:28.848818342) (2023-02-28T22:46:28.848842974) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:28.849074381) (2023-02-28T22:46:28.849096732) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:28.849380813) (2023-02-28T22:46:28.849397404) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:29.417568550) (2023-02-28T22:46:29.417582461) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:29.417754444) (2023-02-28T22:46:29.417763905) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:29.417886663) (2023-02-28T22:46:29.417896724) [Dbg] [Ogre2ParticleEmitter.cc:514] Particle emitter initialized
+(2023-02-28T22:46:29.431800207) (2023-02-28T22:46:29.431818949) [Dbg] [Lidar.cc:122] Laser scans for [usv::sensor_6::sensor_link::lidar] advertised on [world/simple_demo/model/usv/model/sensor_6/link/sensor_link/sensor/lidar/scan]
+(2023-02-28T22:46:29.432078027) (2023-02-28T22:46:29.432091608) [Dbg] [GpuLidarSensor.cc:164] Lidar points for [usv::sensor_6::sensor_link::lidar] advertised on [world/simple_demo/model/usv/model/sensor_6/link/sensor_link/sensor/lidar/scan/points]
+(2023-02-28T22:46:29.432377829) (2023-02-28T22:46:29.432390690) [Msg] Loading plugin [ignition-rendering-ogre2]
+(2023-02-28T22:46:29.589727039) (2023-02-28T22:46:29.589752871) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 10 entities each.
+(2023-02-28T22:50:31.732820234) (2023-02-28T22:50:31.732835524) [Msg] Linear velocity initialized to [0 0 0]
+(2023-02-28T22:50:31.732898395) (2023-02-28T22:50:31.732909666) [Msg] Angular velocity initialized to [0 0 0]
+(2023-02-28T22:50:31.733105410) (2023-02-28T22:50:31.733115710) [Msg] VelocityControl subscribing to twist messages on [/model/usv_0/cmd_vel]
+(2023-02-28T22:50:31.733154871) (2023-02-28T22:50:31.733165811) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::VelocityControl] for entity [222]
+(2023-02-28T22:50:31.733378135) (2023-02-28T22:50:31.733387546) [Dbg] [OdometryPublisher.cc:191] OdometryPublisher system plugin missing <dimensions>, defaults to "2"
+(2023-02-28T22:50:31.733491628) (2023-02-28T22:50:31.733503678) [Msg] OdometryPublisher publishing odometry on [/model/usv_0/odometry]
+(2023-02-28T22:50:31.733587340) (2023-02-28T22:50:31.733596770) [Msg] OdometryPublisher publishing odometry with covariance on [/model/usv_0/odometry_with_covariance]
+(2023-02-28T22:50:31.733692112) (2023-02-28T22:50:31.733701532) [Msg] OdometryPublisher publishing Pose_V (TF) on [/model/usv_0/pose]
+(2023-02-28T22:50:31.733734973) (2023-02-28T22:50:31.733743873) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::OdometryPublisher] for entity [222]
+(2023-02-28T22:50:31.734068590) (2023-02-28T22:50:31.734079920) [Msg] Thruster listening to commands in [/model/usv_0/joint/left_engine_propeller_joint/cmd_thrust]
+(2023-02-28T22:50:31.734144752) (2023-02-28T22:50:31.734154202) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-02-28T22:50:31.734179352) (2023-02-28T22:50:31.734188273) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [222]
+(2023-02-28T22:50:31.734536680) (2023-02-28T22:50:31.734548800) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-02-28T22:50:31.734572661) (2023-02-28T22:50:31.734581811) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-02-28T22:50:31.734619992) (2023-02-28T22:50:31.734628912) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-02-28T22:50:31.734657752) (2023-02-28T22:50:31.734666713) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-02-28T22:50:31.734695483) (2023-02-28T22:50:31.734703633) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-02-28T22:50:31.734731964) (2023-02-28T22:50:31.734741024) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-02-28T22:50:31.734769515) (2023-02-28T22:50:31.734778655) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-02-28T22:50:31.734811326) (2023-02-28T22:50:31.734820706) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-02-28T22:50:31.734849527) (2023-02-28T22:50:31.734857527) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-02-28T22:50:31.734887947) (2023-02-28T22:50:31.734896538) [Dbg] [JointPositionController.cc:214] Topic: [usv/left/thruster/joint/cmd_pos]
+(2023-02-28T22:50:31.734925028) (2023-02-28T22:50:31.734932978) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-02-28T22:50:31.734964989) (2023-02-28T22:50:31.734974479) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [222]
+(2023-02-28T22:50:31.735316056) (2023-02-28T22:50:31.735328037) [Msg] Thruster listening to commands in [/model/usv_0/joint/right_engine_propeller_joint/cmd_thrust]
+(2023-02-28T22:50:31.735389408) (2023-02-28T22:50:31.735399168) [Dbg] [Thruster.cc:288] Using velocity control for propeller joint.
+(2023-02-28T22:50:31.735428449) (2023-02-28T22:50:31.735437909) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Thruster] for entity [222]
+(2023-02-28T22:50:31.735847348) (2023-02-28T22:50:31.735857158) [Dbg] [JointPositionController.cc:205] [JointPositionController] system parameters:
+(2023-02-28T22:50:31.735880208) (2023-02-28T22:50:31.735890018) [Dbg] [JointPositionController.cc:206] p_gain: [1]
+(2023-02-28T22:50:31.735919519) (2023-02-28T22:50:31.735927609) [Dbg] [JointPositionController.cc:207] i_gain: [0.1]
+(2023-02-28T22:50:31.735956730) (2023-02-28T22:50:31.735966420) [Dbg] [JointPositionController.cc:208] d_gain: [0.01]
+(2023-02-28T22:50:31.735995801) (2023-02-28T22:50:31.736005051) [Dbg] [JointPositionController.cc:209] i_max: [1]
+(2023-02-28T22:50:31.736033611) (2023-02-28T22:50:31.736042962) [Dbg] [JointPositionController.cc:210] i_min: [-1]
+(2023-02-28T22:50:31.736072662) (2023-02-28T22:50:31.736081843) [Dbg] [JointPositionController.cc:211] cmd_max: [1000]
+(2023-02-28T22:50:31.736112373) (2023-02-28T22:50:31.736121193) [Dbg] [JointPositionController.cc:212] cmd_min: [-1000]
+(2023-02-28T22:50:31.736150754) (2023-02-28T22:50:31.736159424) [Dbg] [JointPositionController.cc:213] cmd_offset: [0]
+(2023-02-28T22:50:31.736188295) (2023-02-28T22:50:31.736196685) [Dbg] [JointPositionController.cc:214] Topic: [usv/right/thruster/joint/cmd_pos]
+(2023-02-28T22:50:31.736225256) (2023-02-28T22:50:31.736233516) [Dbg] [JointPositionController.cc:215] initial_position: [0]
+(2023-02-28T22:50:31.736265336) (2023-02-28T22:50:31.736274457) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::JointPositionController] for entity [222]
+(2023-02-28T22:50:31.736510332) (2023-02-28T22:50:31.736520302) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:50:31.736647544) (2023-02-28T22:50:31.736657025) [Msg] Using Pierson-Moskowitz spectrum sampling wavefield model 
+(2023-02-28T22:50:31.736722656) (2023-02-28T22:50:31.736731676) [Msg] Input Parameters:
+(2023-02-28T22:50:31.736752597) (2023-02-28T22:50:31.736761957) [Msg] model:     PMS
+(2023-02-28T22:50:31.736787347) (2023-02-28T22:50:31.736795867) [Msg] number:     3
+(2023-02-28T22:50:31.736822228) (2023-02-28T22:50:31.736830978) [Msg] scale:      1.1
+(2023-02-28T22:50:31.736858579) (2023-02-28T22:50:31.736867659) [Msg] angle:      0.4
+(2023-02-28T22:50:31.736893759) (2023-02-28T22:50:31.736902910) [Msg] steepness:  0
+(2023-02-28T22:50:31.736929160) (2023-02-28T22:50:31.736938230) [Msg] amplitude:  0
+(2023-02-28T22:50:31.736968831) (2023-02-28T22:50:31.736976981) [Msg] period:     5
+(2023-02-28T22:50:31.737001802) (2023-02-28T22:50:31.737011122) [Msg] direction:  1 0
+(2023-02-28T22:50:31.737045223) (2023-02-28T22:50:31.737053863) [Msg] tau:  2
+(2023-02-28T22:50:31.737079093) (2023-02-28T22:50:31.737087653) [Msg] gain:  0.3
+(2023-02-28T22:50:31.737114204) (2023-02-28T22:50:31.737122704) [Msg] Derived Parameters:
+(2023-02-28T22:50:31.737143415) (2023-02-28T22:50:31.737152095) [Msg] amplitudes:  0.0363502, 0.0392277, 0.0385703, 
+(2023-02-28T22:50:31.737199316) (2023-02-28T22:50:31.737208076) [Msg] wavenumbers: 0.133171, 0.161136, 0.194975, 
+(2023-02-28T22:50:31.737251547) (2023-02-28T22:50:31.737260287) [Msg] omegas:      1.1424, 1.25664, 1.3823, 
+(2023-02-28T22:50:31.737305148) (2023-02-28T22:50:31.737313358) [Msg] periods:     (2023-02-28T22:50:31.737329958) (2023-02-28T22:50:31.737338459) [Msg] 5.5, (2023-02-28T22:50:31.737358819) (2023-02-28T22:50:31.737367109) [Msg] 5, (2023-02-28T22:50:31.737390260) (2023-02-28T22:50:31.737398860) [Msg] 4.54545, (2023-02-28T22:50:31.737420510) (2023-02-28T22:50:31.737429830) [Msg] 
+(2023-02-28T22:50:31.737446391) (2023-02-28T22:50:31.737454841) [Msg] phases:      0, 0, 0, 
+(2023-02-28T22:50:31.737498002) (2023-02-28T22:50:31.737505302) [Msg] steepnesses: 0, 0, 0, 
+(2023-02-28T22:50:31.737549133) (2023-02-28T22:50:31.737557193) [Msg] directions:  (2023-02-28T22:50:31.737574063) (2023-02-28T22:50:31.737582654) [Msg] 0.921061 -0.389418; (2023-02-28T22:50:31.737611854) (2023-02-28T22:50:31.737620744) [Msg] 1 0; (2023-02-28T22:50:31.737649435) (2023-02-28T22:50:31.737657965) [Msg] 0.921061 0.389418; (2023-02-28T22:50:31.737685746) (2023-02-28T22:50:31.737694446) [Msg] 
+(2023-02-28T22:50:31.737722097) (2023-02-28T22:50:31.737730997) [Dbg] [Surface.cc:161] Surface plugin successfully configured with the following parameters:
+(2023-02-28T22:50:31.737756947) (2023-02-28T22:50:31.737765747) [Dbg] [Surface.cc:163]   <link_name>: base_link
+(2023-02-28T22:50:31.737789668) (2023-02-28T22:50:31.737799108) [Dbg] [Surface.cc:164]   <vehicle_length>: 6
+(2023-02-28T22:50:31.737825599) (2023-02-28T22:50:31.737834499) [Dbg] [Surface.cc:165]   <vehicle_width>: 3.3
+(2023-02-28T22:50:31.737861099) (2023-02-28T22:50:31.737870070) [Dbg] [Surface.cc:166]   <hull_radius>: 0.27
+(2023-02-28T22:50:31.737894340) (2023-02-28T22:50:31.737903560) [Dbg] [Surface.cc:167]   <num_samples>: 2
+(2023-02-28T22:50:31.737927961) (2023-02-28T22:50:31.737937531) [Dbg] [Surface.cc:168]   <fluid_level>: 0.45
+(2023-02-28T22:50:31.737962851) (2023-02-28T22:50:31.737972202) [Dbg] [Surface.cc:169]   <fluid_density>: 997.774
+(2023-02-28T22:50:31.738002182) (2023-02-28T22:50:31.738010972) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::Surface] for entity [222]
+(2023-02-28T22:50:31.738319809) (2023-02-28T22:50:31.738330599) [Dbg] [SimpleHydrodynamics.cc:167] SimpleHydrodynamics plugin successfully configured with the following parameters:
+(2023-02-28T22:50:31.738357930) (2023-02-28T22:50:31.738367060) [Dbg] [SimpleHydrodynamics.cc:169]   <link_name>: base_link
+(2023-02-28T22:50:31.738392820) (2023-02-28T22:50:31.738403061) [Dbg] [SimpleHydrodynamics.cc:170]   <xDotU>: 0
+(2023-02-28T22:50:31.738430711) (2023-02-28T22:50:31.738440081) [Dbg] [SimpleHydrodynamics.cc:171]   <yDotV>: 0
+(2023-02-28T22:50:31.738467062) (2023-02-28T22:50:31.738476222) [Dbg] [SimpleHydrodynamics.cc:172]   <zDotW>: 0.1
+(2023-02-28T22:50:31.738502073) (2023-02-28T22:50:31.738510643) [Dbg] [SimpleHydrodynamics.cc:173]   <kDotP>: 0.1
+(2023-02-28T22:50:31.738535693) (2023-02-28T22:50:31.738545964) [Dbg] [SimpleHydrodynamics.cc:174]   <mDotQ>: 0.1
+(2023-02-28T22:50:31.738571824) (2023-02-28T22:50:31.738580104) [Dbg] [SimpleHydrodynamics.cc:175]   <nDotR>: 0
+(2023-02-28T22:50:31.738605025) (2023-02-28T22:50:31.738613025) [Dbg] [SimpleHydrodynamics.cc:176]   <xU>: 51.3
+(2023-02-28T22:50:31.738642646) (2023-02-28T22:50:31.738652396) [Dbg] [SimpleHydrodynamics.cc:177]   <xUU>: 72.4
+(2023-02-28T22:50:31.738684846) (2023-02-28T22:50:31.738697827) [Dbg] [SimpleHydrodynamics.cc:178]   <yV>: 40
+(2023-02-28T22:50:31.738722347) (2023-02-28T22:50:31.738729877) [Dbg] [SimpleHydrodynamics.cc:179]   <yVV>: 0
+(2023-02-28T22:50:31.738755258) (2023-02-28T22:50:31.738763568) [Dbg] [SimpleHydrodynamics.cc:180]   <zW>: 500
+(2023-02-28T22:50:31.738789119) (2023-02-28T22:50:31.738797459) [Dbg] [SimpleHydrodynamics.cc:181]   <zWW>: 0
+(2023-02-28T22:50:31.738822119) (2023-02-28T22:50:31.738831339) [Dbg] [SimpleHydrodynamics.cc:182]   <kP>: 100
+(2023-02-28T22:50:31.738858160) (2023-02-28T22:50:31.738866640) [Dbg] [SimpleHydrodynamics.cc:183]   <kPP>: 0
+(2023-02-28T22:50:31.738892421) (2023-02-28T22:50:31.738902121) [Dbg] [SimpleHydrodynamics.cc:184]   <mQ>: 100
+(2023-02-28T22:50:31.738929161) (2023-02-28T22:50:31.738937942) [Dbg] [SimpleHydrodynamics.cc:185]   <mQQ>: 0
+(2023-02-28T22:50:31.738964052) (2023-02-28T22:50:31.738973392) [Dbg] [SimpleHydrodynamics.cc:186]   <nR>: 400
+(2023-02-28T22:50:31.739000213) (2023-02-28T22:50:31.739009283) [Dbg] [SimpleHydrodynamics.cc:187]   <nRR>: 0
+(2023-02-28T22:50:31.739037724) (2023-02-28T22:50:31.739046684) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::SimpleHydrodynamics] for entity [222]
+(2023-02-28T22:50:31.739392961) (2023-02-28T22:50:31.739405471) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::PosePublisher] for entity [222]
+(2023-02-28T22:50:31.739639536) (2023-02-28T22:50:31.739650106) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:50:31.739795319) (2023-02-28T22:50:31.739807080) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [222]
+(2023-02-28T22:50:31.740021444) (2023-02-28T22:50:31.740031874) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:50:31.740173037) (2023-02-28T22:50:31.740182877) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [222]
+(2023-02-28T22:50:31.740395082) (2023-02-28T22:50:31.740422932) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:50:31.740565275) (2023-02-28T22:50:31.740576006) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [222]
+(2023-02-28T22:50:31.740785310) (2023-02-28T22:50:31.740795820) [Msg] EntityDetector publishing messages on [/mbzirc/target_object_detector/placed]
+(2023-02-28T22:50:31.740933973) (2023-02-28T22:50:31.740944083) [Dbg] [SystemManager.cc:58] Loaded system [mbzirc::EntityDetector] for entity [222]
+(2023-02-28T22:50:31.741134747) (2023-02-28T22:50:31.741145478) [Dbg] [SystemManager.cc:58] Loaded system [ignition::gazebo::systems::CommsEndpoint] for entity [222]
+(2023-02-28T22:50:31.741496435) (2023-02-28T22:50:31.741506935) [Dbg] [UserCommands.cc:1303] Created entity [222] named [usv_0]
+(2023-02-28T22:50:32.146069809) (2023-02-28T22:50:32.146102180) [Dbg] [GameLogicPlugin.cc:1991] New Competitor Platform: usv_0 with 0sensors
+(2023-02-28T22:50:32.146410666) (2023-02-28T22:50:32.146444167) [Dbg] [ImuSensor.cc:148] IMU data for [usv_0::base_link::imu_sensor] advertised on [world/simple_demo/model/usv_0/link/base_link/sensor/imu_sensor/imu]
+(2023-02-28T22:50:32.149727376) (2023-02-28T22:50:32.149750256) [Dbg] [Lidar.cc:122] Laser scans for [(usv_0::sensor_6::sensor_link::lidar((2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149835628(2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149835628((((2023-02-28T22:50:32.149805087(2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149835628((((2023-02-28T22:50:32.149805087(2023-02-28T22:50:32.149833448((2023-02-28T22:50:32.149835628((((2023-02-28T22:50:32.1498050872023-02-28T22:50:32.149884019) (2023-02-28T22:50:32.149902939) ) 2023-02-28T22:50:32.149980241) 2023-02-28T22:50:32.1500028012023-02-28T22:50:32.150002631) (2023-02-28T22:50:32.150050202) 2023-02-28T22:50:32.150050202) 2023-02-28T22:50:32.149966930) ) ) ) ) (2023-02-28T22:50:32.1498041972023-02-28T22:50:32.150123994) (2023-02-28T22:50:32.150155334) 2023-02-28T22:50:32.150171275) (2023-02-28T22:50:32.150186865) 2023-02-28T22:50:32.149939740) () (2023-02-28T22:50:32.150247416) ((2023-02-28T22:50:32.150300007(2023-02-28T22:50:32.150327348) () ) 2023-02-28T22:50:32.1500301022023-02-28T22:50:32.150351948) (2023-02-28T22:50:32.150383969) (2023-02-28T22:50:32.150409430) (] advertised on [2023-02-28T22:50:32.150278427) () () (2023-02-28T22:50:32.150522422) (world/simple_demo/model/usv_0/model/sensor_6/link/sensor_link/sensor/lidar/scan]
+
+) (2023-02-28T22:50:32.150618964) 2023-02-28T22:50:32.150562873) (2023-02-28T22:50:32.150665655) ) ) (2023-02-28T22:50:32.150714896) ) (2023-02-28T22:50:32.150743126) (2023-02-28T22:50:32.150762427) ) 2023-02-28T22:50:32.150781847) 2023-02-28T22:50:32.150781847) 2023-02-28T22:50:32.1507818472023-02-28T22:50:32.150805208) ) ([Dbg] [SimulationRunner.cc:518] 2023-02-28T22:50:32.150841099) (2023-02-28T22:50:32.150879529) 2023-02-28T22:50:32.150467571) ) (2023-02-28T22:50:32.150941491) [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (2023-02-28T22:50:32.150981491) (2023-02-28T22:50:32.151012572) 1)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (13)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (15)
+Exiting postupdate worker thread (Exiting postupdate worker thread (8)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (Exiting postupdate worker thread (9)
+
+[Dbg] [SimulationRunner.cc:518] 18Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread ([Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (14)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (7)
+Exiting postupdate worker thread (19)
+)
+Exiting postupdate worker thread (0)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (2Exiting postupdate worker thread (20)
+[Dbg] [GpuLidarSensor.cc:164] Lidar points for [Exiting postupdate worker thread (12)
+Exiting postupdate worker thread (16)
+
+usv_0::sensor_6::sensor_link::lidar] advertised on [world/simple_demo/model/usv_0/model/sensor_6/link/sensor_link/sensor/lidar/scan/points]
+Exiting postupdate worker thread (5)
+
+
+11)
+Exiting postupdate worker thread (10)
+4)
+
+Exiting postupdate worker thread (17[Dbg] [GpuLidarSensor.cc:164] Exiting postupdate worker thread (3)
+Exiting postupdate worker thread (6))
+
+(2023-02-28T22:50:32.152876161) (2023-02-28T22:50:32.152898081) [Dbg] [SimulationRunner.cc:491] Creating PostUpdate worker threads: 31
+(2023-02-28T22:50:32.152959232) (2023-02-28T22:50:32.152973803) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (0)
+(2023-02-28T22:50:32.153072905) (2023-02-28T22:50:32.153089355) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (1)
+(2023-02-28T22:50:32.153165016) (2023-02-28T22:50:32.153183017) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (2)
+(2023-02-28T22:50:32.153261858) (2023-02-28T22:50:32.153276959) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (3)
+(2023-02-28T22:50:32.153338380) (2023-02-28T22:50:32.153352420) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (4)
+(2023-02-28T22:50:32.153434272) (2023-02-28T22:50:32.153449032) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (5)
+(2023-02-28T22:50:32.153521704) (2023-02-28T22:50:32.153537204) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (6)
+(2023-02-28T22:50:32.153607006) (2023-02-28T22:50:32.153620976) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (7)
+(2023-02-28T22:50:32.153691647) (2023-02-28T22:50:32.153705848) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (8)
+(2023-02-28T22:50:32.153783669) (2023-02-28T22:50:32.153798570) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (9)
+(2023-02-28T22:50:32.153869351) (2023-02-28T22:50:32.153884671) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (10)
+(2023-02-28T22:50:32.153954383) (2023-02-28T22:50:32.153969373) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (11)
+(2023-02-28T22:50:32.154039565) (2023-02-28T22:50:32.154054265) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (12)
+(2023-02-28T22:50:32.154123176) (2023-02-28T22:50:32.154137927) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (13)
+(2023-02-28T22:50:32.154207678) (2023-02-28T22:50:32.154222658) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (14)
+(2023-02-28T22:50:32.154292160) (2023-02-28T22:50:32.154306760) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (15)
+(2023-02-28T22:50:32.154377502) (2023-02-28T22:50:32.154392482) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (16)
+(2023-02-28T22:50:32.154461643) (2023-02-28T22:50:32.154476164) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (17)
+(2023-02-28T22:50:32.154545635) (2023-02-28T22:50:32.154559545) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (18)
+(2023-02-28T22:50:32.154632467) (2023-02-28T22:50:32.154647447) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (19)
+(2023-02-28T22:50:32.154717779) (2023-02-28T22:50:32.154731979) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (20)
+(2023-02-28T22:50:32.154802710) (2023-02-28T22:50:32.154817661) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (21)
+(2023-02-28T22:50:32.154896682) (2023-02-28T22:50:32.154911813) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (22)
+(2023-02-28T22:50:32.154979274) (2023-02-28T22:50:32.154991904) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (23)
+(2023-02-28T22:50:32.155059386) (2023-02-28T22:50:32.155074616) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (24)
+(2023-02-28T22:50:32.155144017) (2023-02-28T22:50:32.155158708) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (25)
+(2023-02-28T22:50:32.155233419) (2023-02-28T22:50:32.155248820) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (26)
+(2023-02-28T22:50:32.155317191) (2023-02-28T22:50:32.155331341) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (27)
+(2023-02-28T22:50:32.155410533) (2023-02-28T22:50:32.155425993) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (28)
+(2023-02-28T22:50:32.155516865) (2023-02-28T22:50:32.155537895) [Dbg] [SimulationRunner.cc:502] Creating postupdate worker thread (29)
+(2023-02-28T22:50:32.156038986) (2023-02-28T22:50:32.156052806) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:32.156095627) (2023-02-28T22:50:32.156104657) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:32.599442722) (2023-02-28T22:50:32.599457283) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:32.599491563) (2023-02-28T22:50:32.599499433) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:33.26878082) (2023-02-28T22:50:33.26902742) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:33.26969414) (2023-02-28T22:50:33.26985944) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:33.455381224) (2023-02-28T22:50:33.455407485) [Dbg] [EntityComponentManager.cc:1587] Updated state thread iterators: 24 threads processing around 12 entities each.
+(2023-02-28T22:50:33.456716072) (2023-02-28T22:50:33.456729992) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:33.456776113) (2023-02-28T22:50:33.456785253) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:33.887286337) (2023-02-28T22:50:33.887308098) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:33.887372149) (2023-02-28T22:50:33.887386369) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:34.333502984) (2023-02-28T22:50:34.333532025) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:34.333598596) (2023-02-28T22:50:34.333617596) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:34.762019913) (2023-02-28T22:50:34.762037883) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:34.762076304) (2023-02-28T22:50:34.762085834) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:35.193009050) (2023-02-28T22:50:35.193038021) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:35.193121842) (2023-02-28T22:50:35.193144593) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:35.637282546) (2023-02-28T22:50:35.637299566) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:35.637339667) (2023-02-28T22:50:35.637347457) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:36.73637863) (2023-02-28T22:50:36.73654233) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:36.73695034) (2023-02-28T22:50:36.73706674) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:36.501359878) (2023-02-28T22:50:36.501398719) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:36.501502751) (2023-02-28T22:50:36.501530922) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:36.929322988) (2023-02-28T22:50:36.929344579) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:36.929395470) (2023-02-28T22:50:36.929408820) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:37.352865164) (2023-02-28T22:50:37.352887305) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:37.352940066) (2023-02-28T22:50:37.352966846) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:37.764451553) (2023-02-28T22:50:37.764468313) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:37.764504484) (2023-02-28T22:50:37.764513664) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:38.172718643) (2023-02-28T22:50:38.172742974) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:38.172816475) (2023-02-28T22:50:38.172839525) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:38.594643336) (2023-02-28T22:50:38.594657967) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:38.594695837) (2023-02-28T22:50:38.594703597) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:39.19549448) (2023-02-28T22:50:39.19567859) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:39.19609169) (2023-02-28T22:50:39.19617700) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:39.441735995) (2023-02-28T22:50:39.441750445) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:39.441796986) (2023-02-28T22:50:39.441806416) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:39.853935473) (2023-02-28T22:50:39.853951593) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:39.853990144) (2023-02-28T22:50:39.854000474) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:40.264780213) (2023-02-28T22:50:40.264796923) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:40.264836584) (2023-02-28T22:50:40.264849335) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:40.680387858) (2023-02-28T22:50:40.680418558) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:40.680459049) (2023-02-28T22:50:40.680468609) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:41.91642364) (2023-02-28T22:50:41.91657644) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:41.91694025) (2023-02-28T22:50:41.91703055) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:41.504978904) (2023-02-28T22:50:41.505002984) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:41.505074975) (2023-02-28T22:50:41.505096776) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:41.929658315) (2023-02-28T22:50:41.929683675) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:41.929770507) (2023-02-28T22:50:41.929789597) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:42.356603449) (2023-02-28T22:50:42.356625859) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:42.356691791) (2023-02-28T22:50:42.356710611) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:42.779406552) (2023-02-28T22:50:42.779422673) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:42.779468834) (2023-02-28T22:50:42.779481564) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:43.198583203) (2023-02-28T22:50:43.198603903) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:43.198650054) (2023-02-28T22:50:43.198660014) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:43.615687884) (2023-02-28T22:50:43.615713644) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:43.615780156) (2023-02-28T22:50:43.615804606) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:44.43819312) (2023-02-28T22:50:44.43844633) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:44.43909504) (2023-02-28T22:50:44.43926614) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:44.454112053) (2023-02-28T22:50:44.454131314) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:44.454168904) (2023-02-28T22:50:44.454177244) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:44.859732202) (2023-02-28T22:50:44.859756343) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:44.859822824) (2023-02-28T22:50:44.859840574) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:45.272576290) (2023-02-28T22:50:45.272591010) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:45.272627481) (2023-02-28T22:50:45.272636191) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:45.677054019) (2023-02-28T22:50:45.677079210) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:45.677145191) (2023-02-28T22:50:45.677164502) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:46.100683284) (2023-02-28T22:50:46.100700064) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:46.100737355) (2023-02-28T22:50:46.100747115) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:46.508885245) (2023-02-28T22:50:46.508902115) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:46.508940246) (2023-02-28T22:50:46.508950246) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:46.924417406) (2023-02-28T22:50:46.924435936) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:46.924474107) (2023-02-28T22:50:46.924483407) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:47.333287421) (2023-02-28T22:50:47.333302391) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:47.333336922) (2023-02-28T22:50:47.333346702) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:47.746928017) (2023-02-28T22:50:47.746946748) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:47.746986408) (2023-02-28T22:50:47.746996538) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:48.192541222) (2023-02-28T22:50:48.192557272) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:48.192594953) (2023-02-28T22:50:48.192605243) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:48.625233426) (2023-02-28T22:50:48.625248767) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:48.625284777) (2023-02-28T22:50:48.625292757) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:49.67302939) (2023-02-28T22:50:49.67328089) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:49.67393650) (2023-02-28T22:50:49.67410561) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:49.507256037) (2023-02-28T22:50:49.507276537) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:49.507326638) (2023-02-28T22:50:49.507338898) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:49.953113104) (2023-02-28T22:50:49.953128755) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:49.953165215) (2023-02-28T22:50:49.953172776) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:50.387221828) (2023-02-28T22:50:50.387236628) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:50.387272879) (2023-02-28T22:50:50.387280849) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:50.825894990) (2023-02-28T22:50:50.825917301) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:50.825996512) (2023-02-28T22:50:50.826011313) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:51.257101735) (2023-02-28T22:50:51.257116215) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:51.257150926) (2023-02-28T22:50:51.257158866) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:51.700954422) (2023-02-28T22:50:51.700968862) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:51.701008733) (2023-02-28T22:50:51.701016613) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:52.148428455) (2023-02-28T22:50:52.148446836) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:52.148489956) (2023-02-28T22:50:52.148499667) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:52.594593541) (2023-02-28T22:50:52.594608161) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:52.594643092) (2023-02-28T22:50:52.594650822) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:53.47907103) (2023-02-28T22:50:53.47921144) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:53.47958934) (2023-02-28T22:50:53.47967694) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:53.496062844) (2023-02-28T22:50:53.496078094) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:53.496115625) (2023-02-28T22:50:53.496123415) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:53.938859346) (2023-02-28T22:50:53.938875067) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:53.938912367) (2023-02-28T22:50:53.938921538) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:54.378031570) (2023-02-28T22:50:54.378047480) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:54.378084941) (2023-02-28T22:50:54.378093941) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:54.815460424) (2023-02-28T22:50:54.815495145) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:54.815585256) (2023-02-28T22:50:54.815609327) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:55.258559362) (2023-02-28T22:50:55.258576992) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:55.258613433) (2023-02-28T22:50:55.258621013) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:55.704866915) (2023-02-28T22:50:55.704890626) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:55.704950297) (2023-02-28T22:50:55.704965177) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:56.150204572) (2023-02-28T22:50:56.150224083) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:56.150271604) (2023-02-28T22:50:56.150283764) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:56.590230452) (2023-02-28T22:50:56.590248892) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:56.590295493) (2023-02-28T22:50:56.590306803) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:57.50228652) (2023-02-28T22:50:57.50400005) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:57.50517597) (2023-02-28T22:50:57.50542927) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:57.487526282) (2023-02-28T22:50:57.487550902) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:57.487618773) (2023-02-28T22:50:57.487634214) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:57.937790322) (2023-02-28T22:50:57.937805122) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:57.937841412) (2023-02-28T22:50:57.937850503) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:58.385513944) (2023-02-28T22:50:58.385537815) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:58.385625896) (2023-02-28T22:50:58.385645136) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:58.846627253) (2023-02-28T22:50:58.846646064) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:58.846696254) (2023-02-28T22:50:58.846706915) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:59.295985552) (2023-02-28T22:50:59.296002153) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:59.296040893) (2023-02-28T22:50:59.296050843) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:50:59.745161491) (2023-02-28T22:50:59.745177181) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:50:59.745213662) (2023-02-28T22:50:59.745223562) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:00.205938687) (2023-02-28T22:51:00.205953497) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:00.205991798) (2023-02-28T22:51:00.206001128) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:00.660253273) (2023-02-28T22:51:00.660269713) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:00.660308074) (2023-02-28T22:51:00.660317684) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:01.116749735) (2023-02-28T22:51:01.116763735) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:01.116807326) (2023-02-28T22:51:01.116816146) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:01.575673359) (2023-02-28T22:51:01.575688929) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:01.575728140) (2023-02-28T22:51:01.575736870) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:02.27507359) (2023-02-28T22:51:02.27523329) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:02.27558740) (2023-02-28T22:51:02.27567970) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:02.487815125) (2023-02-28T22:51:02.487830555) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:02.487867896) (2023-02-28T22:51:02.487875776) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:02.950595684) (2023-02-28T22:51:02.950625295) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:02.950710286) (2023-02-28T22:51:02.950731476) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:03.413891525) (2023-02-28T22:51:03.413912276) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:03.413957586) (2023-02-28T22:51:03.413968727) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:03.877837172) (2023-02-28T22:51:03.877852632) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:03.877891893) (2023-02-28T22:51:03.877900403) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:04.339511602) (2023-02-28T22:51:04.339529402) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:04.339568333) (2023-02-28T22:51:04.339576883) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:04.802296106) (2023-02-28T22:51:04.802311067) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:04.802347897) (2023-02-28T22:51:04.802355717) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:05.268153194) (2023-02-28T22:51:05.268170244) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:05.268213395) (2023-02-28T22:51:05.268224285) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:05.740548649) (2023-02-28T22:51:05.740564840) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:05.740602490) (2023-02-28T22:51:05.740612511) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:06.206691038) (2023-02-28T22:51:06.206709898) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:06.206755449) (2023-02-28T22:51:06.206768429) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:06.677913630) (2023-02-28T22:51:06.677929760) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:06.677966771) (2023-02-28T22:51:06.677974701) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:07.137283291) (2023-02-28T22:51:07.137299952) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:07.137341082) (2023-02-28T22:51:07.137350733) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:07.584041305) (2023-02-28T22:51:07.584060555) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:07.584101856) (2023-02-28T22:51:07.584112776) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:08.34377594) (2023-02-28T22:51:08.34398415) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:08.34452285) (2023-02-28T22:51:08.34464306) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:08.490069697) (2023-02-28T22:51:08.490086017) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:08.490124818) (2023-02-28T22:51:08.490134868) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:08.952352369) (2023-02-28T22:51:08.952368779) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:08.952433100) (2023-02-28T22:51:08.952446050) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:09.403673966) (2023-02-28T22:51:09.403688926) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:09.403735827) (2023-02-28T22:51:09.403745127) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:09.856778086) (2023-02-28T22:51:09.856800097) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:09.856853348) (2023-02-28T22:51:09.856867738) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:10.311824695) (2023-02-28T22:51:10.311856266) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:10.311935817) (2023-02-28T22:51:10.311957127) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:10.771319600) (2023-02-28T22:51:10.771335390) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:10.771372931) (2023-02-28T22:51:10.771380801) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:11.231042354) (2023-02-28T22:51:11.231070735) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:11.231127836) (2023-02-28T22:51:11.231141226) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:11.679032393) (2023-02-28T22:51:11.679047793) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:11.679083224) (2023-02-28T22:51:11.679090804) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:12.120340741) (2023-02-28T22:51:12.120366751) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:12.120451292) (2023-02-28T22:51:12.120468923) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:12.555233231) (2023-02-28T22:51:12.555256011) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:12.555315252) (2023-02-28T22:51:12.555329862) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:12.995322195) (2023-02-28T22:51:12.995348515) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:12.995414016) (2023-02-28T22:51:12.995430676) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:13.439576927) (2023-02-28T22:51:13.439593797) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:13.439631728) (2023-02-28T22:51:13.439639688) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:13.870020140) (2023-02-28T22:51:13.870036150) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:13.870083571) (2023-02-28T22:51:13.870091481) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:14.301175851) (2023-02-28T22:51:14.301201072) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:14.301265933) (2023-02-28T22:51:14.301283523) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:14.733592449) (2023-02-28T22:51:14.733613589) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:14.733657510) (2023-02-28T22:51:14.733668450) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:15.168267224) (2023-02-28T22:51:15.168284744) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:15.168329565) (2023-02-28T22:51:15.168341365) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:15.603089902) (2023-02-28T22:51:15.603107982) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:15.603165023) (2023-02-28T22:51:15.603176333) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:16.35312346) (2023-02-28T22:51:16.35330976) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:16.35378157) (2023-02-28T22:51:16.35390187) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:16.472420233) (2023-02-28T22:51:16.472435173) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:16.472469703) (2023-02-28T22:51:16.472477304) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:16.923551369) (2023-02-28T22:51:16.923579960) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:16.923675321) (2023-02-28T22:51:16.923697131) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:17.381343290) (2023-02-28T22:51:17.381363671) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:17.381408381) (2023-02-28T22:51:17.381418121) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:17.836412581) (2023-02-28T22:51:17.836430122) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:17.836466872) (2023-02-28T22:51:17.836476582) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:18.281677779) (2023-02-28T22:51:18.281695230) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:18.281742530) (2023-02-28T22:51:18.281752380) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:18.735692534) (2023-02-28T22:51:18.735716264) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:18.735777105) (2023-02-28T22:51:18.735793086) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:19.192508803) (2023-02-28T22:51:19.192528924) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:19.192582914) (2023-02-28T22:51:19.192597105) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:19.652633324) (2023-02-28T22:51:19.652649824) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:19.652686265) (2023-02-28T22:51:19.652695555) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:20.98984684) (2023-02-28T22:51:20.98999344) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:20.99039675) (2023-02-28T22:51:20.99047655) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:20.550275211) (2023-02-28T22:51:20.550295512) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:20.550338602) (2023-02-28T22:51:20.550349052) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:20.996576934) (2023-02-28T22:51:20.996592445) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:20.996630205) (2023-02-28T22:51:20.996638635) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:21.445331748) (2023-02-28T22:51:21.445347368) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:21.445382739) (2023-02-28T22:51:21.445392749) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:21.897065786) (2023-02-28T22:51:21.897079927) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:21.897116437) (2023-02-28T22:51:21.897126197) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:22.345474929) (2023-02-28T22:51:22.345489799) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:22.345525499) (2023-02-28T22:51:22.345533259) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:22.792537859) (2023-02-28T22:51:22.792568089) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:22.792642521) (2023-02-28T22:51:22.792664661) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:23.251996699) (2023-02-28T22:51:23.252021750) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:23.252074851) (2023-02-28T22:51:23.252084191) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:23.709562100) (2023-02-28T22:51:23.709577930) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:23.709614561) (2023-02-28T22:51:23.709623141) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:24.165028743) (2023-02-28T22:51:24.165048024) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:24.165092794) (2023-02-28T22:51:24.165102575) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:24.619951608) (2023-02-28T22:51:24.619968138) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:24.620013319) (2023-02-28T22:51:24.620026999) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:25.75157136) (2023-02-28T22:51:25.75184077) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:25.75247528) (2023-02-28T22:51:25.75263348) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:25.518940221) (2023-02-28T22:51:25.518956461) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:25.518992292) (2023-02-28T22:51:25.519001632) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:25.972317705) (2023-02-28T22:51:25.972333066) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:25.972371066) (2023-02-28T22:51:25.972378886) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:26.423863440) (2023-02-28T22:51:26.423879680) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:26.423916310) (2023-02-28T22:51:26.423925490) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:26.872017522) (2023-02-28T22:51:26.872043892) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:26.872114173) (2023-02-28T22:51:26.872133294) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:27.331558266) (2023-02-28T22:51:27.331587486) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:27.331659827) (2023-02-28T22:51:27.331684058) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:27.798823618) (2023-02-28T22:51:27.798843009) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:27.798883639) (2023-02-28T22:51:27.798893589) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:28.265916562) (2023-02-28T22:51:28.265936882) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:28.265986763) (2023-02-28T22:51:28.265997983) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:28.725480366) (2023-02-28T22:51:28.725498106) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:28.725544147) (2023-02-28T22:51:28.725554557) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:29.188591101) (2023-02-28T22:51:29.188607492) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:29.188648592) (2023-02-28T22:51:29.188658632) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:29.648794678) (2023-02-28T22:51:29.648822489) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:29.648890360) (2023-02-28T22:51:29.648908890) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:30.118690251) (2023-02-28T22:51:30.118711801) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:30.118772992) (2023-02-28T22:51:30.118791792) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:30.585150920) (2023-02-28T22:51:30.585168621) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:30.585214071) (2023-02-28T22:51:30.585225481) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:31.58042705) (2023-02-28T22:51:31.58065056) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:31.58126467) (2023-02-28T22:51:31.58141707) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:31.520594112) (2023-02-28T22:51:31.520610892) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:31.520649793) (2023-02-28T22:51:31.520659403) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:31.988691356) (2023-02-28T22:51:31.988706736) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:31.988743087) (2023-02-28T22:51:31.988750927) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:32.449247680) (2023-02-28T22:51:32.449340362) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:32.449425723) (2023-02-28T22:51:32.449449783) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:32.915092467) (2023-02-28T22:51:32.915123588) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:32.915204029) (2023-02-28T22:51:32.915227969) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:33.376101679) (2023-02-28T22:51:33.376124560) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:33.376183740) (2023-02-28T22:51:33.376200541) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:33.845524049) (2023-02-28T22:51:33.845539569) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:33.845577510) (2023-02-28T22:51:33.845587390) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:34.301569561) (2023-02-28T22:51:34.301590571) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:34.301661402) (2023-02-28T22:51:34.301679122) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:34.764081539) (2023-02-28T22:51:34.764098240) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:34.764135670) (2023-02-28T22:51:34.764145800) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:35.228267148) (2023-02-28T22:51:35.228292968) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:35.228353959) (2023-02-28T22:51:35.228369159) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:35.697896687) (2023-02-28T22:51:35.697913087) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:35.697952058) (2023-02-28T22:51:35.697961808) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:36.157870909) (2023-02-28T22:51:36.157887249) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:36.157933830) (2023-02-28T22:51:36.157946010) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:36.614434174) (2023-02-28T22:51:36.614451904) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:36.614492045) (2023-02-28T22:51:36.614503875) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:37.92541973) (2023-02-28T22:51:37.92557513) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:37.92595314) (2023-02-28T22:51:37.92604854) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:37.556783948) (2023-02-28T22:51:37.556801468) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:37.556843198) (2023-02-28T22:51:37.556853759) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:38.20143135) (2023-02-28T22:51:38.20157665) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:38.20193896) (2023-02-28T22:51:38.20201696) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:38.479921135) (2023-02-28T22:51:38.479935955) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:38.479972536) (2023-02-28T22:51:38.479981006) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:38.931430872) (2023-02-28T22:51:38.931456942) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:38.931525893) (2023-02-28T22:51:38.931543923) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:39.390415683) (2023-02-28T22:51:39.390439713) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:39.390510404) (2023-02-28T22:51:39.390526344) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:39.842870829) (2023-02-28T22:51:39.842886059) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:39.842921230) (2023-02-28T22:51:39.842931300) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:40.299795097) (2023-02-28T22:51:40.299813767) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:40.299859367) (2023-02-28T22:51:40.299868958) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:40.757543089) (2023-02-28T22:51:40.757558520) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:40.757595450) (2023-02-28T22:51:40.757604040) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:41.206300744) (2023-02-28T22:51:41.206316754) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:41.206355345) (2023-02-28T22:51:41.206364555) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:41.650235711) (2023-02-28T22:51:41.650256521) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:41.650318122) (2023-02-28T22:51:41.650333242) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:42.94828478) (2023-02-28T22:51:42.94845128) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:42.94883618) (2023-02-28T22:51:42.94894018) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:42.542766095) (2023-02-28T22:51:42.542781915) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:42.542822135) (2023-02-28T22:51:42.542832106) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:42.987521110) (2023-02-28T22:51:42.987539150) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:42.987577941) (2023-02-28T22:51:42.987585921) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:43.431311051) (2023-02-28T22:51:43.431331111) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:43.431381911) (2023-02-28T22:51:43.431394252) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:43.880649530) (2023-02-28T22:51:43.880667151) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:43.880706011) (2023-02-28T22:51:43.880715361) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:44.335705615) (2023-02-28T22:51:44.335730526) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:44.335796527) (2023-02-28T22:51:44.335814277) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:44.795063312) (2023-02-28T22:51:44.795078412) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:44.795116182) (2023-02-28T22:51:44.795125062) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:45.245075005) (2023-02-28T22:51:45.245098775) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:45.245173266) (2023-02-28T22:51:45.245193347) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:45.688818381) (2023-02-28T22:51:45.688833661) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:45.688874731) (2023-02-28T22:51:45.688886452) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:46.136695564) (2023-02-28T22:51:46.136720584) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:46.136778815) (2023-02-28T22:51:46.136793955) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:46.587501826) (2023-02-28T22:51:46.587530857) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:46.587622808) (2023-02-28T22:51:46.587643418) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:47.55039104) (2023-02-28T22:51:47.55062824) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:47.55120845) (2023-02-28T22:51:47.55137205) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:47.506637422) (2023-02-28T22:51:47.506653732) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:47.506695323) (2023-02-28T22:51:47.506705723) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:47.952871844) (2023-02-28T22:51:47.952895854) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:47.952959945) (2023-02-28T22:51:47.952979205) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:48.405591737) (2023-02-28T22:51:48.405614137) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:48.405666468) (2023-02-28T22:51:48.405681298) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:48.859184948) (2023-02-28T22:51:48.859200368) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:48.859239948) (2023-02-28T22:51:48.859249369) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:49.304200464) (2023-02-28T22:51:49.304218684) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:49.304278575) (2023-02-28T22:51:49.304291225) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:49.756139402) (2023-02-28T22:51:49.756155582) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:49.756192683) (2023-02-28T22:51:49.756201883) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:50.206870127) (2023-02-28T22:51:50.206886957) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:50.206934088) (2023-02-28T22:51:50.206947448) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:50.645696361) (2023-02-28T22:51:50.645733292) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:50.645820493) (2023-02-28T22:51:50.645841403) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:51.100119208) (2023-02-28T22:51:51.100133868) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:51.100175509) (2023-02-28T22:51:51.100186719) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:51.554519693) (2023-02-28T22:51:51.554534373) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:51.554570713) (2023-02-28T22:51:51.554579613) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:52.11622358) (2023-02-28T22:51:52.11638778) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:52.11684909) (2023-02-28T22:51:52.11697409) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:52.467493217) (2023-02-28T22:51:52.467517207) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:52.467589298) (2023-02-28T22:51:52.467607988) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:52.925298148) (2023-02-28T22:51:52.925314259) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:52.925366519) (2023-02-28T22:51:52.925380109) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:53.380345161) (2023-02-28T22:51:53.380361951) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:53.380412602) (2023-02-28T22:51:53.380423032) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:53.837746846) (2023-02-28T22:51:53.837762407) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:53.837797767) (2023-02-28T22:51:53.837808157) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:54.302979048) (2023-02-28T22:51:54.303006518) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:54.303077389) (2023-02-28T22:51:54.303094229) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:54.767066150) (2023-02-28T22:51:54.767081110) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:54.767119141) (2023-02-28T22:51:54.767127101) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:55.229933867) (2023-02-28T22:51:55.229951288) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:55.229989018) (2023-02-28T22:51:55.229999848) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:55.690953831) (2023-02-28T22:51:55.690969091) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:55.691004332) (2023-02-28T22:51:55.691012852) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:56.164628439) (2023-02-28T22:51:56.164649129) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:56.164694290) (2023-02-28T22:51:56.164715640) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:56.640138951) (2023-02-28T22:51:56.640153931) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:56.640189201) (2023-02-28T22:51:56.640197701) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:57.109306506) (2023-02-28T22:51:57.109322306) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:57.109361117) (2023-02-28T22:51:57.109370367) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:57.569010399) (2023-02-28T22:51:57.569026819) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:57.569064740) (2023-02-28T22:51:57.569074440) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:58.25318643) (2023-02-28T22:51:58.25334023) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:58.25370233) (2023-02-28T22:51:58.25378113) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:58.481827419) (2023-02-28T22:51:58.481842169) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:58.481887709) (2023-02-28T22:51:58.481911150) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:58.948647882) (2023-02-28T22:51:58.948665953) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:58.948712453) (2023-02-28T22:51:58.948720533) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:59.409605444) (2023-02-28T22:51:59.409634494) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:59.409714515) (2023-02-28T22:51:59.409737545) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:51:59.883510897) (2023-02-28T22:51:59.883529967) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:51:59.883575867) (2023-02-28T22:51:59.883586947) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:00.363907271) (2023-02-28T22:52:00.363938512) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:00.364031323) (2023-02-28T22:52:00.364055763) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:00.834957950) (2023-02-28T22:52:00.834974871) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:00.835014391) (2023-02-28T22:52:00.835024091) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:01.308853414) (2023-02-28T22:52:01.308883664) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:01.308962145) (2023-02-28T22:52:01.308983145) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:01.807760502) (2023-02-28T22:52:01.807844333) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:01.808011885) (2023-02-28T22:52:01.808046695) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:02.281996637) (2023-02-28T22:52:02.282013347) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:02.282048737) (2023-02-28T22:52:02.282057317) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:02.757536011) (2023-02-28T22:52:02.757561612) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:02.757653373) (2023-02-28T22:52:02.757677993) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:03.240925082) (2023-02-28T22:52:03.240945962) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:03.241009833) (2023-02-28T22:52:03.241027223) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:03.720691330) (2023-02-28T22:52:03.720724060) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:03.720811501) (2023-02-28T22:52:03.720837361) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:04.199032666) (2023-02-28T22:52:04.199060366) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:04.199145457) (2023-02-28T22:52:04.199166347) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:04.667605388) (2023-02-28T22:52:04.667621728) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:04.667658539) (2023-02-28T22:52:04.667666819) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:05.127642768) (2023-02-28T22:52:05.127657228) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:05.127694678) (2023-02-28T22:52:05.127703139) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:05.580201485) (2023-02-28T22:52:05.580226675) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:05.580317736) (2023-02-28T22:52:05.580335966) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:06.43648578) (2023-02-28T22:52:06.43664619) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:06.43712429) (2023-02-28T22:52:06.43723569) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:06.500243991) (2023-02-28T22:52:06.500262731) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:06.500312581) (2023-02-28T22:52:06.500324352) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:06.960138296) (2023-02-28T22:52:06.960156457) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:06.960201617) (2023-02-28T22:52:06.960210897) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:07.416992335) (2023-02-28T22:52:07.417032485) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:07.417126066) (2023-02-28T22:52:07.417149387) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:07.891057414) (2023-02-28T22:52:07.891071974) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:07.891110165) (2023-02-28T22:52:07.891118175) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:08.354758340) (2023-02-28T22:52:08.354782080) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:08.354843461) (2023-02-28T22:52:08.354860621) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:08.818309505) (2023-02-28T22:52:08.818326355) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:08.818362925) (2023-02-28T22:52:08.818371905) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:09.292922654) (2023-02-28T22:52:09.292943334) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:09.292997345) (2023-02-28T22:52:09.293011615) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:09.763127759) (2023-02-28T22:52:09.763145329) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:09.763188669) (2023-02-28T22:52:09.763198639) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:10.219959406) (2023-02-28T22:52:10.219974286) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:10.220017246) (2023-02-28T22:52:10.220026256) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:10.677032543) (2023-02-28T22:52:10.677050533) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:10.677099804) (2023-02-28T22:52:10.677110334) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:11.142639988) (2023-02-28T22:52:11.142656158) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:11.142700049) (2023-02-28T22:52:11.142711169) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:11.604530696) (2023-02-28T22:52:11.604546286) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:11.604595046) (2023-02-28T22:52:11.604607086) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:12.70556091) (2023-02-28T22:52:12.70585801) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:12.70683552) (2023-02-28T22:52:12.70705572) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:12.530325448) (2023-02-28T22:52:12.530362818) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:12.530461539) (2023-02-28T22:52:12.530486360) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:13.1448011) (2023-02-28T22:52:13.1477111) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:13.1545782) (2023-02-28T22:52:13.1563832) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:13.475806356) (2023-02-28T22:52:13.475826616) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:13.475871007) (2023-02-28T22:52:13.475881267) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:13.937660495) (2023-02-28T22:52:13.937677896) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:13.937719506) (2023-02-28T22:52:13.937729436) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:14.411873375) (2023-02-28T22:52:14.411899045) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:14.411969376) (2023-02-28T22:52:14.411986576) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:14.885071119) (2023-02-28T22:52:14.885087850) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:14.885131430) (2023-02-28T22:52:14.885141960) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:15.354374834) (2023-02-28T22:52:15.354390004) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:15.354427135) (2023-02-28T22:52:15.354436825) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:15.823012612) (2023-02-28T22:52:15.823033712) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:15.823086473) (2023-02-28T22:52:15.823100813) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:16.285915699) (2023-02-28T22:52:16.285931220) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:16.285966820) (2023-02-28T22:52:16.285976400) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:16.747171145) (2023-02-28T22:52:16.747200555) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:16.747265925) (2023-02-28T22:52:16.747280876) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:17.212636875) (2023-02-28T22:52:17.212662135) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:17.212712816) (2023-02-28T22:52:17.212726236) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:17.672316276) (2023-02-28T22:52:17.672338456) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:17.672393767) (2023-02-28T22:52:17.672421127) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:18.140352875) (2023-02-28T22:52:18.140368546) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:18.140420316) (2023-02-28T22:52:18.140429746) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:18.602262590) (2023-02-28T22:52:18.602294380) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:18.602389781) (2023-02-28T22:52:18.602416681) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:19.54769838) (2023-02-28T22:52:19.54787839) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:19.54823989) (2023-02-28T22:52:19.54832309) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:19.508816758) (2023-02-28T22:52:19.508832348) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:19.508869998) (2023-02-28T22:52:19.508879199) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:19.959778827) (2023-02-28T22:52:19.959802408) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:19.959841968) (2023-02-28T22:52:19.959852528) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:20.412043927) (2023-02-28T22:52:20.412071077) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:20.412139428) (2023-02-28T22:52:20.412157488) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:20.866180970) (2023-02-28T22:52:20.866198250) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:20.866240890) (2023-02-28T22:52:20.866251980) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:21.332535413) (2023-02-28T22:52:21.332555073) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:21.332605174) (2023-02-28T22:52:21.332613904) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:21.794720864) (2023-02-28T22:52:21.794738645) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:21.794785085) (2023-02-28T22:52:21.794795215) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:22.267698877) (2023-02-28T22:52:22.267713897) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:22.267749778) (2023-02-28T22:52:22.267759238) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:22.731425535) (2023-02-28T22:52:22.731444276) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:22.731496716) (2023-02-28T22:52:22.731509426) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:23.191942268) (2023-02-28T22:52:23.191957838) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:23.191994168) (2023-02-28T22:52:23.192003328) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:23.650036245) (2023-02-28T22:52:23.650051756) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:23.650088546) (2023-02-28T22:52:23.650097456) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:24.117289047) (2023-02-28T22:52:24.117321457) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:24.117406618) (2023-02-28T22:52:24.117427878) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:24.577559017) (2023-02-28T22:52:24.577575977) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:24.577625958) (2023-02-28T22:52:24.577635028) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:25.35211560) (2023-02-28T22:52:25.35244380) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:25.35331841) (2023-02-28T22:52:25.35350451) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:25.497752703) (2023-02-28T22:52:25.497768614) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:25.497817904) (2023-02-28T22:52:25.497829594) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:25.949455527) (2023-02-28T22:52:25.949471868) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:25.949524688) (2023-02-28T22:52:25.949534268) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:26.422853707) (2023-02-28T22:52:26.422875807) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:26.422945997) (2023-02-28T22:52:26.422966588) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:26.922558470) (2023-02-28T22:52:26.922571790) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:26.922615561) (2023-02-28T22:52:26.922625121) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:27.412281510) (2023-02-28T22:52:27.412295180) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:27.412332131) (2023-02-28T22:52:27.412341981) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:27.912125714) (2023-02-28T22:52:27.912139384) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:27.912173675) (2023-02-28T22:52:27.912183925) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:28.400425893) (2023-02-28T22:52:28.400461093) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:28.400541974) (2023-02-28T22:52:28.400569394) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:28.882267406) (2023-02-28T22:52:28.882292447) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:28.882360397) (2023-02-28T22:52:28.882374937) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:29.377063114) (2023-02-28T22:52:29.377077954) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:29.377121024) (2023-02-28T22:52:29.377132194) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:29.859972468) (2023-02-28T22:52:29.860000638) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:29.860075049) (2023-02-28T22:52:29.860096529) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:30.335540431) (2023-02-28T22:52:30.335555701) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:30.335590592) (2023-02-28T22:52:30.335599092) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:30.805224031) (2023-02-28T22:52:30.805248161) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:30.805307442) (2023-02-28T22:52:30.805323482) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:31.298393713) (2023-02-28T22:52:31.298413733) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:31.298470554) (2023-02-28T22:52:31.298479774) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:31.786219643) (2023-02-28T22:52:31.786244893) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:31.786313553) (2023-02-28T22:52:31.786333044) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:32.297412092) (2023-02-28T22:52:32.297434532) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:32.297493513) (2023-02-28T22:52:32.297510443) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:32.799142304) (2023-02-28T22:52:32.799157374) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:32.799193624) (2023-02-28T22:52:32.799203024) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:33.299788602) (2023-02-28T22:52:33.299803162) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:33.299841752) (2023-02-28T22:52:33.299850692) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:33.793462265) (2023-02-28T22:52:33.793477105) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:33.793513275) (2023-02-28T22:52:33.793522105) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:34.284565682) (2023-02-28T22:52:34.284587242) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:34.284638913) (2023-02-28T22:52:34.284651553) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:34.773510867) (2023-02-28T22:52:34.773531507) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:34.773576398) (2023-02-28T22:52:34.773585688) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:35.274250007) (2023-02-28T22:52:35.274263377) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:35.274305327) (2023-02-28T22:52:35.274316828) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:35.784604651) (2023-02-28T22:52:35.784634062) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:35.784711442) (2023-02-28T22:52:35.784729492) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:36.295325217) (2023-02-28T22:52:36.295340787) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:36.295375317) (2023-02-28T22:52:36.295385227) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:36.813237163) (2023-02-28T22:52:36.813254983) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:36.813300294) (2023-02-28T22:52:36.813310244) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:37.313583672) (2023-02-28T22:52:37.313614052) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:37.313690583) (2023-02-28T22:52:37.313712433) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:37.805514035) (2023-02-28T22:52:37.805533905) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:37.805580756) (2023-02-28T22:52:37.805591536) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:38.321141560) (2023-02-28T22:52:38.321161180) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:38.321207270) (2023-02-28T22:52:38.321219470) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:38.828209568) (2023-02-28T22:52:38.828250368) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:38.828310188) (2023-02-28T22:52:38.828325079) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:39.336923766) (2023-02-28T22:52:39.336941026) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:39.336980906) (2023-02-28T22:52:39.336990296) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:39.846471254) (2023-02-28T22:52:39.846486094) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:39.846526854) (2023-02-28T22:52:39.846537325) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:40.349623356) (2023-02-28T22:52:40.349639256) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:40.349683237) (2023-02-28T22:52:40.349693327) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:40.853323170) (2023-02-28T22:52:40.853340150) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:40.853379180) (2023-02-28T22:52:40.853387720) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:41.352333667) (2023-02-28T22:52:41.352349717) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:41.352385178) (2023-02-28T22:52:41.352392708) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:41.855858151) (2023-02-28T22:52:41.855877072) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:41.855911622) (2023-02-28T22:52:41.855919142) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:42.353861654) (2023-02-28T22:52:42.353880315) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:42.353917685) (2023-02-28T22:52:42.353925485) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:42.853138917) (2023-02-28T22:52:42.853155467) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:42.853191337) (2023-02-28T22:52:42.853201807) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:43.360701368) (2023-02-28T22:52:43.360721608) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:43.360775028) (2023-02-28T22:52:43.360789469) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:43.870676724) (2023-02-28T22:52:43.870699654) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:43.870761425) (2023-02-28T22:52:43.870777065) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:44.370174272) (2023-02-28T22:52:44.370189022) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:44.370224492) (2023-02-28T22:52:44.370233982) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:44.865096546) (2023-02-28T22:52:44.865110256) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:44.865157766) (2023-02-28T22:52:44.865165726) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:45.354204907) (2023-02-28T22:52:45.354220187) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:45.354256318) (2023-02-28T22:52:45.354264098) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:45.842499892) (2023-02-28T22:52:45.842513973) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:45.842550443) (2023-02-28T22:52:45.842559273) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:46.334164479) (2023-02-28T22:52:46.334184439) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:46.334236840) (2023-02-28T22:52:46.334248500) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:46.836448952) (2023-02-28T22:52:46.836464033) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:46.836506643) (2023-02-28T22:52:46.836517043) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:47.350168564) (2023-02-28T22:52:47.350186214) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:47.350233125) (2023-02-28T22:52:47.350242655) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:47.857367768) (2023-02-28T22:52:47.857383308) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:47.857423348) (2023-02-28T22:52:47.857433368) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:48.385014884) (2023-02-28T22:52:48.385032535) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:48.385076445) (2023-02-28T22:52:48.385086835) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:48.887970908) (2023-02-28T22:52:48.887991578) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:48.888047809) (2023-02-28T22:52:48.888062289) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:49.380038525) (2023-02-28T22:52:49.380054305) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:49.380093975) (2023-02-28T22:52:49.380103576) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:49.862136738) (2023-02-28T22:52:49.862161548) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:49.862221858) (2023-02-28T22:52:49.862237549) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:50.339718785) (2023-02-28T22:52:50.339733045) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:50.339770615) (2023-02-28T22:52:50.339779005) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:50.833639478) (2023-02-28T22:52:50.833655129) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:50.833693419) (2023-02-28T22:52:50.833703259) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:51.314408454) (2023-02-28T22:52:51.314426034) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:51.314466885) (2023-02-28T22:52:51.314478995) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:51.791894885) (2023-02-28T22:52:51.791920445) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:51.791999745) (2023-02-28T22:52:51.792016645) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:52.277764084) (2023-02-28T22:52:52.277799024) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:52.277897845) (2023-02-28T22:52:52.277925875) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:52.756141955) (2023-02-28T22:52:52.756157325) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:52.756192045) (2023-02-28T22:52:52.756203045) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:53.229819625) (2023-02-28T22:52:53.229835055) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:53.229873075) (2023-02-28T22:52:53.229882535) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:53.716772230) (2023-02-28T22:52:53.716802131) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:53.716881321) (2023-02-28T22:52:53.716900271) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:54.204797610) (2023-02-28T22:52:54.204816790) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:54.204861461) (2023-02-28T22:52:54.204871701) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:54.708218845) (2023-02-28T22:52:54.708245905) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:54.708317816) (2023-02-28T22:52:54.708342306) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:55.221946427) (2023-02-28T22:52:55.221961447) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:55.221998287) (2023-02-28T22:52:55.222010898) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:55.720376351) (2023-02-28T22:52:55.720394271) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:55.720452692) (2023-02-28T22:52:55.720462692) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:56.214523921) (2023-02-28T22:52:56.214549632) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:56.214608582) (2023-02-28T22:52:56.214625162) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:56.707517762) (2023-02-28T22:52:56.707531532) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:56.707569293) (2023-02-28T22:52:56.707579743) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:57.195181544) (2023-02-28T22:52:57.195196435) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:57.195231565) (2023-02-28T22:52:57.195239085) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:57.683904252) (2023-02-28T22:52:57.683923312) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:57.683967692) (2023-02-28T22:52:57.683979022) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:58.173355711) (2023-02-28T22:52:58.173373751) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:58.173425372) (2023-02-28T22:52:58.173439482) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:58.677177504) (2023-02-28T22:52:58.677192334) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:58.677238214) (2023-02-28T22:52:58.677248235) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:59.198199306) (2023-02-28T22:52:59.198215016) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:59.198250686) (2023-02-28T22:52:59.198258186) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:52:59.670597256) (2023-02-28T22:52:59.670614906) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:52:59.670662026) (2023-02-28T22:52:59.670671466) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:00.156243952) (2023-02-28T22:53:00.156260952) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:00.156301512) (2023-02-28T22:53:00.156311113) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:00.638720774) (2023-02-28T22:53:00.638746184) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:00.638821215) (2023-02-28T22:53:00.638838175) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:01.134941936) (2023-02-28T22:53:01.134957836) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:01.134995356) (2023-02-28T22:53:01.135004976) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:01.604609902) (2023-02-28T22:53:01.604625852) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:01.604673402) (2023-02-28T22:53:01.604686852) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:02.78472869) (2023-02-28T22:53:02.78488389) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:02.78529069) (2023-02-28T22:53:02.78540679) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:02.539605647) (2023-02-28T22:53:02.539631117) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:02.539693067) (2023-02-28T22:53:02.539709017) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:03.16303792) (2023-02-28T22:53:03.16318662) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:03.16357492) (2023-02-28T22:53:03.16365262) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:03.475327314) (2023-02-28T22:53:03.475355585) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:03.475414995) (2023-02-28T22:53:03.475431745) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:03.928531379) (2023-02-28T22:53:03.928548499) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:03.928588000) (2023-02-28T22:53:03.928597420) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:04.365614428) (2023-02-28T22:53:04.365636288) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:04.365694919) (2023-02-28T22:53:04.365711069) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:04.811649918) (2023-02-28T22:53:04.811674848) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:04.811765188) (2023-02-28T22:53:04.811782658) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:05.252743289) (2023-02-28T22:53:05.252766479) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:05.252828799) (2023-02-28T22:53:05.252843859) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:05.729665206) (2023-02-28T22:53:05.729684716) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:05.729723026) (2023-02-28T22:53:05.729732377) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:06.192745366) (2023-02-28T22:53:06.192773716) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:06.192864756) (2023-02-28T22:53:06.192893106) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:06.667643158) (2023-02-28T22:53:06.667659738) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:06.667705868) (2023-02-28T22:53:06.667716758) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:07.124752983) (2023-02-28T22:53:07.124779173) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:07.124845594) (2023-02-28T22:53:07.124864534) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:07.598946709) (2023-02-28T22:53:07.598964369) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:07.599008209) (2023-02-28T22:53:07.599019220) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:08.79056525) (2023-02-28T22:53:08.79080065) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:08.79153566) (2023-02-28T22:53:08.79175336) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:08.540468312) (2023-02-28T22:53:08.540485072) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:08.540524843) (2023-02-28T22:53:08.540533273) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:09.649642) (2023-02-28T22:53:09.666222) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:09.702963) (2023-02-28T22:53:09.712533) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:09.463355615) (2023-02-28T22:53:09.463371265) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:09.463411606) (2023-02-28T22:53:09.463421826) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:09.901155822) (2023-02-28T22:53:09.901174642) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:09.901226392) (2023-02-28T22:53:09.901238022) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:10.355768452) (2023-02-28T22:53:10.355794782) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:10.355856623) (2023-02-28T22:53:10.355871953) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:10.812296538) (2023-02-28T22:53:10.812322908) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:10.812389599) (2023-02-28T22:53:10.812424489) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:11.268049031) (2023-02-28T22:53:11.268064411) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:11.268113432) (2023-02-28T22:53:11.268123422) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:11.707853589) (2023-02-28T22:53:11.707868549) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:11.707906529) (2023-02-28T22:53:11.707916319) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:12.154892417) (2023-02-28T22:53:12.154907427) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:12.154945177) (2023-02-28T22:53:12.154954178) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:12.598039683) (2023-02-28T22:53:12.598057773) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:12.598096274) (2023-02-28T22:53:12.598106234) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:13.49367184) (2023-02-28T22:53:13.49382624) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:13.49419464) (2023-02-28T22:53:13.49429264) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:13.495459568) (2023-02-28T22:53:13.495474168) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:13.495510308) (2023-02-28T22:53:13.495519118) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:13.946109048) (2023-02-28T22:53:13.946126808) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:13.946171678) (2023-02-28T22:53:13.946182608) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:14.407380489) (2023-02-28T22:53:14.407396459) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:14.407435599) (2023-02-28T22:53:14.407443840) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:14.857049293) (2023-02-28T22:53:14.857067343) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:14.857113733) (2023-02-28T22:53:14.857123853) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:15.301969100) (2023-02-28T22:53:15.301984970) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:15.302022500) (2023-02-28T22:53:15.302032390) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:15.767078848) (2023-02-28T22:53:15.767101558) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:15.767160248) (2023-02-28T22:53:15.767177368) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:16.246212177) (2023-02-28T22:53:16.246237667) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:16.246300117) (2023-02-28T22:53:16.246316397) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:16.716763284) (2023-02-28T22:53:16.716782784) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:16.716837074) (2023-02-28T22:53:16.716850884) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:17.203720595) (2023-02-28T22:53:17.203735785) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:17.203771695) (2023-02-28T22:53:17.203779995) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:17.683401019) (2023-02-28T22:53:17.683433860) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:17.683522290) (2023-02-28T22:53:17.683546100) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:18.147718821) (2023-02-28T22:53:18.147734742) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:18.147774312) (2023-02-28T22:53:18.147784312) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:18.655569992) (2023-02-28T22:53:18.655583392) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:18.655619272) (2023-02-28T22:53:18.655627162) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:19.142952203) (2023-02-28T22:53:19.142967343) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:19.143004834) (2023-02-28T22:53:19.143013044) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:19.645710144) (2023-02-28T22:53:19.645726354) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:19.645762474) (2023-02-28T22:53:19.645770154) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:20.137311979) (2023-02-28T22:53:20.137334539) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:20.137396380) (2023-02-28T22:53:20.137414190) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:20.649827567) (2023-02-28T22:53:20.649851697) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:20.649915807) (2023-02-28T22:53:20.649931447) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:21.157988242) (2023-02-28T22:53:21.158005042) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:21.158043443) (2023-02-28T22:53:21.158051283) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:21.662354235) (2023-02-28T22:53:21.662374225) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:21.662421996) (2023-02-28T22:53:21.662431696) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:22.184566007) (2023-02-28T22:53:22.184590567) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:22.184653808) (2023-02-28T22:53:22.184669298) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:22.719175619) (2023-02-28T22:53:22.719201499) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:22.719270039) (2023-02-28T22:53:22.719288999) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:23.253426542) (2023-02-28T22:53:23.253461583) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:23.253545193) (2023-02-28T22:53:23.253566103) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:23.766793894) (2023-02-28T22:53:23.766811494) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:23.766851624) (2023-02-28T22:53:23.766860694) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:24.294407648) (2023-02-28T22:53:24.294424248) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:24.294473118) (2023-02-28T22:53:24.294482828) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:24.832156585) (2023-02-28T22:53:24.832173996) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:24.832211296) (2023-02-28T22:53:24.832222006) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:25.353205760) (2023-02-28T22:53:25.353220660) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:25.353256630) (2023-02-28T22:53:25.353265560) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:25.862188693) (2023-02-28T22:53:25.862204613) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:25.862241294) (2023-02-28T22:53:25.862250444) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:26.374642260) (2023-02-28T22:53:26.374657480) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:26.374694800) (2023-02-28T22:53:26.374704470) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:26.885068858) (2023-02-28T22:53:26.885084348) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:26.885122698) (2023-02-28T22:53:26.885131688) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:27.383098393) (2023-02-28T22:53:27.383122993) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:27.383182113) (2023-02-28T22:53:27.383197973) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:27.896808604) (2023-02-28T22:53:27.896825494) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:27.896864824) (2023-02-28T22:53:27.896873494) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:28.402289862) (2023-02-28T22:53:28.402305532) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:28.402342882) (2023-02-28T22:53:28.402352362) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:28.909894822) (2023-02-28T22:53:28.909911012) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:28.909950383) (2023-02-28T22:53:28.909959713) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:29.407448780) (2023-02-28T22:53:29.407474661) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:29.407536091) (2023-02-28T22:53:29.407553041) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:29.926909703) (2023-02-28T22:53:29.926934893) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:29.926974143) (2023-02-28T22:53:29.926982063) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:30.467507152) (2023-02-28T22:53:30.467531572) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:30.467600393) (2023-02-28T22:53:30.467617113) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:31.18830454) (2023-02-28T22:53:31.18845914) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:31.18888554) (2023-02-28T22:53:31.18900614) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:31.556852103) (2023-02-28T22:53:31.556870833) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:31.556924603) (2023-02-28T22:53:31.556936293) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:32.91577352) (2023-02-28T22:53:32.91592342) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:32.91629312) (2023-02-28T22:53:32.91637022) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:32.624245033) (2023-02-28T22:53:32.624261363) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:32.624298253) (2023-02-28T22:53:32.624306774) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:33.165905393) (2023-02-28T22:53:33.165922703) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:33.165962093) (2023-02-28T22:53:33.165971543) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:33.689622394) (2023-02-28T22:53:33.689640254) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:33.689680694) (2023-02-28T22:53:33.689688674) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:34.185460482) (2023-02-28T22:53:34.185476342) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:34.185520993) (2023-02-28T22:53:34.185529933) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:34.690444960) (2023-02-28T22:53:34.690463130) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:34.690517420) (2023-02-28T22:53:34.690527700) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:35.206756903) (2023-02-28T22:53:35.206770893) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:35.206816533) (2023-02-28T22:53:35.206827293) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:35.721509290) (2023-02-28T22:53:35.721526560) [Err] [MsgManager.cc:61] AddSubscriber() error: Address already attached to a different model
+(2023-02-28T22:53:35.721567990) (2023-02-28T22:53:35.721578140) [Dbg] [CommsEndpoint.cc:89] Succesfuly bound to [usv] on topic [model/usv/rx]
+(2023-02-28T22:53:35.993423750) (2023-02-28T22:53:35.993443470) [Dbg] [SignalHandler.cc:141] Received signal[2].
+(2023-02-28T22:53:35.993483530) (2023-02-28T22:53:35.993493340) [Dbg] [ServerPrivate.cc:110] Server received signal[2]
+(2023-02-28T22:53:35.993534260) (2023-02-28T22:53:35.993546311) [Dbg] [Sensors.cc:406] SensorsPrivate::Stop
+(2023-02-28T22:53:35.997541057) (2023-02-28T22:53:35.997563207) [Dbg] [Sensors.cc:392] SensorsPrivate::RenderThread stopped
+(2023-02-28T22:53:36.241145354) (2023-02-28T22:53:36.241160614) [Dbg] [ign.cc:410] Shutting down ign-gazebo-server
+((((((((((((2023-02-28T22:53:36.243795194(2023-02-28T22:53:36.243795194) (2023-02-28T22:53:36.243829924) (((2023-02-28T22:53:36.243885094) (2023-02-28T22:53:36.243916885) ) (2023-02-28T22:53:36.243954255) ((2023-02-28T22:53:36.244023965) (2023-02-28T22:53:36.244050605) ((2023-02-28T22:53:36.244091035) (2023-02-28T22:53:36.244120215) (2023-02-28T22:53:36.244137415) (2023-02-28T22:53:36.244167806) (2023-02-28T22:53:36.2437286542023-02-28T22:53:36.244200566) (2023-02-28T22:53:36.244228806) ((2023-02-28T22:53:36.244269266) (2023-02-28T22:53:36.244295756) 2023-02-28T22:53:36.244317966) (2023-02-28T22:53:36.244345336) ) ((2023-02-28T22:53:36.244392806) (2023-02-28T22:53:36.244453587) (2023-02-28T22:53:36.244469017) [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] (2023-02-28T22:53:36.244551397) (2023-02-28T22:53:36.244582747) 2023-02-28T22:53:36.244435757) (2023-02-28T22:53:36.244653048) 2023-02-28T22:53:36.244675438) (2023-02-28T22:53:36.244720658) (2023-02-28T22:53:36.2447753282023-02-28T22:53:36.2447796482023-02-28T22:53:36.2447753282023-02-28T22:53:36.2447796482023-02-28T22:53:36.2440111852023-02-28T22:53:36.244805058) (2023-02-28T22:53:36.244831268) 2023-02-28T22:53:36.244506737) (2023-02-28T22:53:36.244879809) ) ((2023-02-28T22:53:36.244919449) 2023-02-28T22:53:36.244944549) (2023-02-28T22:53:36.2449770592023-02-28T22:53:36.244977059Exiting postupdate worker thread () (2023-02-28T22:53:36.245016739) ) ((2023-02-28T22:53:36.245066429) ) [Dbg] [SimulationRunner.cc:518] ) (2023-02-28T22:53:36.245142600) 2023-02-28T22:53:36.245142600) (2023-02-28T22:53:36.245168360) (2023-02-28T22:53:36.245193540) ) 2023-02-28T22:53:36.245225570) (2023-02-28T22:53:36.245252060) (() (2023-02-28T22:53:36.245821053) 2023-02-28T22:53:36.245821053) (2023-02-28T22:53:36.245851523) 2023-02-28T22:53:36.245781212Exiting postupdate worker thread (772023-02-28T22:53:36.245894843) () ) (2023-02-28T22:53:36.245972253) ) () (2023-02-28T22:53:36.246032434) )
+[Dbg] [SimulationRunner.cc:518] 2023-02-28T22:53:36.246060354) ((2023-02-28T22:53:36.246158584) [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] 2023-02-28T22:53:36.2460056932023-02-28T22:53:36.246212554) ) [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (4)
+[Dbg] [SimulationRunner.cc:518] 0)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (12)Exiting postupdate worker thread (8)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (5)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (6)
+Exiting postupdate worker thread (Exiting postupdate worker thread (22)
+Exiting postupdate worker thread (23)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (29)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (20[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (17)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (25)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (18)20[Dbg] [SimulationRunner.cc:518] )
+1010Exiting postupdate worker thread (2)
+
+26)22[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (16)
+[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (15)
+
+11)
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] )
+
+[Dbg] [SimulationRunner.cc:518] )
+12[Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (19)
+Exiting postupdate worker thread (9Exiting postupdate worker thread ()Exiting postupdate worker thread (3)
+Exiting postupdate worker thread (1)
+
+[Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] [Dbg] [SimulationRunner.cc:518] Exiting postupdate worker thread (13)
+[Dbg] [SimulationRunner.cc:518] 14)
+Exiting postupdate worker thread (28)
+24)
+Exiting postupdate worker thread (21)
+(2023-02-28T22:53:36.288729850) (2023-02-28T22:53:36.288743880) [Dbg] [Sensors.cc:406] SensorsPrivate::Stop
+(2023-02-28T22:53:36.311603144) (2023-02-28T22:53:36.311623024) [Msg] Stopping recording
