@@ -1,1 +1,0 @@
-/home/victor/USV-DOCK/ws/venv/lib/python3.10/site-packages/pkg_resources/tests/data/my-test-package-source/setup.py

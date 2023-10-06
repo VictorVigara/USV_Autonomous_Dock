@@ -1,3 +1,0 @@
-laser_odom_map:
-  ros__parameters:
-    use_sim_time: True

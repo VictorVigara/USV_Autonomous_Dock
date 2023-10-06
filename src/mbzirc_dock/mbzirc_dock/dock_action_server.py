@@ -56,7 +56,7 @@ class DockActionServer(Node):
         self.v_orbit = 2.0
 
         # parameters for the line detection
-        self.line_thres = 0.7
+        self.line_thres_min = 0.7
         self.line_thres_max = 1
         self.angle_threshold = np.deg2rad(50) # 150
 
@@ -121,6 +121,7 @@ class DockActionServer(Node):
         self.target_pub = self.create_publisher(Marker, 'target', 10)
         self.traj_pub = self.create_publisher(Marker, 'trajectory', 10)
         self.line_pub = self.create_publisher(Marker, 'line', 10)
+        self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 10)
         self.control_timer = self.create_timer(self.DT, self._control_cb)
 
         self._action_server = ActionServer(
@@ -133,7 +134,8 @@ class DockActionServer(Node):
             self._current_state.target = self.target_center
 
             self._track_line()
-
+            
+            print(self._policy_queue)
             action = self._get_action(self._current_state)
 
             msg = Twist()
@@ -171,17 +173,16 @@ class DockActionServer(Node):
             return Dock.Result(success=False)
 
     def _laser_cb(self, pointcloud: PointCloud2) -> None:
+        """Callback for the laser scan topic."""
         # Get the center_line from the PointCloud2
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
-
         points = np.array(center_line).T # 3xN points
         self.points = points[:2, :]
 
-        """Callback for the laser scan topic."""
         #self.points = self._scan_to_points(scan)
         self.target_center = np.median(self.points, axis=1)
-
         marker = self.get_marker(self.target_center)
+
         self.center_pub.publish(marker)
 
     def _pc2_to_scan(self, pointcloud: PointCloud2, ang_threshold = [-0.5, 5]): 
@@ -221,7 +222,7 @@ class DockActionServer(Node):
         marker_array = MarkerArray()
         for i in range(len(scan_line)): 
             id += 1
-            marker = self.get_marker(scan_line[i], color=[0.0, 255.0, 0.0], scale=0.05, id_=id, scale = 0.05)
+            marker = self.get_marker(scan_line[i], color=[0.0, 255.0, 0.0], id_=id, scale = 0.05)
             marker_array.markers.append(marker)
         self.scan_pub.publish(marker_array)
         return np.array(scan_line)
@@ -229,10 +230,11 @@ class DockActionServer(Node):
 
     def _track_line(self) -> None:
         """Detects and tracks a line in the laser scan."""
-        if self.state == DockStage.STOP:
-            return
+        """ if self.state == DockStage.STOP:
+            return """
 
         lines = detect_lines(self.points, 4, 0.1, self.get_logger())
+
         if len(lines) == 0:
             return
 
@@ -241,7 +243,7 @@ class DockActionServer(Node):
             if line.length() > best_line.length():
                 best_line = line
 
-        if best_line.length() < self.line_thres and best_line.length() > self.line:
+        if best_line.length() < self.line_thres_min and best_line.length() > self.line_thres_max:
             self.get_logger().debug(f'Line not found')
             return
 
@@ -288,7 +290,6 @@ class DockActionServer(Node):
             )
             self._policy_queue.append(touch_policy)
             self.get_logger().info(f'Initial x0: {self.tracked_start.x}')
-
         self._recalculate_approach_trajectory(lower, higher)
 
     def _set_stop(self) -> None:
@@ -348,6 +349,7 @@ class DockActionServer(Node):
                 self._policy_queue.popleft()
 
             policy = self._policy_queue[0]
+            print(policy)
             try:
                 action = policy.get_action(state)
                 if isinstance(policy, TargetPolicy):
@@ -385,7 +387,7 @@ class DockActionServer(Node):
         points_base = T @ points_lidar
         return points_base[:2, :]   # drop z
 
-    def get_marker(self, point: np.ndarray, color = None, stamp=None, id_=0, scale=0.3) -> Marker:
+    def get_marker(self, point: np.ndarray, color = None, stamp=None, id_=0, scale = 0.3) -> Marker:
         """Returns a marker for the given point."""
         if color is None:
             color = (1.0, 0.0, 0.0)

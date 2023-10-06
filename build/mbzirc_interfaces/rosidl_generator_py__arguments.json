@@ -1,9 +1,9 @@
 {
   "package_name": "mbzirc_interfaces",
-  "output_dir": "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_generator_py/mbzirc_interfaces",
+  "output_dir": "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_generator_py/mbzirc_interfaces",
   "template_dir": "/opt/ros/foxy/share/rosidl_generator_py/cmake/../resource",
   "idl_tuples": [
-    "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces:action/Dock.idl"
+    "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces:action/Dock.idl"
   ],
   "ros_interface_dependencies": [
     "action_msgs:/opt/ros/foxy/share/action_msgs/msg/GoalInfo.idl",
@@ -28,7 +28,7 @@
     "/opt/ros/foxy/share/rosidl_generator_py/cmake/../resource/_msg.py.em",
     "/opt/ros/foxy/share/rosidl_generator_py/cmake/../resource/_srv_pkg_typesupport_entry_point.c.em",
     "/opt/ros/foxy/share/rosidl_generator_py/cmake/../resource/_srv.py.em",
-    "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces/action/Dock.idl",
+    "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces/action/Dock.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalInfo.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalStatus.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalStatusArray.idl",

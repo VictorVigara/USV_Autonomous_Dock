@@ -1,6 +1,13 @@
 package.xml
 setup.cfg
 setup.py
+../../build/mbzirc_dock/mbzirc_dock.egg-info/PKG-INFO
+../../build/mbzirc_dock/mbzirc_dock.egg-info/SOURCES.txt
+../../build/mbzirc_dock/mbzirc_dock.egg-info/dependency_links.txt
+../../build/mbzirc_dock/mbzirc_dock.egg-info/entry_points.txt
+../../build/mbzirc_dock/mbzirc_dock.egg-info/requires.txt
+../../build/mbzirc_dock/mbzirc_dock.egg-info/top_level.txt
+../../build/mbzirc_dock/mbzirc_dock.egg-info/zip-safe
 config/laser_odom_map.yaml
 config/scan_filter_chain.yaml
 config/usv.yaml
@@ -17,11 +24,4 @@ mbzirc_dock/stop_policy.py
 mbzirc_dock/target_policy.py
 mbzirc_dock/touch_policy.py
 mbzirc_dock/tracker.py
-mbzirc_dock.egg-info/PKG-INFO
-mbzirc_dock.egg-info/SOURCES.txt
-mbzirc_dock.egg-info/dependency_links.txt
-mbzirc_dock.egg-info/entry_points.txt
-mbzirc_dock.egg-info/requires.txt
-mbzirc_dock.egg-info/top_level.txt
-mbzirc_dock.egg-info/zip-safe
 resource/mbzirc_dock

@@ -1,1 +1,0 @@
-Invoking command in '/home/victor/USV-DOCK/ws/build/mbzirc_interfaces': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake --build /home/victor/USV-DOCK/ws/build/mbzirc_interfaces -- -j8 -l8

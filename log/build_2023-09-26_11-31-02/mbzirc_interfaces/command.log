@@ -1,1 +1,0 @@
-Invoking command in '/home/victor/USV-DOCK/ws/build/mbzirc_interfaces': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/mbzirc_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install

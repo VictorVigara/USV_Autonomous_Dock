@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_generator_py/mbzirc_interfaces/libmbzirc_interfaces__python.so" "TARGETS" "mbzirc_interfaces__python" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

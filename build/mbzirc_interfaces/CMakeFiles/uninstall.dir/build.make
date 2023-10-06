@@ -53,10 +53,10 @@ RM = /home/victor/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -E rm 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/victor/USV-DOCK/ws/src/mbzirc_interfaces
+CMAKE_SOURCE_DIR = /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/victor/USV-DOCK/ws/build/mbzirc_interfaces
+CMAKE_BINARY_DIR = /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/victor/USV-DOCK/ws/build/mbzirc_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/victor/USV-DOCK/ws/src/mbzirc_interfaces /home/victor/USV-DOCK/ws/src/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

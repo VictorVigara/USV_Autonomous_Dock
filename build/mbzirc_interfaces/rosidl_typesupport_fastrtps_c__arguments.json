@@ -1,9 +1,9 @@
 {
   "package_name": "mbzirc_interfaces",
-  "output_dir": "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_typesupport_fastrtps_c/mbzirc_interfaces",
+  "output_dir": "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_typesupport_fastrtps_c/mbzirc_interfaces",
   "template_dir": "/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/resource",
   "idl_tuples": [
-    "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces:action/Dock.idl"
+    "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces:action/Dock.idl"
   ],
   "ros_interface_dependencies": [
     "action_msgs:/opt/ros/foxy/share/action_msgs/msg/GoalInfo.idl",
@@ -23,7 +23,7 @@
     "/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/resource/msg__type_support_c.cpp.em",
     "/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/resource/srv__rosidl_typesupport_fastrtps_c.h.em",
     "/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/resource/srv__type_support_c.cpp.em",
-    "/home/victor/USV-DOCK/ws/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces/action/Dock.idl",
+    "/home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/rosidl_adapter/mbzirc_interfaces/action/Dock.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalInfo.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalStatus.idl",
     "/opt/ros/foxy/share/action_msgs/msg/GoalStatusArray.idl",

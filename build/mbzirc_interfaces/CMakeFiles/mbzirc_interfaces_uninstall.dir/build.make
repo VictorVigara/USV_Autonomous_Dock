@@ -53,10 +53,10 @@ RM = /home/victor/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -E rm 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/victor/USV-DOCK/ws/src/mbzirc_interfaces
+CMAKE_SOURCE_DIR = /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/victor/USV-DOCK/ws/build/mbzirc_interfaces
+CMAKE_BINARY_DIR = /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces
 
 # Utility rule file for mbzirc_interfaces_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/mbzirc_interfaces_uninstall.dir/compiler_depend.make
 include CMakeFiles/mbzirc_interfaces_uninstall.dir/progress.make
 
 CMakeFiles/mbzirc_interfaces_uninstall:
-	/home/victor/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -P /home/victor/USV-DOCK/ws/build/mbzirc_interfaces/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/home/victor/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -P /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 mbzirc_interfaces_uninstall: CMakeFiles/mbzirc_interfaces_uninstall
 mbzirc_interfaces_uninstall: CMakeFiles/mbzirc_interfaces_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/mbzirc_interfaces_uninstall.dir/clean:
 .PHONY : CMakeFiles/mbzirc_interfaces_uninstall.dir/clean
 
 CMakeFiles/mbzirc_interfaces_uninstall.dir/depend:
-	cd /home/victor/USV-DOCK/ws/build/mbzirc_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/victor/USV-DOCK/ws/src/mbzirc_interfaces /home/victor/USV-DOCK/ws/src/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces /home/victor/USV-DOCK/ws/build/mbzirc_interfaces/CMakeFiles/mbzirc_interfaces_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/CMakeFiles/mbzirc_interfaces_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/mbzirc_interfaces_uninstall.dir/depend
 

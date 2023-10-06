@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/victor/USV-DOCK/ws/build/ros_ign_interfaces/libros_ign_interfaces__rosidl_typesupport_fastrtps_cpp.so" "TARGETS" "ros_ign_interfaces__rosidl_typesupport_fastrtps_cpp" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

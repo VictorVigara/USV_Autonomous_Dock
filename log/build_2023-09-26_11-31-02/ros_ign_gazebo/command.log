@@ -1,2 +1,0 @@
-Invoking command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install
-Invoked command in '/home/victor/USV-DOCK/ws/build/ros_ign_gazebo' returned '1': CMAKE_PREFIX_PATH=/opt/ros/foxy /home/victor/.local/bin/cmake /home/victor/USV-DOCK/ws/src/ros_ign/ros_ign_gazebo -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/victor/USV-DOCK/ws/install

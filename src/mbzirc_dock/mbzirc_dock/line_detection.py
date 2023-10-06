@@ -93,5 +93,4 @@ def detect_lines(points: np.ndarray, k: int, dist_threshold: float, log) -> List
             break
         if i + j >= n:
             break
-
     return lines

@@ -1,8 +1,8 @@
-# Install script for directory: /home/victor/USV-DOCK/ws/build/mbzirc_interfaces/mbzirc_interfaces__py
+# Install script for directory: /home/victor/USV_Autonomous_Dock/build/mbzirc_interfaces/mbzirc_interfaces__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/victor/USV-DOCK/ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/victor/USV_Autonomous_Dock/install/mbzirc_interfaces")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
