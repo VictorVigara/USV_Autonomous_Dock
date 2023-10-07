@@ -14,7 +14,7 @@ from rclpy.node import Node
 from rclpy.time import Time
 
 from geometry_msgs.msg import Twist, Point
-from sensor_msgs.msg import LaserScan, PointCloud2
+from sensor_msgs.msg import LaserScan, PointCloud2, PointField
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
 
@@ -45,11 +45,15 @@ class DockStage(enum.Enum):
 
 
 class DockActionServer(Node):
-    BASE_LINK = 'usv/base_link'
+    BASE_LINK = 'world'
     DT = 0.1
 
     def __init__(self):
         super().__init__('dock_action_server')
+
+        # parameters crop pc2
+        self.x_crop = 2.2
+        self.y_crop = 1.1
 
         # parameters for the orbit
         self.r_orbit = 10.0
@@ -122,6 +126,8 @@ class DockActionServer(Node):
         self.traj_pub = self.create_publisher(Marker, 'trajectory', 10)
         self.line_pub = self.create_publisher(Marker, 'line', 10)
         self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 10)
+        self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 10)
+
         self.control_timer = self.create_timer(self.DT, self._control_cb)
 
         self._action_server = ActionServer(
@@ -174,7 +180,8 @@ class DockActionServer(Node):
 
     def _laser_cb(self, pointcloud: PointCloud2) -> None:
         """Callback for the laser scan topic."""
-        # Get the center_line from the PointCloud2
+
+        # Get the center_line from the PointCloud2 and delete vessel points
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
         points = np.array(center_line).T # 3xN points
         self.points = points[:2, :]
@@ -182,13 +189,13 @@ class DockActionServer(Node):
         #self.points = self._scan_to_points(scan)
         self.target_center = np.median(self.points, axis=1)
         marker = self.get_marker(self.target_center)
-
         self.center_pub.publish(marker)
+    
 
     def _pc2_to_scan(self, pointcloud: PointCloud2, ang_threshold = [-0.5, 5]): 
         """Get an horizontal scan from a PointCloud2"""
-        angles = []
         scan_line = []
+        
         for p in point_cloud2.read_points(pointcloud, field_names = ("x", "y", "z"), skip_nans=True):
             # Get XYZ coordinates to calculate vertical angle and filter by vertical scans
             x = p[0]
@@ -200,31 +207,22 @@ class DockActionServer(Node):
                 angle = 90 - np.rad2deg(np.arccos(z/d))
 
                 # Save points from center scan
-                if angle < ang_threshold[0] and angle > ang_threshold[1] and x > 1 and x < 4 and d < 2.5: 
+                if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_crop) or (x < -self.x_crop) or (x > -self.x_crop and x < self.x_crop and (y > self.y_crop or y < -self.y_crop))): 
                     scan_line.append([x, y, z])
                     
+        pc2_cropped = PointCloud2()
+        pc2_cropped.header = pointcloud.header
+        pc2_cropped.height = 1
+        pc2_cropped.width = len(scan_line)
+        pc2_cropped.fields.append(PointField(name="x", offset=0, datatype=PointField.FLOAT32, count=1))
+        pc2_cropped.fields.append(PointField(name="y", offset=4, datatype=PointField.FLOAT32, count=1))
+        pc2_cropped.fields.append(PointField(name="z", offset=8, datatype=PointField.FLOAT32, count=1))
+        pc2_cropped.is_bigendian = False
+        pc2_cropped.point_step = 12  # 4 (x) + 4 (y) + 4 (z) bytes per point
+        pc2_cropped.row_step = pc2_cropped.point_step * len(scan_line)
+        pc2_cropped.data = np.array(scan_line, dtype=np.float32).tobytes()
+        self.pc_crop_pub.publish(pc2_cropped)
 
-                # Calculate vertical angles from the PointCloud2
-                """ ang_saved = False
-                if len(angles) == 0: 
-                    angles.append(angle)
-                    print(angles)
-                else: 
-                    for i in range(len(angles)): 
-                        diff = angle - angles[i]
-                        
-                        if diff < 0.5 and diff > -0.5:
-                            ang_saved = True
-                    
-                    if ang_saved == False: 
-                        angles.append(angle) """
-        id = 0
-        marker_array = MarkerArray()
-        for i in range(len(scan_line)): 
-            id += 1
-            marker = self.get_marker(scan_line[i], color=[0.0, 255.0, 0.0], id_=id, scale = 0.05)
-            marker_array.markers.append(marker)
-        self.scan_pub.publish(marker_array)
         return np.array(scan_line)
 
 
@@ -257,9 +255,9 @@ class DockActionServer(Node):
         angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
         self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°')
 
-        if angle < self.angle_threshold and self.tracked_start is None:
+        """ if angle < self.angle_threshold and self.tracked_start is None:
             self.get_logger().warn(f'Too small line angle: {np.rad2deg(angle):.1f}° < {np.rad2deg(self.angle_threshold):.1f}°, ignoring...')
-            return
+            return """
 
         if self.tracked_start is not None:
             self.tracked_start.update(lower[:, None])
