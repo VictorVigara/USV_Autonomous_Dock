@@ -346,23 +346,18 @@ class LidarScan(Node):
             # check if the first 2 points are consecutive
             
             while i + j < n:
-                # Check if the first 2 points are close enough
+                # Check if the first 2 points are close enough if not continue with following points
                 if j == 2 and (abs(differences_x) > 0.3 and abs(differences_y) > 0.3):
                     i += 1
                     break
 
                 previous_keys = []
                 iter_points = points[:, i:i + j]
-                # Compute the differences between consecutive points
-                differences_x = np.diff(np.array(iter_points[0,:]))
-                differences_y = np.diff(np.array(iter_points[1,:]))
-                # Calculate the median of the differences
-                median_distance_x = np.median(np.abs(differences_x))
-                median_distance_y = np.median(np.abs(differences_y))
+                
                 # Calculate last points distance in x and y
                 last_dist_x = abs(iter_points[0,-2]-iter_points[0,-1])
                 last_dist_y = abs(iter_points[1,-2]-iter_points[1,-1])
-
+                
 
                 # If map outliers dict is not empty check if the last value is 0
                 if len(map_outliers.keys()) is not 0 and len(map_outliers.keys()) is not 1: 
@@ -392,12 +387,11 @@ class LidarScan(Node):
                 # Estimate the line of the points being analyzed 
                 new_line = self.est_line(new_iter_points)  # Removed 'self.' from here
                 # Check if points being analyzed belong to the estimated line
-                valid_flag, inliers, outliers = self.all_points_valid(new_line, iter_points, dist_threshold)
+                valid_flag, _, outliers = self.all_points_valid(new_line, iter_points, dist_threshold)
                 # Visualize the line being analyzed
                 #line_msg = self._visualize_line(lower=iter_points[:,0], higher=iter_points[:,-1], color=[1.0, 0.0, 0.0], id=99)
-                
 
-
+                # 
                 if abs(last_dist_x) > 4 and last_dist_y > 4 and valid_flag == False:
                     # Get the values associated with the target_key
                     j_values = list(map_outliers.values())
@@ -416,9 +410,8 @@ class LidarScan(Node):
                     break
 
                 # Check if the last point is an outlier
-                for p in range(outliers.shape[1]): 
-                    if iter_points[0,-1] == outliers[0, p]: 
-                        n_last_outliers += 1
+                if np.any(iter_points[0,-1] == outliers[0, :]): 
+                    n_last_outliers += 1
                 # If there are no outliers or the last point is not an outlier update line
                 if valid_flag or n_last_outliers == 0:  # Removed 'self.' from here
                     current_line = new_line
