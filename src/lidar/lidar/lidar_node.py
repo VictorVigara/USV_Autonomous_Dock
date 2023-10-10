@@ -85,11 +85,7 @@ class LidarScan(Node):
 
         lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
         #line_msg = self._visualize_line(lower, higher, id=id)
-        h = np.linalg.norm(higher)
-        l = np.linalg.norm(lower)
-        r = np.linalg.norm(higher - lower)
-        angle = np.rad2deg(np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l)))
-        print(f"Target line angle: {angle}")
+        
         
         # Get all the points from the pointcloud that belongs to the detected line and are within a threshold
         line_cluster = self.points_on_line_with_threshold(points, [lower, higher], threshold = 1)
@@ -117,18 +113,22 @@ class LidarScan(Node):
         first_point = line_cluster_array[:, sorted_indices[0]]
         last_point = line_cluster_array[:, sorted_indices[-1]]
 
+        x1, y1 = first_point
+        x2, y2 = last_point
+        slope = (y2-y1)/(x2-x1)
+        angle_line_x_axis = np.rad2deg(math.atan(slope))
+        print(f"Line angle: {angle_line_x_axis}")
 
         _ = self._visualize_line(first_point, last_point, id = 0, color=[0.0, 1.0, 0.0])
-        lines_array_msg = MarkerArray()
+        """ lines_array_msg = MarkerArray()
         lines_array_msg.markers = []
         for i in range(line_cluster_array.shape[1]): 
             x = line_cluster_array[0, i]
             y = line_cluster_array[1, i]
             marker = self.get_marker([x, y], color=[255.0, 0.0, 0.0], scale=0.1, id_=i)
             lines_array_msg.markers.append(marker)
-        self.scan_pub.publish(lines_array_msg)
+        self.scan_pub.publish(lines_array_msg) """
 
-        a = 1
 
         # Get line length information to filter them
         """ marker_id = 0
