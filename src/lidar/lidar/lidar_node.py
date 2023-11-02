@@ -14,10 +14,19 @@ from typing import List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 
+import numpy as np
+
+from skimage.transform import (hough_line, hough_line_peaks,
+                            probabilistic_hough_line)
+from skimage.feature import canny
+from skimage import data
+
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import cv2 as cv
+
 
 import math
-
-
 
 
 class Line:
@@ -31,6 +40,77 @@ class Line:
     def center(self) -> np.ndarray:
         return (self.start + self.end) / 2
 
+class Tracker2D:
+    def __init__(self, x0: np.ndarray, P0: float, R0: float, Q0: float, dt: float, mode: str) -> None:
+        self.x = np.array([[
+            x0[0],  # x position
+            0.0,    # x velocity
+            0.0,    # x acceleration
+            x0[1],  # y position
+            0.0,    # y velocity
+            0.0     # y acceleration
+        ]]).T
+
+        self.P = P0 * np.eye(6)     # state uncertainty
+        self.R = R0 * np.eye(2)     # measurement uncertainty
+        self.Q = Q0 * np.eye(6)     # process noise
+
+        self.H = np.array([  # observation matrix
+            [1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0]
+        ])
+
+        if mode == 'p':     # only position tracking
+            self.F = np.array([  # transition matrix
+                [1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+            ])
+        elif mode == 'v':     # position & velocity tracking
+            self.F = np.array([  # transition matrix
+                [1, dt, 0, 0,  0, 0],
+                [0,  1, 0, 0,  0, 0],
+                [0,  0, 0, 0,  0, 0],
+                [0,  0, 0, 1, dt, 0],
+                [0,  0, 0, 0,  1, 0],
+                [0,  0, 0, 0,  0, 0],
+            ])
+        elif mode == 'a':     # position, velocity & acceleration tracking
+            a = dt ** 2 / 2  # acceleration term
+            self.F = np.array([  # transition matrix
+                [1, dt,  a, 0,  0,  0],
+                [0,  1, dt, 0,  0,  0],
+                [0,  0,  1, 0,  0,  0],
+                [0,  0,  0, 1, dt,  a],
+                [0,  0,  0, 0,  1, dt],
+                [0,  0,  0, 0,  0,  1],
+            ])
+        else:
+            raise NotImplementedError(f'Invalid mode: {mode}, only p, v, a available.')
+
+    def update(self, Z: np.ndarray) -> None:
+        """Update state with new measurement."""
+        err = Z - self.H @ self.x
+        print(f'{self.H.shape}')
+        S = self.H @ self.P @ self.H.T + self.R
+        K = self.P @ self.H.T @ np.linalg.inv(S)
+
+        self.x = self.x + K @ err
+        self.P = (np.eye(6) - K @ self.H) @ self.P
+
+    def predict(self) -> None:
+        """Predict next state."""
+        self.x = self.F @ self.x  # + u
+        self.P = self.F @ self.P @ self.F.T + self.Q
+
+    @property
+    def pos(self) -> np.ndarray:
+        return np.array([self.x[0, 0], self.x[3, 0]])
+
+
 class LidarScan(Node):
     def __init__(self):
         super().__init__("lidar_node")
@@ -39,11 +119,11 @@ class LidarScan(Node):
 
         self.laser_sub = self.create_subscription(
             PointCloud2, '/cloud_fullframe', self._laser_cb, 1)
-        self.center_pub = self.create_publisher(Marker, 'target_center', 10)
-        self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 10)
-        self.line_pub = self.create_publisher(Marker, 'line', 10)
-        self.traj_pub = self.create_publisher(Marker, 'trajectory', 10)
-        self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 10)
+        self.center_pub = self.create_publisher(Marker, 'target_center', 1)
+        self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 1)
+        self.line_pub = self.create_publisher(Marker, 'line', 1)
+        self.traj_pub = self.create_publisher(Marker, 'trajectory', 1)
+        self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 1)
 
         # parameters crop pc2
         self.x_crop = 2.2
@@ -62,6 +142,15 @@ class LidarScan(Node):
             np.array([[0.0, 0.0]]).T for _ in range(len(self.trajectory_relative))
         ]
 
+        # parameters for line tracking
+        self.P0 = 5.0
+        self.R0 = 0.05
+        self.Q0 = 0.01
+        self.mode = 'p'
+        self.tracked_start: Optional[Tracker2D] = None
+        self.tracked_end: Optional[Tracker2D] = None
+
+        self.DT = 0.1
 
     def _laser_cb(self, pointcloud: PointCloud2):
         """ PointCloud2 callback"""
@@ -72,18 +161,108 @@ class LidarScan(Node):
         points = points[:2, :]
 
         # Detect continuous lines in the pointcloud        
-        lines_detected = self.detect_lines(points = points[:2, :], k = 4, dist_threshold=0.05)
+        #lines_detected = self.detect_lines(points = points[:2, :], k = 4, dist_threshold=0.05)
+
+
+
+        ###
         
+        # Constructing test image
+        #image = np.zeros((100, 100))
+        #idx = np.arange(25, 75)
+        #image[idx[::-1], idx] = 255
+        #image[idx, idx] = 255
+
+        # Define the grid parameters
+        grid_resolution = 0.1  # Resolution of the grid (adjust based on your needs)
+
+        # Calculate the grid size based on the range of coordinates
+        min_x, min_y = np.min(points, axis=1)
+        max_x, max_y = np.max(points, axis=1)
+
+        grid_size_x = int((max_x - min_x) / grid_resolution) + 1
+        grid_size_y = int((max_y - min_y) / grid_resolution) + 1
+
+        # Create an empty grid
+        occupancy_grid = np.zeros((grid_size_x, grid_size_y), dtype=np.uint8)
+
+        # Map laser scan points to the grid
+        for x, y in points.T:  # Transpose 'points' to loop over columns
+            x_index = int((x - min_x) / grid_resolution)
+            y_index = int((y - min_y) / grid_resolution)
+            occupancy_grid[x_index, y_index] = 255  # Set as occupied
+
+        image = occupancy_grid
+
+        kernel = np.ones((3,3),np.uint8)
+        image = cv.dilate(image,kernel,iterations = 1)
+
+        # Classic straight-line Hough transform
+        h, theta, d = hough_line(image)
+
+        # Generating figure 1
+        """ fig, axes = plt.subplots(1, 3, figsize=(15, 6))
+        ax = axes.ravel()
+
+        ax[0].imshow(image, cmap=cm.gray)
+        ax[0].set_title('Input image')
+        ax[0].set_axis_off()
+
+        ax[1].imshow(np.log(1 + h),
+                    extent=[np.rad2deg(theta[-1]), np.rad2deg(theta[0]), d[-1], d[0]],
+                    cmap=cm.gray, aspect=1/1.5)
+        ax[1].set_title('Hough transform')
+        ax[1].set_xlabel('Angles (degrees)')
+        ax[1].set_ylabel('Distance (pixels)')
+        ax[1].axis('image')
+
+        ax[2].imshow(image, cmap=cm.gray) """
+
+        lines_scan = []
+        for _, angle, dist in zip(*hough_line_peaks(h, theta, d)):
+            y0 = (dist - 0 * np.cos(angle)) / np.sin(angle)
+            y1 = (dist - (image.shape[1] - 1) * np.cos(angle)) / np.sin(angle)
+            x0 = 0
+            x1 = image.shape[1] - 1
+
+            #ax[2].plot((x0, x1), (y0, y1), '-r')
+            
+            p1 = [y0*grid_resolution+min_x, x0*grid_resolution+min_y]
+            p2 = [y1*grid_resolution+min_x, x1*grid_resolution+min_y]
+
+            lines_scan.append([p1, p2])
         
+        for line in lines_scan:
+            line_msg = self._visualize_line(line[0], line[1], id=0)
+        
+        """ ax[2].set_xlim((0, image.shape[1]))
+        ax[2].set_ylim((image.shape[0], 0))
+        ax[2].set_axis_off()
+        ax[2].set_title('Detected lines')
+
+        plt.tight_layout()
+        plt.show()
+        a = 1 """
+
+
+
+        ###
+        
+        """ 
         min_dist = 999999
         # Detect lines that are closer (assuming that the target line is the closest one)
         for line in lines_detected: 
             center = line.center()
+            lower, higher = self._order_line_endpoints(line.start, line.end)
             dist = math.sqrt(center[0]**2 + center[1]**2)
-            if dist < min_dist: 
+            length = np.linalg.norm(lower - higher)
+            if dist < min_dist and length < 18: 
                 best_line = line
 
         lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
+        print(f"Line length first: {np.linalg.norm(lower - higher)}")
+
+
         #line_msg = self._visualize_line(lower, higher, id=id)
         
         
@@ -99,6 +278,7 @@ class LidarScan(Node):
         line_cluster_array = inliers[:2,:]
         line_cluster_eq = self.est_line(line_cluster_array)
         best_line = Line(line_cluster_eq, line_cluster_array[:,0], line_cluster_array[:,-1])
+
 
         points = line_cluster_array.T
 
@@ -117,9 +297,9 @@ class LidarScan(Node):
         x2, y2 = last_point
         slope = (y2-y1)/(x2-x1)
         angle_line_x_axis = np.rad2deg(math.atan(slope))
-        print(f"Line angle: {angle_line_x_axis}")
+        print(f"Line angle: {angle_line_x_axis}") """
 
-        _ = self._visualize_line(first_point, last_point, id = 0, color=[0.0, 1.0, 0.0])
+        #_ = self._visualize_line(first_point, last_point, id = 0, color=[0.0, 1.0, 0.0])
         """ lines_array_msg = MarkerArray()
         lines_array_msg.markers = []
         for i in range(line_cluster_array.shape[1]): 
@@ -170,6 +350,53 @@ class LidarScan(Node):
             r = np.linalg.norm(higher - lower)
             angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
             self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°; h: {h}; l: {l}; r:{r}') """
+
+
+        #if self.tracked_start is not None:
+            #self._visualize_line(lower=self.tracked_start.pos, higher=self.tracked_end.pos, id = 0, color=[1.0, 1.0, 0.0])
+
+        """ lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
+        h = np.linalg.norm(higher)
+        l = np.linalg.norm(lower)
+        r = np.linalg.norm(higher - lower)
+        angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
+        self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°')
+        print(f"Linel ength: {np.linalg.norm(first_point - last_point)}")
+         """""" if angle < self.angle_threshold and self.tracked_start is None:
+            self.get_logger().warn(f'Too small line angle: {np.rad2deg(angle):.1f}° < {np.rad2deg(self.angle_threshold):.1f}°, ignoring...')
+            return """
+
+        """ if self.tracked_start is not None:
+            self.tracked_start.update(lower[:, None])
+            self.tracked_start.predict()
+            self.tracked_end.update(higher[:, None])
+            self.tracked_end.predict()
+        else:
+            self.get_logger().info(f'Started tracking line!')
+            #self.state = DockStage.APPROACH
+
+            self.tracked_start = Tracker2D(
+                lower, self.P0, self.R0, self.Q0, self.DT, self.mode)
+            self.tracked_end = Tracker2D(
+                higher, self.P0, self.R0, self.Q0, self.DT, self.mode)"""
+        """ self._policy_queue.clear()
+        
+        for target, speed in zip(self.trajectory_targets, self.trajectory_speeds):
+            policy = ApproachPolicy(
+                target, speed, 1.0, self.get_logger()
+            )
+            self._policy_queue.append(policy)
+
+        touch_policy = TouchPolicy(
+            self.tracked_start, self.tracked_end, self.usv_width,
+            self.v_touch, self.touch_precision,
+            self._set_stop,
+            self.get_logger()
+        )
+        self._policy_queue.append(touch_policy) """
+        """ self.get_logger().info(f'Initial x0: {self.tracked_start.x}')
+    self._recalculate_approach_trajectory(lower, higher) """
+
 
     def distance_point_to_line(self, point, line):
         x1, y1 = line[0]
@@ -389,7 +616,7 @@ class LidarScan(Node):
                 # Check if points being analyzed belong to the estimated line
                 valid_flag, _, outliers = self.all_points_valid(new_line, iter_points, dist_threshold)
                 # Visualize the line being analyzed
-                #line_msg = self._visualize_line(lower=iter_points[:,0], higher=iter_points[:,-1], color=[1.0, 0.0, 0.0], id=99)
+                line_msg = self._visualize_line(lower=iter_points[:,0], higher=iter_points[:,-1], color=[1.0, 0.0, 0.0], id=99)
 
                 # 
                 if abs(last_dist_x) > 4 and last_dist_y > 4 and valid_flag == False:
@@ -523,6 +750,21 @@ class LidarScan(Node):
             )
 
         self.traj_pub.publish(msg)
+    
+    def line_intersections(self, x1, y1, x2, y2):
+        # Calculate the slope (m) and y-intercept (b)
+        m = (y2 - y1) / (x2 - x1)
+        b = y1 - m * x1
+
+        # Calculate the point of intersection with the x-axis (y = 0)
+        x_intersection_x_axis = -b / m
+        y_intersection_x_axis = 0
+
+        # Calculate the point of intersection with the y-axis (x = 0)
+        x_intersection_y_axis = 0
+        y_intersection_y_axis = b
+
+        return (x_intersection_x_axis, y_intersection_x_axis), (x_intersection_y_axis, y_intersection_y_axis)
 
 
 def main(args=None):

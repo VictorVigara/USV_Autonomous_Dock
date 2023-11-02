@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/victor/USV_Autonomous_Dock/install/sick_scan/include/**",
+        "/home/victor/USV_Autonomous_Dock/install/mbzirc_interfaces/include/**",
+        "/opt/ros/foxy/include/**",
+        "/home/victor/USV_Autonomous_Dock/src/mbzirc_interfaces/include/**",
+        "/home/victor/USV_Autonomous_Dock/src/sick_scan_xd/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
