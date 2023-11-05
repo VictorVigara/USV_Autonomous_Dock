@@ -27,7 +27,7 @@ from tf2_ros.transform_listener import TransformListener
 from mbzirc_interfaces.action import Dock
 
 from mbzirc_dock.approach_policy import ApproachPolicy
-from mbzirc_dock.line_detection import detect_lines
+from mbzirc_dock.line_detection import detect_lines, filter_lines
 from mbzirc_dock.orbit_policy import OrbitPolicy
 from mbzirc_dock.policy import Policy, PolicyAction, PolicyState, PolicyCanceledException, PolicyOutOfBoundsException
 from mbzirc_dock.stop_policy import StopPolicy
@@ -63,12 +63,13 @@ class DockActionServer(Node):
         self.line_thres_min = 0.7
         self.line_thres_max = 1
         self.angle_threshold = np.deg2rad(50) # 150
+        self.prev_angle = None
 
         # parameters for line tracking
         self.P0 = 5.0
         self.R0 = 0.05
         self.Q0 = 0.01
-        self.mode = 'v'
+        self.mode = 'p'
         self.tracked_start: Optional[Tracker2D] = None
         self.tracked_end: Optional[Tracker2D] = None
 
@@ -231,19 +232,30 @@ class DockActionServer(Node):
         """ if self.state == DockStage.STOP:
             return """
 
-        lines = detect_lines(self.points, 4, 0.1, self.get_logger())
+        #lines = detect_lines(self.points, 4, 0.1, self.get_logger())
+        best_line = filter_lines(self.points, self.prev_angle)
 
-        if len(lines) == 0:
+        if best_line == None: 
+            return
+        
+        x1, y1 = best_line.start
+        x2, y2 = best_line.end
+        slope = (y2-y1)/(x2-x1)
+        angle_x_axis = np.rad2deg(math.atan(slope))
+
+        self.prev_angle = angle_x_axis
+
+        """ if len(lines) == 0:
             return
 
         best_line = lines[0]
         for line in lines:
             if line.length() > best_line.length():
-                best_line = line
+                best_line = line """
 
-        if best_line.length() < self.line_thres_min and best_line.length() > self.line_thres_max:
+        """ if best_line.length() < self.line_thres_min and best_line.length() > self.line_thres_max:
             self.get_logger().debug(f'Line not found')
-            return
+            return """
 
         if self.tracked_start is not None:
             self._visualize_line()
@@ -266,14 +278,14 @@ class DockActionServer(Node):
             self.tracked_end.predict()
         else:
             self.get_logger().info(f'Started tracking line!')
-            self.state = DockStage.APPROACH
+            """ self.state = DockStage.APPROACH """
 
             self.tracked_start = Tracker2D(
                 lower, self.P0, self.R0, self.Q0, self.DT, self.mode)
             self.tracked_end = Tracker2D(
                 higher, self.P0, self.R0, self.Q0, self.DT, self.mode)
 
-            self._policy_queue.clear()
+            """ self._policy_queue.clear()
             for target, speed in zip(self.trajectory_targets, self.trajectory_speeds):
                 policy = ApproachPolicy(
                     target, speed, 1.0, self.get_logger()
@@ -287,7 +299,7 @@ class DockActionServer(Node):
                 self.get_logger()
             )
             self._policy_queue.append(touch_policy)
-            self.get_logger().info(f'Initial x0: {self.tracked_start.x}')
+            self.get_logger().info(f'Initial x0: {self.tracked_start.x}') """
         self._recalculate_approach_trajectory(lower, higher)
 
     def _set_stop(self) -> None:
