@@ -152,6 +152,9 @@ class LidarScan(Node):
 
         self.DT = 0.1
 
+        self.prev_ang = None
+        self.best_line = None
+
     def _laser_cb(self, pointcloud: PointCloud2):
         """ PointCloud2 callback"""
         
@@ -163,18 +166,83 @@ class LidarScan(Node):
         # Detect continuous lines in the pointcloud        
         #lines_detected = self.detect_lines(points = points[:2, :], k = 4, dist_threshold=0.05)
 
+        self.filter_lines(points=points)
 
+        if self.best_line == None: 
+            a = 1
+        else:    
+            x1, y1 = self.best_line.start
+            x2, y2 = self.best_line.end
+            slope = (y2-y1)/(x2-x1)
+            angle_x_axis = np.rad2deg(math.atan(slope))
 
-        ###
+            line_msg = self._visualize_line(self.best_line.start, self.best_line.end, id=0)
+
+            lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
+            h = np.linalg.norm(higher)
+            l = np.linalg.norm(lower)
+            r = np.linalg.norm(higher - lower)
+            angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
+            self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°')
+
+            print(f"Line length: {np.linalg.norm(lower - higher)}")
+            """ if angle < self.angle_threshold and self.tracked_start is None:
+                self.get_logger().warn(f'Too small line angle: {np.rad2deg(angle):.1f}° < {np.rad2deg(self.angle_threshold):.1f}°, ignoring...')
+                return """
+
+            if self.tracked_start is not None:
+                self.tracked_start.update(lower[:, None])
+                self.tracked_start.predict()
+                self.tracked_end.update(higher[:, None])
+                self.tracked_end.predict()
+            else:
+                self.get_logger().info(f'Started tracking line!')
+                #self.state = DockStage.APPROACH
+
+                self.tracked_start = Tracker2D(
+                    lower, self.P0, self.R0, self.Q0, self.DT, self.mode)
+                self.tracked_end = Tracker2D(
+                    higher, self.P0, self.R0, self.Q0, self.DT, self.mode)
+            
+            """ if self.tracked_start is not None:
+                self._visualize_line(lower=self.tracked_start.pos, higher=self.tracked_end.pos, id = 1, color=[0.0, 1.0, 0.0])"""
+            
+            self._recalculate_approach_trajectory(lower, higher)
+
+            self.prev_ang = angle_x_axis
+            self.best_line = None
+
+        """ ax[2].set_xlim((0, image.shape[1]))
+        ax[2].set_ylim((image.shape[0], 0))
+        ax[2].set_axis_off()
+        ax[2].set_title('Detected lines')
+
+        plt.tight_layout()
+        plt.show()
+        a = 1 """
+
+        """ for target, speed in zip(self.trajectory_targets, self.trajectory_speeds):
+            policy = ApproachPolicy(
+                target, speed, 1.0, self.get_logger()
+            )
+            self._policy_queue.append(policy)
+
+        touch_policy = TouchPolicy(
+            self.tracked_start, self.tracked_end, self.usv_width,
+            self.v_touch, self.touch_precision,
+            self._set_stop,
+            self.get_logger()
+        )
+        self._policy_queue.append(touch_policy)
+        self.get_logger().info(f'Initial x0: {self.tracked_start.x}') """
         
-        # Constructing test image
-        #image = np.zeros((100, 100))
-        #idx = np.arange(25, 75)
-        #image[idx[::-1], idx] = 255
-        #image[idx, idx] = 255
 
-        # Define the grid parameters
+    def filter_lines(self, points): 
+        """ Line detection using hough lines """
+
+        ## Parameters ##
         grid_resolution = 0.1  # Resolution of the grid (adjust based on your needs)
+        dilate_kernel_size = 3
 
         # Calculate the grid size based on the range of coordinates
         min_x, min_y = np.min(points, axis=1)
@@ -192,9 +260,11 @@ class LidarScan(Node):
             y_index = int((y - min_y) / grid_resolution)
             occupancy_grid[x_index, y_index] = 255  # Set as occupied
 
+        # Create image to be processed
         image = occupancy_grid
 
-        kernel = np.ones((3,3),np.uint8)
+        # Dilate image to join continuous points that define a line
+        kernel = np.ones((dilate_kernel_size,dilate_kernel_size),np.uint8)
         image = cv.dilate(image,kernel,iterations = 1)
 
         # Classic straight-line Hough transform
@@ -218,185 +288,92 @@ class LidarScan(Node):
 
         ax[2].imshow(image, cmap=cm.gray) """
 
-        lines_scan = []
+        min_line_dist = 9999999
+
+        # Obtain first and last point of each line detected in the image
+        lines_hough = []
         for _, angle, dist in zip(*hough_line_peaks(h, theta, d)):
+            # First and last line point in image frame
             y0 = (dist - 0 * np.cos(angle)) / np.sin(angle)
             y1 = (dist - (image.shape[1] - 1) * np.cos(angle)) / np.sin(angle)
             x0 = 0
             x1 = image.shape[1] - 1
-
             #ax[2].plot((x0, x1), (y0, y1), '-r')
             
+            # Convert line points detected to laser scan frame
             p1 = [y0*grid_resolution+min_x, x0*grid_resolution+min_y]
             p2 = [y1*grid_resolution+min_x, x1*grid_resolution+min_y]
+            
+            # Create line with first and last point
+            line = [p1, p2]
+            lines_hough.append([p1, p2])
 
-            lines_scan.append([p1, p2])
-        
-        for line in lines_scan:
-            line_msg = self._visualize_line(line[0], line[1], id=0)
-        
-        """ ax[2].set_xlim((0, image.shape[1]))
-        ax[2].set_ylim((image.shape[0], 0))
-        ax[2].set_axis_off()
-        ax[2].set_title('Detected lines')
+            #line_msg = self._visualize_line(line[0], line[1], id=0)
 
-        plt.tight_layout()
-        plt.show()
-        a = 1 """
+            # Get all laser points that belongs to the line
+            valid_points = self.points_on_line_with_threshold(points, line, 0.2)
 
+            # Convert points to an array
+            valid_points_array = np.transpose(np.array(valid_points))
+            
+            if len(valid_points_array) == 0: 
+                continue
 
+            # Estimate line from scan points using PCA
+            valid_points_eq = self.est_line(valid_points_array)
 
-        ###
-        
-        """ 
-        min_dist = 999999
-        # Detect lines that are closer (assuming that the target line is the closest one)
-        for line in lines_detected: 
-            center = line.center()
-            lower, higher = self._order_line_endpoints(line.start, line.end)
-            dist = math.sqrt(center[0]**2 + center[1]**2)
-            length = np.linalg.norm(lower - higher)
-            if dist < min_dist and length < 18: 
-                best_line = line
+            # Get inliers from that line
+            _, inliers, _ = self.all_points_valid(valid_points_eq, valid_points_array, threshold=0.05)
+            # Update line cluster eliminating outliers
+            valid_points_array = inliers[:2,:]
+            valid_points_eq = self.est_line(valid_points_array)
 
-        lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
-        print(f"Line length first: {np.linalg.norm(lower - higher)}")
+            # Find start and end line point
 
+            # Compute the orthogonal vector [-B, A]
+            orthogonal_vector = np.array([-valid_points_eq[1], valid_points_eq[0]])
 
-        #line_msg = self._visualize_line(lower, higher, id=id)
-        
-        
-        # Get all the points from the pointcloud that belongs to the detected line and are within a threshold
-        line_cluster = self.points_on_line_with_threshold(points, [lower, higher], threshold = 1)
-        line_cluster_array = np.transpose(np.array(line_cluster))
-        # Calculate the line adjusted to those points through PCA
-        line_cluster_eq = self.est_line(line_cluster_array)
+            # Project all points onto the orthogonal vector and sort them
+            projections = np.dot(valid_points_array.T, orthogonal_vector)
+            sorted_indices = np.argsort(projections)
 
-        # Get inliers from that line
-        _, inliers, _ = self.all_points_valid(line_cluster_eq, line_cluster_array, threshold=0.1)
-        # Update line cluster eliminating outliers
-        line_cluster_array = inliers[:2,:]
-        line_cluster_eq = self.est_line(line_cluster_array)
-        best_line = Line(line_cluster_eq, line_cluster_array[:,0], line_cluster_array[:,-1])
+            # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
+            first_point = valid_points_array[:, sorted_indices[0]]
+            last_point = valid_points_array[:, sorted_indices[-1]]  
 
+            # Get x axis line angle
+            x1, y1 = first_point
+            x2, y2 = last_point
+            slope = (y2-y1)/(x2-x1)
+            angle_x_axis = np.rad2deg(math.atan(slope))
 
-        points = line_cluster_array.T
+            #lower, higher = self._order_line_endpoints(first_point, last_point)
+            h = np.linalg.norm(last_point)
+            l = np.linalg.norm(first_point)
+            r = np.linalg.norm(last_point - first_point)
+            curr_angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
 
-        # Compute the orthogonal vector [-B, A]
-        orthogonal_vector = np.array([-line_cluster_eq[1], line_cluster_eq[0]])
+            line_i = Line(eq= valid_points_eq, start=first_point, end=last_point)
 
-        # Project all points onto the orthogonal vector and sort them
-        projections = np.dot(line_cluster_array.T, orthogonal_vector)
-        sorted_indices = np.argsort(projections)
+            if self.prev_ang == None: 
+                self.prev_ang = angle_x_axis
 
-        # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
-        first_point = line_cluster_array[:, sorted_indices[0]]
-        last_point = line_cluster_array[:, sorted_indices[-1]]
+            print(f"Prev angle: {self.prev_ang}")
+            print(f"Curr angle: {angle_x_axis}")
+            print(f"Ang diff:   {abs(angle_x_axis - self.prev_ang)}")
 
-        x1, y1 = first_point
-        x2, y2 = last_point
-        slope = (y2-y1)/(x2-x1)
-        angle_line_x_axis = np.rad2deg(math.atan(slope))
-        print(f"Line angle: {angle_line_x_axis}") """
+            if np.linalg.norm(line_i.center()) < min_line_dist and abs(angle_x_axis - self.prev_ang) < 45: 
+                min_line_dist = np.linalg.norm(line_i.center())
+                self.best_line = line_i
 
-        #_ = self._visualize_line(first_point, last_point, id = 0, color=[0.0, 1.0, 0.0])
-        """ lines_array_msg = MarkerArray()
-        lines_array_msg.markers = []
-        for i in range(line_cluster_array.shape[1]): 
-            x = line_cluster_array[0, i]
-            y = line_cluster_array[1, i]
-            marker = self.get_marker([x, y], color=[255.0, 0.0, 0.0], scale=0.1, id_=i)
-            lines_array_msg.markers.append(marker)
-        self.scan_pub.publish(lines_array_msg) """
-
-
-        # Get line length information to filter them
-        """ marker_id = 0
-        best_line = lines_detected[0]
-        line_detected = False
-        max_length = 0
-        for i in range(len(lines_detected)): 
-            marker_id += 1
-            line_i = lines_detected[i]
-            line_i_length = line_i.length()
-            line_i_center = line_i.center()
-
-            if line_i_length > max_length: 
-                max_length_idx = i
-            # Plot in Rviz the center point of the filtered lines
-            print(f"Line center: {line_i_center}; Line length: {line_i_length}")
-            if line_i_length > 0.7 and line_i_length < 1.0: 
-                print(f"Line center: {line_i_center}; Line length: {line_i_length}")
-                marker = self.get_marker(line_i_center, color=[0.0, 0.0, 255.0], scale=0.1, id_=marker_id)
-                self.center_pub.publish(marker)
-                best_line = lines_detected[i]
-                line_detected = True
-
-        if line_detected: 
-            lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
-            self._visualize_line(lower, higher)
-            h = np.linalg.norm(higher)
-            l = np.linalg.norm(lower)
-            r = np.linalg.norm(higher - lower)
-            angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
-            self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°; h: {h}; l: {l}; r:{r}')
-        else: 
-            # Calculate the angle for the biggest line
-            # THIS IS NOT USEFUL JUST FOR DEBUGGING
-            lower, higher = self._order_line_endpoints(lines_detected[max_length_idx].start, lines_detected[max_length_idx].end)
-            self._visualize_line(lower, higher, color=[0.0, 0.5, 0.5])
-            h = np.linalg.norm(higher)
-            l = np.linalg.norm(lower)
-            r = np.linalg.norm(higher - lower)
-            angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
-            self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°; h: {h}; l: {l}; r:{r}') """
-
-
-        #if self.tracked_start is not None:
-            #self._visualize_line(lower=self.tracked_start.pos, higher=self.tracked_end.pos, id = 0, color=[1.0, 1.0, 0.0])
-
-        """ lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
-        h = np.linalg.norm(higher)
-        l = np.linalg.norm(lower)
-        r = np.linalg.norm(higher - lower)
-        angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
-        self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°')
-        print(f"Linel ength: {np.linalg.norm(first_point - last_point)}")
-         """""" if angle < self.angle_threshold and self.tracked_start is None:
-            self.get_logger().warn(f'Too small line angle: {np.rad2deg(angle):.1f}° < {np.rad2deg(self.angle_threshold):.1f}°, ignoring...')
-            return """
-
-        """ if self.tracked_start is not None:
-            self.tracked_start.update(lower[:, None])
-            self.tracked_start.predict()
-            self.tracked_end.update(higher[:, None])
-            self.tracked_end.predict()
-        else:
-            self.get_logger().info(f'Started tracking line!')
-            #self.state = DockStage.APPROACH
-
-            self.tracked_start = Tracker2D(
-                lower, self.P0, self.R0, self.Q0, self.DT, self.mode)
-            self.tracked_end = Tracker2D(
-                higher, self.P0, self.R0, self.Q0, self.DT, self.mode)"""
-        """ self._policy_queue.clear()
-        
-        for target, speed in zip(self.trajectory_targets, self.trajectory_speeds):
-            policy = ApproachPolicy(
-                target, speed, 1.0, self.get_logger()
-            )
-            self._policy_queue.append(policy)
-
-        touch_policy = TouchPolicy(
-            self.tracked_start, self.tracked_end, self.usv_width,
-            self.v_touch, self.touch_precision,
-            self._set_stop,
-            self.get_logger()
-        )
-        self._policy_queue.append(touch_policy) """
-        """ self.get_logger().info(f'Initial x0: {self.tracked_start.x}')
-    self._recalculate_approach_trajectory(lower, higher) """
-
+                """ lines_array_msg = MarkerArray()
+                lines_array_msg.markers = []
+                for i in range(valid_points_array.shape[1]): 
+                    x = valid_points_array[0, i]
+                    y = valid_points_array[1, i]
+                    marker = self.get_marker([x, y], color=[255.0, 0.0, 0.0], scale=0.1, id_=i)
+                    lines_array_msg.markers.append(marker)
+                self.scan_pub.publish(lines_array_msg) """
 
     def distance_point_to_line(self, point, line):
         x1, y1 = line[0]
