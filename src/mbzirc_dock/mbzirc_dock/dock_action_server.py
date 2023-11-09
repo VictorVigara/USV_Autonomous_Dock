@@ -3,6 +3,7 @@ import time
 import traceback
 from collections import deque
 from typing import Optional, Tuple
+import json
 
 import numpy as np
 import rclpy
@@ -19,7 +20,6 @@ from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
 
 import math
-
 
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
@@ -46,10 +46,16 @@ class DockStage(enum.Enum):
 
 class DockActionServer(Node):
     BASE_LINK = 'world'
-    DT = 0.1
+    DT = 0.01
 
     def __init__(self):
         super().__init__('dock_action_server')
+        # debug
+        self.step_counter = 0
+        self.debug = False
+        self.predicted_points = []
+        self.detected_points = []
+        self.updated_points = []
 
         # parameters crop pc2
         self.x_crop = 2.2
@@ -72,10 +78,9 @@ class DockActionServer(Node):
         self.th_factor = 2
 
         # parameters for line tracking
-        self.DT = 0.02
-        self.P0 = 2.0
-        self.R0 = 2.5
-        self.Q0 = 0.05
+        self.P0 = 1.0
+        self.R0 = 0.1
+        self.Q0 = 0.5
         self.mode = 'p'
         self.tracked_start: Optional[Tracker2D] = None
         self.tracked_end: Optional[Tracker2D] = None
@@ -110,6 +115,7 @@ class DockActionServer(Node):
         self.state = DockStage.STOP
         self.target_center = np.zeros(2)
         self.points = np.zeros((2, 1))
+        self.best_line = None
 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
@@ -148,8 +154,21 @@ class DockActionServer(Node):
         try:
             self._current_state.target = self.target_center
 
+            # Track line using Kalman Filter
             self._track_line()
-            
+
+            # Save measurements, predictions and updates to analyze performance
+            if self.debug == True:
+                print(self.step_counter)
+                if self.step_counter > 11000: 
+
+                    with open('updated_points.json', 'w') as jsonfile:
+                        json.dump(self.updated_points, jsonfile)
+                    with open('detected_points.json', 'w') as jsonfile:
+                        json.dump(self.detected_points, jsonfile)
+                    with open('predicted_points.json', 'w') as jsonfile:
+                        json.dump(self.predicted_points, jsonfile)
+                
             print(self._policy_queue)
             action = self._get_action(self._current_state)
 
@@ -195,18 +214,17 @@ class DockActionServer(Node):
 
         # Prepare points to process them
         points = np.array(center_line).T # 3xN points
-        self.points = points[:2, :]
+        self.points = points[:2, :]        
 
         # Filter the target line
-        self.best_line = filter_lines(self.points, self.prev_angle)
-
-        
+        self.best_line = filter_lines(self, self.points, self.prev_angle)
 
         # If no line detected do not update variables
         if self.best_line == None: 
             return
-        
-        # 
+
+        ### Avoid outliers to update kalman filter ###
+
         end_point_tracked = self.best_line.end
         start_point_tracked = self.best_line.start
         # Add the new measurement to the list
@@ -235,10 +253,14 @@ class DockActionServer(Node):
                 self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
                 self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
                 #self._visualize_line()
+
+                if self.debug == True:
+                    self.step_counter += 1
+                    self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
         else:
             self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
             self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
-        
+
         # Calculate line angle wrt lidar x-axis (pointing forward)
         x1, y1 = self.best_line.start
         x2, y2 = self.best_line.end
@@ -247,14 +269,6 @@ class DockActionServer(Node):
 
         # Save the angle to compare it with the next detection
         self.prev_angle = angle_x_axis
-
-        # Get the first and the last point of the line
-        #lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
-        """ lower = self.best_line.start
-        higher = self.best_line.end
-
-        self.tracked_start.update(lower[:, None])
-        self.tracked_end.update(higher[:, None]) """
 
         # Get the center of the line detected
         self.target_center = np.median(self.points, axis=1)
@@ -280,7 +294,7 @@ class DockActionServer(Node):
                 if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_crop) or (x < -self.x_crop) or (x > -self.x_crop and x < self.x_crop and (y > self.y_crop or y < -self.y_crop))): 
                     scan_line.append([x, y, z])
                     
-        pc2_cropped = PointCloud2()
+        """ pc2_cropped = PointCloud2()
         pc2_cropped.header = pointcloud.header
         pc2_cropped.height = 1
         pc2_cropped.width = len(scan_line)
@@ -291,7 +305,7 @@ class DockActionServer(Node):
         pc2_cropped.point_step = 12  # 4 (x) + 4 (y) + 4 (z) bytes per point
         pc2_cropped.row_step = pc2_cropped.point_step * len(scan_line)
         pc2_cropped.data = np.array(scan_line, dtype=np.float32).tobytes()
-        self.pc_crop_pub.publish(pc2_cropped)
+        self.pc_crop_pub.publish(pc2_cropped) """
 
         return np.array(scan_line)
 
@@ -322,12 +336,12 @@ class DockActionServer(Node):
             self._visualize_line()
 
         #lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
-        lower = self.best_line.start
+        """ lower = self.best_line.start
         higher = self.best_line.end
         h = np.linalg.norm(higher)
         l = np.linalg.norm(lower)
-        r = np.linalg.norm(higher - lower)
-        angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
+        r = np.linalg.norm(higher - lower) """
+        #angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
         #self.get_logger().info(f'Line angle: {self.prev_angle:.1f}°')
 
         """ if angle < self.angle_threshold and self.tracked_start is None:
@@ -339,14 +353,19 @@ class DockActionServer(Node):
             self.tracked_start.predict()
             #self.tracked_end.update(higher[:, None])
             self.tracked_end.predict()
+
+            if self.debug == True:
+                self.step_counter += 1
+                self.predicted_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
+            
         else:
             self.get_logger().info(f'Started tracking line!')
             """ self.state = DockStage.APPROACH """
 
             self.tracked_start = Tracker2D(
-                lower, self.P0, self.R0, self.Q0, self.DT, self.mode)
+                self.best_line.start, self.P0, self.R0, self.Q0, self.DT, self.mode)
             self.tracked_end = Tracker2D(
-                higher, self.P0, self.R0, self.Q0, self.DT, self.mode)
+                self.best_line.end, self.P0, self.R0, self.Q0, self.DT, self.mode)
 
             """ self._policy_queue.clear()
             for target, speed in zip(self.trajectory_targets, self.trajectory_speeds):
