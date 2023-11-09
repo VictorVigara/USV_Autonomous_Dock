@@ -256,7 +256,10 @@ class DockActionServer(Node):
 
                 if self.debug == True:
                     self.step_counter += 1
+                    self.detected_points.append([self.step_counter, self.best_line.end[0], self.best_line.end[1]])
+
                     self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
+
         else:
             self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
             self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
