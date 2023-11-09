@@ -11,6 +11,8 @@ from skimage.transform import (hough_line, hough_line_peaks)
 
 from mbzirc_dock.line import Line
 
+import json
+
 
 def Pi(ph: np.ndarray) -> np.ndarray:
     return ph[:-1, :] / ph[-1, :]
@@ -105,8 +107,12 @@ def filter_lines(points, prev_ang):
         """ Line detection using hough lines """
 
         ## Parameters ##
-        grid_resolution = 0.1  # Resolution of the grid (adjust based on your needs)
-        dilate_kernel_size = 3
+        grid_resolution = 0.1       # Resolution of the grid (adjust based on your needs)
+        dilate_kernel_size = 3      # Kernel size to apply dilate to laser scan image to detect lines
+        angle_difference = 10       # Angle difference between previous best_line detected and the current one
+                                    # to avoid selecting a different best line detected that is not the target
+        points_in_line_th_1 = 0.2  # Threshold to select points that belong to the first line detected
+        points_in_line_th_2 = 0.05  # Threshold to select points that belong to the final line
 
         best_line = None
 
@@ -177,7 +183,7 @@ def filter_lines(points, prev_ang):
             #line_msg = self._visualize_line(line[0], line[1], id=0)
 
             # Get all laser points that belongs to the line
-            valid_points = points_on_line_with_threshold(points, line, 0.2)
+            valid_points = points_on_line_with_threshold(points, line, points_in_line_th_1)
 
             # Convert points to an array
             valid_points_array = np.transpose(np.array(valid_points))
@@ -189,7 +195,7 @@ def filter_lines(points, prev_ang):
             valid_points_eq = est_line(valid_points_array)
 
             # Get inliers from that line
-            _, inliers, _ = all_points_valid(valid_points_eq, valid_points_array, threshold=0.05)
+            _, inliers, _ = all_points_valid(valid_points_eq, valid_points_array, threshold=points_in_line_th_2)
             # Update line cluster eliminating outliers
             valid_points_array = inliers[:2,:]
             valid_points_eq = est_line(valid_points_array)
@@ -229,7 +235,7 @@ def filter_lines(points, prev_ang):
             print(f"Ang diff:   {abs(angle_x_axis - prev_ang)}")
 
             # Select as best line if is the closest and the angle does not differ more than x degrees with the previous best_line
-            if np.linalg.norm(line_i.center()) < min_line_dist and abs(angle_x_axis - prev_ang) < 45: 
+            if np.linalg.norm(line_i.center()) < min_line_dist and abs(angle_x_axis - prev_ang) < angle_difference: 
                 min_line_dist = np.linalg.norm(line_i.center())
                 best_line = line_i
 
@@ -241,6 +247,27 @@ def filter_lines(points, prev_ang):
                     marker = self.get_marker([x, y], color=[255.0, 0.0, 0.0], scale=0.1, id_=i)
                     lines_array_msg.markers.append(marker)
                 self.scan_pub.publish(lines_array_msg) """
+
+        print(f"Start: {best_line.start}")
+        print(f"End: {best_line.end}")
+
+        # Read the existing JSON data from the file, if any
+        existing_points = []
+
+        try:
+            with open('points.json', 'r') as jsonfile:
+                existing_points = json.load(jsonfile)
+        except FileNotFoundError:
+            # The file doesn't exist yet, so we'll start with an empty list.
+            existing_points = []
+
+        # Append the new points to the existing data
+        existing_points.extend((best_line.end[0], best_line.end[1]))
+
+        # Write the updated data (old and new points) back to the JSON file
+        with open('points.json', 'w') as jsonfile:
+            json.dump(existing_points, jsonfile)
+
     
         return best_line
 

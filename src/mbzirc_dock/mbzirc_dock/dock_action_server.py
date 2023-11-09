@@ -65,10 +65,17 @@ class DockActionServer(Node):
         self.angle_threshold = np.deg2rad(50) # 150
         self.prev_angle = None
 
+        # Parameters to discard outlier measurements
+        self.window_size = 20
+        self.measurements_x = []
+        self.measurements_y = []
+        self.th_factor = 2
+
         # parameters for line tracking
-        self.P0 = 5.0
-        self.R0 = 0.05
-        self.Q0 = 0.01
+        self.DT = 0.02
+        self.P0 = 2.0
+        self.R0 = 2.5
+        self.Q0 = 0.05
         self.mode = 'p'
         self.tracked_start: Optional[Tracker2D] = None
         self.tracked_end: Optional[Tracker2D] = None
@@ -130,6 +137,7 @@ class DockActionServer(Node):
         self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 10)
 
         self.control_timer = self.create_timer(self.DT, self._control_cb)
+        
 
         self._action_server = ActionServer(
             self, Dock, 'dock',
@@ -184,10 +192,71 @@ class DockActionServer(Node):
 
         # Get the center_line from the PointCloud2 and delete vessel points
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
+
+        # Prepare points to process them
         points = np.array(center_line).T # 3xN points
         self.points = points[:2, :]
 
-        #self.points = self._scan_to_points(scan)
+        # Filter the target line
+        self.best_line = filter_lines(self.points, self.prev_angle)
+
+        
+
+        # If no line detected do not update variables
+        if self.best_line == None: 
+            return
+        
+        # 
+        end_point_tracked = self.best_line.end
+        start_point_tracked = self.best_line.start
+        # Add the new measurement to the list
+        self.measurements_x.append(end_point_tracked[0])
+        self.measurements_y.append(end_point_tracked[1])
+
+        # Ensure the list contains at most 5 measurements_x
+        if len(self.measurements_x) > self.window_size:
+            self.measurements_x.pop(0)  # Remove the oldest measurement
+            self.measurements_y.pop(0)  # Remove the oldest measurement
+        
+        # Calculate the differences_x between the last 5 self.measurements_x
+        differences_x = abs(np.diff(self.measurements_x))
+        differences_y = abs(np.diff(self.measurements_y))
+        
+        # Calculate the median of the differences_x
+        median_diff_x = np.median(differences_x)
+        median_diff_y = np.median(differences_y)
+
+        # Compare the difference between the current measurement and the previous one with the threshold
+        if len(self.measurements_x) > 1:
+            current_diff_x = abs(end_point_tracked[0] - self.measurements_x[-2])
+            current_diff_y = abs(end_point_tracked[1] - self.measurements_y[-2])
+
+            if current_diff_x < median_diff_x * self.th_factor or current_diff_y < median_diff_y * self.th_factor:
+                self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
+                self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
+                #self._visualize_line()
+        else:
+            self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
+            self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
+        
+        # Calculate line angle wrt lidar x-axis (pointing forward)
+        x1, y1 = self.best_line.start
+        x2, y2 = self.best_line.end
+        slope = (y2-y1)/(x2-x1)
+        angle_x_axis = np.rad2deg(math.atan(slope))
+
+        # Save the angle to compare it with the next detection
+        self.prev_angle = angle_x_axis
+
+        # Get the first and the last point of the line
+        #lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
+        """ lower = self.best_line.start
+        higher = self.best_line.end
+
+        self.tracked_start.update(lower[:, None])
+        self.tracked_end.update(higher[:, None]) """
+
+        # Get the center of the line detected
         self.target_center = np.median(self.points, axis=1)
         marker = self.get_marker(self.target_center)
         self.center_pub.publish(marker)
@@ -233,48 +302,42 @@ class DockActionServer(Node):
             return """
 
         #lines = detect_lines(self.points, 4, 0.1, self.get_logger())
-        best_line = filter_lines(self.points, self.prev_angle)
-
-        if best_line == None: 
-            return
         
-        x1, y1 = best_line.start
-        x2, y2 = best_line.end
-        slope = (y2-y1)/(x2-x1)
-        angle_x_axis = np.rad2deg(math.atan(slope))
-
-        self.prev_angle = angle_x_axis
+        if self.best_line == None: 
+            return
 
         """ if len(lines) == 0:
             return
 
-        best_line = lines[0]
+        self.best_line = lines[0]
         for line in lines:
-            if line.length() > best_line.length():
-                best_line = line """
+            if line.length() > self.best_line.length():
+                self.best_line = line """
 
-        """ if best_line.length() < self.line_thres_min and best_line.length() > self.line_thres_max:
+        """ if self.best_line.length() < self.line_thres_min and self.best_line.length() > self.line_thres_max:
             self.get_logger().debug(f'Line not found')
             return """
 
         if self.tracked_start is not None:
             self._visualize_line()
 
-        lower, higher = self._order_line_endpoints(best_line.start, best_line.end)
+        #lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
+        lower = self.best_line.start
+        higher = self.best_line.end
         h = np.linalg.norm(higher)
         l = np.linalg.norm(lower)
         r = np.linalg.norm(higher - lower)
         angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
-        self.get_logger().info(f'Line angle: {np.rad2deg(angle):.1f}°')
+        #self.get_logger().info(f'Line angle: {self.prev_angle:.1f}°')
 
         """ if angle < self.angle_threshold and self.tracked_start is None:
             self.get_logger().warn(f'Too small line angle: {np.rad2deg(angle):.1f}° < {np.rad2deg(self.angle_threshold):.1f}°, ignoring...')
             return """
 
         if self.tracked_start is not None:
-            self.tracked_start.update(lower[:, None])
+            #self.tracked_start.update(lower[:, None])
             self.tracked_start.predict()
-            self.tracked_end.update(higher[:, None])
+            #self.tracked_end.update(higher[:, None])
             self.tracked_end.predict()
         else:
             self.get_logger().info(f'Started tracking line!')
@@ -300,7 +363,7 @@ class DockActionServer(Node):
             )
             self._policy_queue.append(touch_policy)
             self.get_logger().info(f'Initial x0: {self.tracked_start.x}') """
-        self._recalculate_approach_trajectory(lower, higher)
+        self._recalculate_approach_trajectory(self.tracked_end.pos, self.tracked_start.pos)
 
     def _set_stop(self) -> None:
         """Callback for the touch policy."""
@@ -436,6 +499,10 @@ class DockActionServer(Node):
 
         start_ = Point(x=self.tracked_start.pos[0], y=self.tracked_start.pos[1], z=0.0)
         end_ = Point(x=self.tracked_end.pos[0], y=self.tracked_end.pos[1], z=0.0)
+
+        """ start_ = Point(x=self.best_line.start[0], y=self.best_line.start[1], z=0.0)
+        end_ = Point(x=self.best_line.end[0], y=self.best_line.end[1], z=0.0) """
+
         msg.points.append(start_)
         msg.points.append(end_)
 
