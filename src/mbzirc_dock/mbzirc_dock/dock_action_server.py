@@ -53,12 +53,42 @@ class DockActionServer(Node):
 
     def __init__(self):
         super().__init__('dock_action_server')
+
+        # Run mode
+        self.demo = False # Set TRUE if docking at pier
+
         # debug
         self.step_counter = 0
         self.debug = False
         self.predicted_points = []
         self.detected_points = []
         self.updated_points = []
+
+        # Define colours to plot clusters
+        self.cluster_colors = [[255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          [255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          ]
+        
+        # DBSCAN clustering parameters
+        self.epsilon = 0.5
+        self.min_samples = 1
+
+        # Object avoidance parameters
+        self.clear_path_width = 6.0
+        self.clear_path_length = 50.0
+
+        # Object trackers array
+        self.trackers_objects = []
 
         # parameters crop pc2
         self.x_crop = 2.2
@@ -162,10 +192,14 @@ class DockActionServer(Node):
     def _control_cb(self):
         """Control loop, called every 0.1 seconds. Executes current policy action."""
         try:
+            
+            self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0)
+            self.publish_line(start=[-self.clear_path_width/2, 0.0], end=[-self.clear_path_width/2, self.clear_path_length], id = 1)
+
             self._current_state.target = self.target_center
 
             # Track line using Kalman Filter
-            self._track_line()
+            #self._track_line()
 
             # Save measurements, predictions and updates to analyze performance
             if self.debug == True:
@@ -179,7 +213,7 @@ class DockActionServer(Node):
                     with open('predicted_points.json', 'w') as jsonfile:
                         json.dump(self.predicted_points, jsonfile)
                 
-            print(self._policy_queue)
+            #print(self._policy_queue)
             action = self._get_action(self._current_state)
 
             msg = Twist()
@@ -218,6 +252,10 @@ class DockActionServer(Node):
 
     def _laser_cb(self, pointcloud: PointCloud2) -> None:
         """Callback for the laser scan topic."""
+        
+        ###
+        ### GET LASER SCAN FROM PC2
+        ###
 
         # Get the center_line from the PointCloud2 and delete vessel points
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
@@ -226,35 +264,18 @@ class DockActionServer(Node):
         points3d = np.array(center_line).T # 3xN points
         self.points = points3d[:2, :]      
 
-        # Standardize the data
-        scaler = StandardScaler()
-        point_cloud_scaled = scaler.fit_transform(points3d.T)
+        ###
+        ### DBSCAN CLUSTERING
+        ###
 
-        # Apply DBSCAN
-        dbscan = DBSCAN(eps=0.5, min_samples=1)
-        labels = dbscan.fit_predict(point_cloud_scaled)
-
-        # Get cluster labels
-        label_idxs = np.unique(labels)
-
-        # Define colours to plot clusters
-        cluster_colors = [[255.0, 0.0, 0.0], 
-                          [0.0, 255.0, 0.0], 
-                          [0.0, 0.0, 255.0], 
-                          [255.0, 255.0, 0.0], 
-                          [0.0, 255.0, 255.0], 
-                          [255.0, 0.0, 255.0],
-                          [255.0, 0.0, 0.0], 
-                          [0.0, 255.0, 0.0], 
-                          [0.0, 0.0, 255.0], 
-                          [255.0, 255.0, 0.0], 
-                          [0.0, 255.0, 255.0], 
-                          [255.0, 0.0, 255.0],
-                          ]
+        labels, label_idxs = self.dbscan_clustering(points3d)
 
         # Iterate over all clusters and find the target
         lines_array_msg = MarkerArray()
         lines_array_msg.markers = []
+        updated_tracked_object = np.zeros(len(self.trackers_objects))
+        target_detected = False
+
         for label_idx in label_idxs:
             # Get points from each cluster detected
             cluster_points  = points3d[:,np.where(labels == label_idx)[0]]
@@ -265,16 +286,19 @@ class DockActionServer(Node):
             # Check if target is detected
             cluster_2d_pos = cluster_median_pos[0:2, None]
 
-            # If target rtacker not initialized, calculate distance with taregt received
+            # If target tracker not initialized, calculate distance with target received
             if self.tracker_target == None:
+                # self.target_vessel_position VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
                 cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
             else: 
                 # Calculate distance with target tracker if initialized
                 cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
             print(f"Object {label_idx}: {cluster_target_distance}")
             
+            # If target detected from the beginning, start tracking it
             if cluster_target_distance < self.distance_threshold: 
                 # Initialize target tracker
+                target_detected = True
                 if self.tracker_target == None: 
                     self.tracker_target = Tracker2D(
                         cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
@@ -285,77 +309,159 @@ class DockActionServer(Node):
                     self.tracker_target.update(cluster_2d_pos)
                     
                     self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+            else: 
+                
+                object_tracked = False
+                if len(self.trackers_objects) > 0: 
+                    
+                    for object_tracker_idx in range(len(self.trackers_objects)): 
+                        cluster_object_distance = np.linalg.norm(self.trackers_objects[object_tracker_idx].pos - cluster_2d_pos[:,0])
 
+                        # Check if the object is already being tracked and update with measurement
+                        if cluster_object_distance < 1: 
+                            self.trackers_objects[object_tracker_idx].predict()
+                            self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
+                            object_tracked = True
+                            updated_tracked_object[object_tracker_idx] = 1
+                            break
+                    
+                    # If the object is not being tracked, initialize tracker
+                    if object_tracked == False: 
+                        self.trackers_objects.append(Tracker2D(
+                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                
+                # start tracking the object if the tracker list has not been initialized
+                else: 
+                    self.trackers_objects.append(Tracker2D(
+                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                    
+            
+            # Fill marker msg for cluster visualization in RVIZ
             for i in range(cluster_points.shape[1]): 
                 x = cluster_points[0, i]
                 y = cluster_points[1, i]
-                marker = self.get_marker([x, y], cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
+                marker = self.get_marker([x, y], self.cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
                 lines_array_msg.markers.append(marker)
         self.scan_pub.publish(lines_array_msg)
 
+        if target_detected == False and self.tracker_target != None: 
+            # If tracker target is not None, because the target has been detected previously but it is not being detected currently, 
+            # check if some of the objects being detected currently could be the target by comparing the minimum distance of the
+            # cluster points with the target tracked. 
+            self.tracker_target.predict()
 
-        # Filter the target line
-        self.best_line = filter_lines(self, self.points, self.prev_angle)
+            for label_idx in label_idxs:
+                # Get points from each cluster detected
+                cluster_2dpoints  = points3d[:,np.where(labels == label_idx)[0]][0:2,:]
 
-        # If no line detected do not update variables
-        if self.best_line == None: 
-            return
+                points2target_distances = np.array([np.linalg.norm(self.tracker_target.pos - point) for point in cluster_2dpoints.T])
+                
+                if np.any(points2target_distances < 1) == True:
+                    # Get median from the cluster
+                    cluster_2d_pos = np.median(cluster_2dpoints, axis=1)[:,None]
+                    
+                    # Update target tracker with the measurement
+                    self.tracker_target.update(cluster_2d_pos.reshape(2,1))
+                    
+            self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
 
-        ### Avoid outliers to update kalman filter ###
-
-        end_point_tracked = self.best_line.end
-        start_point_tracked = self.best_line.start
-        # Add the new measurement to the list
-        self.measurements_x.append(end_point_tracked[0])
-        self.measurements_y.append(end_point_tracked[1])
-
-        # Ensure the list contains at most 5 measurements_x
-        if len(self.measurements_x) > self.window_size:
-            self.measurements_x.pop(0)  # Remove the oldest measurement
-            self.measurements_y.pop(0)  # Remove the oldest measurement
         
-        # Calculate the differences_x between the last 5 self.measurements_x
-        differences_x = abs(np.diff(self.measurements_x))
-        differences_y = abs(np.diff(self.measurements_y))
+        # Remove tracked objects that have not been updated
+        eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
+        print(f"Updated tracked objectss: {updated_tracked_object}")
+        print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
+        # Remove elements at specified indices using a loop
+        if len(list(eliminate_tracked_objects_idxs[0])) > 0:
+            for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
+                self.trackers_objects.pop(index[0])
+
+        for k, object_tracked in enumerate(self.trackers_objects): 
+            self.center_pub.publish(self.get_marker(object_tracked.pos, color = [255.0, 255.0, 0.0], scale = 0.3, id_ = k+1000))
+            print(f" Object {k} tracked: {object_tracked.pos}")
         
-        # Calculate the median of the differences_x
-        median_diff_x = np.median(differences_x)
-        median_diff_y = np.median(differences_y)
+        ###
+        ### DEMO LINE CLUSTERING
+        ###
+        if self.demo == True:
+            # Filter the target line
+            self.best_line = filter_lines(self, self.points, self.prev_angle)
 
-        # Compare the difference between the current measurement and the previous one with the threshold
-        if len(self.measurements_x) > 1:
-            current_diff_x = abs(end_point_tracked[0] - self.measurements_x[-2])
-            current_diff_y = abs(end_point_tracked[1] - self.measurements_y[-2])
+            # If no line detected do not update variables
+            if self.best_line == None: 
+                return
 
-            if current_diff_x < median_diff_x * self.th_factor or current_diff_y < median_diff_y * self.th_factor:
+            ### Avoid outliers to update kalman filter ###
+            # This is done by saving the last 5 start and end line points and checking 
+            # the distance between them, to avoid outliers updating kalman filter
+
+            end_point_tracked = self.best_line.end
+            start_point_tracked = self.best_line.start
+
+            # Add the new measurement to the list
+            self.measurements_x.append(end_point_tracked[0])
+            self.measurements_y.append(end_point_tracked[1])
+
+            # Ensure the list contains at most 5 measurements_x
+            if len(self.measurements_x) > self.window_size:
+                self.measurements_x.pop(0)  # Remove the oldest measurement
+                self.measurements_y.pop(0)  # Remove the oldest measurement
+            
+            # Calculate the differences_x between the last 5 self.measurements_x
+            differences_x = abs(np.diff(self.measurements_x))
+            differences_y = abs(np.diff(self.measurements_y))
+            
+            # Calculate the median of the differences_x
+            median_diff_x = np.median(differences_x)
+            median_diff_y = np.median(differences_y)
+
+            # Compare the difference between the current measurement and the previous one with the threshold
+            if len(self.measurements_x) > 1:
+                current_diff_x = abs(end_point_tracked[0] - self.measurements_x[-2])
+                current_diff_y = abs(end_point_tracked[1] - self.measurements_y[-2])
+
+                # If last measurement is between the accepted threshold update kalman filter
+                if current_diff_x < median_diff_x * self.th_factor or current_diff_y < median_diff_y * self.th_factor:
+                    self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
+                    self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
+                    #self._visualize_line()
+
+                    if self.debug == True:
+                        self.step_counter += 1
+                        self.detected_points.append([self.step_counter, self.best_line.end[0], self.best_line.end[1]])
+                        self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
+
+            else:
+                # Update kalman filter until last 5 measurements have been saved
                 self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
                 self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
-                #self._visualize_line()
 
-                if self.debug == True:
-                    self.step_counter += 1
-                    self.detected_points.append([self.step_counter, self.best_line.end[0], self.best_line.end[1]])
+            # Calculate line angle wrt lidar x-axis (pointing forward)
+            x1, y1 = self.best_line.start
+            x2, y2 = self.best_line.end
+            slope = (y2-y1)/(x2-x1)
+            angle_x_axis = np.rad2deg(math.atan(slope))
 
-                    self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
+            # Save the angle to compare it with the next detection
+            self.prev_angle = angle_x_axis
 
-        else:
-            self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
-            self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
-
-        # Calculate line angle wrt lidar x-axis (pointing forward)
-        x1, y1 = self.best_line.start
-        x2, y2 = self.best_line.end
-        slope = (y2-y1)/(x2-x1)
-        angle_x_axis = np.rad2deg(math.atan(slope))
-
-        # Save the angle to compare it with the next detection
-        self.prev_angle = angle_x_axis
-
-        # Get the center of the line detected
-        self.target_center = np.median(self.points, axis=1)
-        marker = self.get_marker(self.target_center)
-        #self.center_pub.publish(marker)
+            # Get the center of the line detected
+            self.target_center = np.median(self.points, axis=1)
+            marker = self.get_marker(self.target_center)
+            #self.center_pub.publish(marker)
     
+    def dbscan_clustering(self, points3d): 
+        # Standardize the data
+        scaler = StandardScaler()
+        point_cloud_scaled = scaler.fit_transform(points3d.T)
+
+        # Apply DBSCAN
+        dbscan = DBSCAN(eps=self.epsilon, min_samples=self.min_samples)
+        labels = dbscan.fit_predict(point_cloud_scaled)
+
+        # Get cluster labels
+        label_idxs = np.unique(labels)
+
+        return labels, label_idxs
 
     def _pc2_to_scan(self, pointcloud: PointCloud2, ang_threshold = [-0.5, 5]): 
         """Get an horizontal scan from a PointCloud2"""
@@ -375,7 +481,7 @@ class DockActionServer(Node):
                 if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_crop) or (x < -self.x_crop) or (x > -self.x_crop and x < self.x_crop and (y > self.y_crop or y < -self.y_crop))): 
                     scan_line.append([x, y, z])
                     
-        """ pc2_cropped = PointCloud2()
+        pc2_cropped = PointCloud2()
         pc2_cropped.header = pointcloud.header
         pc2_cropped.height = 1
         pc2_cropped.width = len(scan_line)
@@ -386,7 +492,7 @@ class DockActionServer(Node):
         pc2_cropped.point_step = 12  # 4 (x) + 4 (y) + 4 (z) bytes per point
         pc2_cropped.row_step = pc2_cropped.point_step * len(scan_line)
         pc2_cropped.data = np.array(scan_line, dtype=np.float32).tobytes()
-        self.pc_crop_pub.publish(pc2_cropped) """
+        self.pc_crop_pub.publish(pc2_cropped)
 
         return np.array(scan_line)
 
@@ -522,7 +628,7 @@ class DockActionServer(Node):
                 self._policy_queue.popleft()
 
             policy = self._policy_queue[0]
-            print(policy)
+            #print(policy)
             try:
                 action = policy.get_action(state)
                 if isinstance(policy, TargetPolicy):
@@ -599,6 +705,32 @@ class DockActionServer(Node):
 
         start_ = Point(x=self.tracked_start.pos[0], y=self.tracked_start.pos[1], z=0.0)
         end_ = Point(x=self.tracked_end.pos[0], y=self.tracked_end.pos[1], z=0.0)
+
+        """ start_ = Point(x=self.best_line.start[0], y=self.best_line.start[1], z=0.0)
+        end_ = Point(x=self.best_line.end[0], y=self.best_line.end[1], z=0.0) """
+
+        msg.points.append(start_)
+        msg.points.append(end_)
+
+        self.line_pub.publish(msg)
+
+    def publish_line(self, start, end, id): 
+        """Visualizes line."""
+        msg = Marker()
+        msg.id = id
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
+    
+        msg.scale.x = 0.1
+        msg.type = Marker.LINE_LIST
+        msg.points = []
+        msg.color.r = 1.0
+        msg.color.g = 0.0
+        msg.color.b = 0.0
+        msg.color.a = 1.0
+
+        start_ = Point(x=start[0], y=start[1], z=0.0)
+        end_ = Point(x=end[0], y=end[1], z=0.0)
 
         """ start_ = Point(x=self.best_line.start[0], y=self.best_line.start[1], z=0.0)
         end_ = Point(x=self.best_line.end[0], y=self.best_line.end[1], z=0.0) """
