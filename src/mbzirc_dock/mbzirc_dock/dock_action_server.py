@@ -9,6 +9,9 @@ import numpy as np
 import rclpy
 from scipy.spatial.transform import Rotation
 
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
+
 from rclpy.action import ActionServer
 from rclpy.action.server import ServerGoalHandle
 from rclpy.node import Node
@@ -60,6 +63,13 @@ class DockActionServer(Node):
         # parameters crop pc2
         self.x_crop = 2.2
         self.y_crop = 1.1
+
+        # Initial target coordinates
+        self.target_vessel_position = [[-1], [21]]
+        self.tracker_target = None
+
+        # parameter for target detection
+        self.distance_threshold = 1
 
         # parameters for the orbit
         self.r_orbit = 10.0
@@ -133,7 +143,7 @@ class DockActionServer(Node):
         """ self.laser_sub = self.create_subscription(
             LaserScan, 'scan', self._laser_cb, 10) """
         self.laser_sub = self.create_subscription(
-            PointCloud2, '/cloud_fullframe', self._laser_cb, 10)
+            PointCloud2, '/usv/slot6/points', self._laser_cb, 10)
         self.twist_pub = self.create_publisher(Twist, 'cmd_vel', 10)
         self.center_pub = self.create_publisher(Marker, 'target_center', 10)
         self.target_pub = self.create_publisher(Marker, 'target', 10)
@@ -213,8 +223,76 @@ class DockActionServer(Node):
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
 
         # Prepare points to process them
-        points = np.array(center_line).T # 3xN points
-        self.points = points[:2, :]        
+        points3d = np.array(center_line).T # 3xN points
+        self.points = points3d[:2, :]      
+
+        # Standardize the data
+        scaler = StandardScaler()
+        point_cloud_scaled = scaler.fit_transform(points3d.T)
+
+        # Apply DBSCAN
+        dbscan = DBSCAN(eps=0.5, min_samples=1)
+        labels = dbscan.fit_predict(point_cloud_scaled)
+
+        # Get cluster labels
+        label_idxs = np.unique(labels)
+
+        # Define colours to plot clusters
+        cluster_colors = [[255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          [255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          ]
+
+        # Iterate over all clusters and find the target
+        lines_array_msg = MarkerArray()
+        lines_array_msg.markers = []
+        for label_idx in label_idxs:
+            # Get points from each cluster detected
+            cluster_points  = points3d[:,np.where(labels == label_idx)[0]]
+
+            # Get median from each cluster
+            cluster_median_pos = np.median(cluster_points, axis=1)
+
+            # Check if target is detected
+            cluster_2d_pos = cluster_median_pos[0:2, None]
+
+            # If target rtacker not initialized, calculate distance with taregt received
+            if self.tracker_target == None:
+                cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
+            else: 
+                # Calculate distance with target tracker if initialized
+                cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
+            print(f"Object {label_idx}: {cluster_target_distance}")
+            
+            if cluster_target_distance < self.distance_threshold: 
+                # Initialize target tracker
+                if self.tracker_target == None: 
+                    self.tracker_target = Tracker2D(
+                        cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+                else: 
+                    # Update target tracker
+                    self.tracker_target.predict()
+                    self.tracker_target.update(cluster_2d_pos)
+                    
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+
+            for i in range(cluster_points.shape[1]): 
+                x = cluster_points[0, i]
+                y = cluster_points[1, i]
+                marker = self.get_marker([x, y], cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
+                lines_array_msg.markers.append(marker)
+        self.scan_pub.publish(lines_array_msg)
+
 
         # Filter the target line
         self.best_line = filter_lines(self, self.points, self.prev_angle)
@@ -276,7 +354,7 @@ class DockActionServer(Node):
         # Get the center of the line detected
         self.target_center = np.median(self.points, axis=1)
         marker = self.get_marker(self.target_center)
-        self.center_pub.publish(marker)
+        #self.center_pub.publish(marker)
     
 
     def _pc2_to_scan(self, pointcloud: PointCloud2, ang_threshold = [-0.5, 5]): 
@@ -492,7 +570,7 @@ class DockActionServer(Node):
 
         msg = Marker()
         msg.header.stamp = stamp
-        msg.header.frame_id = self.BASE_LINK
+        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
         msg.type = Marker.SPHERE
         msg.id = id_
         msg.pose.position.x = point[0]

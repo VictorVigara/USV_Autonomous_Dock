@@ -7,12 +7,13 @@ from geometry_msgs.msg import Twist, Point
 from sensor_msgs.msg import LaserScan, PointCloud2, PointField
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
-import  numpy as np
+
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
 
 from typing import List, Optional, Tuple
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 import numpy as np
 
@@ -118,7 +119,7 @@ class LidarScan(Node):
         self.BASE_LINK = 'world'
 
         self.laser_sub = self.create_subscription(
-            PointCloud2, '/cloud_fullframe', self._laser_cb, 1)
+            PointCloud2, '/usv/slot6/points', self._laser_cb, 1)
         self.center_pub = self.create_publisher(Marker, 'target_center', 1)
         self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 1)
         self.line_pub = self.create_publisher(Marker, 'line', 1)
@@ -155,18 +156,96 @@ class LidarScan(Node):
         self.prev_ang = None
         self.best_line = None
 
+        # Initial target coordinates
+        self.target_vessel_position = [[-1], [21]]
+        self.tracker_target = None
+
     def _laser_cb(self, pointcloud: PointCloud2):
         """ PointCloud2 callback"""
         
         # Get the center_line from the PointCloud2
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
-        points = np.array(center_line).T # 3xN points
-        points = points[:2, :]
+        points3d = np.array(center_line).T # 3xN points
+        points = points3d[:2, :]
+
+        # Assuming you have a numpy array 'point_cloud' with shape (n_points, 3) representing x, y, z coordinates
+
+        # Standardize the data
+        scaler = StandardScaler()
+        point_cloud_scaled = scaler.fit_transform(points3d.T)
+
+        # Apply DBSCAN
+        dbscan = DBSCAN(eps=0.5, min_samples=1)
+        labels = dbscan.fit_predict(point_cloud_scaled) 
+
+        """ # Visualize the clusters (optional)
+        fig = plt.figure(1)
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Scatter points with color-coded labels
+        ax.scatter(points3d[0, :], points3d[1, :], points3d[2, :], c=labels, cmap='viridis')
+        ax.set_zlim(-1, 10)
+        plt.show() """
+        label_idxs = np.unique(labels)
+
+        cluster_colors = [[255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          [255.0, 0.0, 0.0], 
+                          [0.0, 255.0, 0.0], 
+                          [0.0, 0.0, 255.0], 
+                          [255.0, 255.0, 0.0], 
+                          [0.0, 255.0, 255.0], 
+                          [255.0, 0.0, 255.0],
+                          ]
+
+
+        lines_array_msg = MarkerArray()
+        lines_array_msg.markers = []
+        for label_idx in label_idxs:
+            # Get points from each cluster detected
+            cluster_points  = points3d[:,np.where(labels == label_idx)[0]]
+
+            # Get median from each cluster
+            cluster_median_pos = np.median(cluster_points, axis=1)
+
+            # Check if target is detected
+            cluster_2d_pos = cluster_median_pos[0:2, None]
+
+            # If target rtacker not initialized, calculate distance with taregt received
+            if self.tracker_target == None:
+                cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
+            else: 
+                # Calculate distance with target tracker if initialized
+                cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
+            print(f"Object {label_idx}: {cluster_target_distance}")
+            
+            if cluster_target_distance < 1: 
+                # Initialize target tracker
+                if self.tracker_target == None: 
+                    self.tracker_target = Tracker2D(
+                        cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+                else: 
+                    self.tracker_target.predict()
+                    self.tracker_target.update(cluster_2d_pos)
+                    
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+
+            for i in range(cluster_points.shape[1]): 
+                x = cluster_points[0, i]
+                y = cluster_points[1, i]
+                marker = self.get_marker([x, y], cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
+                lines_array_msg.markers.append(marker)
+        self.scan_pub.publish(lines_array_msg)
 
         # Detect continuous lines in the pointcloud        
         #lines_detected = self.detect_lines(points = points[:2, :], k = 4, dist_threshold=0.05)
 
-        self.filter_lines(points=points)
+        self.filter_lines(points=points) 
 
         if self.best_line == None: 
             a = 1
@@ -338,7 +417,7 @@ class LidarScan(Node):
             sorted_indices = np.argsort(projections)
 
             # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
-            first_point = valid_points_array[:, sorted_indices[0]]
+            """ first_point = valid_points_array[:, sorted_indices[0]]
             last_point = valid_points_array[:, sorted_indices[-1]]  
 
             # Get x axis line angle
@@ -364,16 +443,7 @@ class LidarScan(Node):
 
             if np.linalg.norm(line_i.center()) < min_line_dist and abs(angle_x_axis - self.prev_ang) < 45: 
                 min_line_dist = np.linalg.norm(line_i.center())
-                self.best_line = line_i
-
-                """ lines_array_msg = MarkerArray()
-                lines_array_msg.markers = []
-                for i in range(valid_points_array.shape[1]): 
-                    x = valid_points_array[0, i]
-                    y = valid_points_array[1, i]
-                    marker = self.get_marker([x, y], color=[255.0, 0.0, 0.0], scale=0.1, id_=i)
-                    lines_array_msg.markers.append(marker)
-                self.scan_pub.publish(lines_array_msg) """
+                self.best_line = line_i """
 
     def distance_point_to_line(self, point, line):
         x1, y1 = line[0]
@@ -465,7 +535,7 @@ class LidarScan(Node):
 
         msg = Marker()
         msg.header.stamp = stamp
-        msg.header.frame_id = self.BASE_LINK
+        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
         msg.type = Marker.SPHERE
         msg.id = id_
         msg.pose.position.x = point[0]
