@@ -88,7 +88,10 @@ class DockActionServer(Node):
         self.clear_path_length = 50.0
 
         # Object trackers array
-        self.trackers_objects = []
+        self.trackers_objects = []          # Position tracker for detected objects
+        self.tracked_objects_points = []    # Stores the points from the tracked objects
+        self.collision_objects = []         # Boolean array 1: obstacle in the path, 0: obstacle outside the path
+        self.colision_status = False        # False -> No colision, True -> Obstacles in the path
 
         # parameters crop pc2
         self.x_crop = 2.2
@@ -192,9 +195,13 @@ class DockActionServer(Node):
     def _control_cb(self):
         """Control loop, called every 0.1 seconds. Executes current policy action."""
         try:
-            
-            self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0)
-            self.publish_line(start=[-self.clear_path_width/2, 0.0], end=[-self.clear_path_width/2, self.clear_path_length], id = 1)
+            if self.colision_status == True: 
+                line_color = [1.0, 0.0, 0.0]
+            else: 
+                line_color = [0.0,1.0, 0.0]
+
+            self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0, color = line_color)
+            self.publish_line(start=[-self.clear_path_width/2, 0.0], end=[-self.clear_path_width/2, self.clear_path_length], id = 1, color = line_color)
 
             self._current_state.target = self.target_center
 
@@ -286,6 +293,10 @@ class DockActionServer(Node):
             # Check if target is detected
             cluster_2d_pos = cluster_median_pos[0:2, None]
 
+            ###
+            ### CHECK IF THE CLUSTER IS THE TARGET OR AN OBSTACLE
+            ###
+
             # If target tracker not initialized, calculate distance with target received
             if self.tracker_target == None:
                 # self.target_vessel_position VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
@@ -295,6 +306,8 @@ class DockActionServer(Node):
                 cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
             print(f"Object {label_idx}: {cluster_target_distance}")
             
+            ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
+
             # If target detected from the beginning, start tracking it
             if cluster_target_distance < self.distance_threshold: 
                 # Initialize target tracker
@@ -302,13 +315,15 @@ class DockActionServer(Node):
                 if self.tracker_target == None: 
                     self.tracker_target = Tracker2D(
                         cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
-                    self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
                 else: 
                     # Update target tracker
                     self.tracker_target.predict()
                     self.tracker_target.update(cluster_2d_pos)
                     
-                    self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+                    self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+            
+            ### IF THE CLUSTER IS AN OBSTACLE, UPDATE MEASUREMENT
             else: 
                 
                 object_tracked = False
@@ -321,6 +336,7 @@ class DockActionServer(Node):
                         if cluster_object_distance < 1: 
                             self.trackers_objects[object_tracker_idx].predict()
                             self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
+                            self.tracked_objects_points[object_tracker_idx] = cluster_points
                             object_tracked = True
                             updated_tracked_object[object_tracker_idx] = 1
                             break
@@ -329,20 +345,28 @@ class DockActionServer(Node):
                     if object_tracked == False: 
                         self.trackers_objects.append(Tracker2D(
                             cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                        self.tracked_objects_points.append(cluster_points)
+                        # Initialize tracked obstacle without collision to check it later
+                        self.collision_objects.append(0)
                 
                 # start tracking the object if the tracker list has not been initialized
                 else: 
                     self.trackers_objects.append(Tracker2D(
                             cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                    self.tracked_objects_points.append(cluster_points)
+                    # Initialize tracked obstacle without collision to check it later
+                    self.collision_objects.append(0)
                     
             
             # Fill marker msg for cluster visualization in RVIZ
-            for i in range(cluster_points.shape[1]): 
+            """ for i in range(cluster_points.shape[1]): 
                 x = cluster_points[0, i]
                 y = cluster_points[1, i]
                 marker = self.get_marker([x, y], self.cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
                 lines_array_msg.markers.append(marker)
-        self.scan_pub.publish(lines_array_msg)
+        self.scan_pub.publish(lines_array_msg) """
+
+        ### IF TARGET HAS BEEN OCLUDED, TRY TO FIND IT AGAIN
 
         if target_detected == False and self.tracker_target != None: 
             # If tracker target is not None, because the target has been detected previously but it is not being detected currently, 
@@ -363,10 +387,11 @@ class DockActionServer(Node):
                     # Update target tracker with the measurement
                     self.tracker_target.update(cluster_2d_pos.reshape(2,1))
                     
-            self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 99999))
+            self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
         
-        # Remove tracked objects that have not been updated
+        ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
+
         eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
         print(f"Updated tracked objectss: {updated_tracked_object}")
         print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
@@ -374,10 +399,33 @@ class DockActionServer(Node):
         if len(list(eliminate_tracked_objects_idxs[0])) > 0:
             for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
                 self.trackers_objects.pop(index[0])
+                self.tracked_objects_points.pop(index[0])
+                self.collision_objects.pop(index[0])
+            
+
+
+        ###
+        ### CHECK OBSTACLE COLLISION
+        ###
 
         for k, object_tracked in enumerate(self.trackers_objects): 
-            self.center_pub.publish(self.get_marker(object_tracked.pos, color = [255.0, 255.0, 0.0], scale = 0.3, id_ = k+1000))
+
+            if np.any(self.tracked_objects_points[k][1,:] < 50) and np.any(self.tracked_objects_points[k][1,:] > 0) \
+               and np.any(self.tracked_objects_points[k][0,:] > -3) and np.any(self.tracked_objects_points[k][0,:] < 3):
+                color = [255.0, 0.0, 0.0]
+                # Set collision object to 1 if is inside the trajectory
+                self.collision_objects[k] = 1
+            else: 
+                color = [0.0, 255.0, 0.0]
+                # Set collision object to 1 if it is outside the path
+                self.collision_objects[k] = 0
+            # Publish a point tracking the obstacle
+            self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+1000))
             print(f" Object {k} tracked: {object_tracked.pos}")
+
+        # If collision_status = True -> Collision detected / False -> Free path, no collisions
+        self.colision_status = np.any(np.array(self.collision_objects))
+        print(f"Collision status: {self.colision_status}")
         
         ###
         ### DEMO LINE CLUSTERING
@@ -714,7 +762,7 @@ class DockActionServer(Node):
 
         self.line_pub.publish(msg)
 
-    def publish_line(self, start, end, id): 
+    def publish_line(self, start, end, id, color = [255.0, 0.0, 0.0]): 
         """Visualizes line."""
         msg = Marker()
         msg.id = id
@@ -724,9 +772,9 @@ class DockActionServer(Node):
         msg.scale.x = 0.1
         msg.type = Marker.LINE_LIST
         msg.points = []
-        msg.color.r = 1.0
-        msg.color.g = 0.0
-        msg.color.b = 0.0
+        msg.color.r = color[0]
+        msg.color.g = color[1]
+        msg.color.b = color[2]
         msg.color.a = 1.0
 
         start_ = Point(x=start[0], y=start[1], z=0.0)
