@@ -21,6 +21,7 @@ from geometry_msgs.msg import Twist, Point
 from sensor_msgs.msg import LaserScan, PointCloud2, PointField
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
+from std_msgs.msg import Int16
 
 import math
 
@@ -156,6 +157,18 @@ class DockActionServer(Node):
         self.v_touch = 0.5
         self.touch_precision = 0.3
 
+        # States dict
+        self.USV_state_dict  = {'ON_SHORE': 0, 
+                           'TURNING_TO_POI': 1, 
+                           'STRAIGHT_TO_POI': 2, 
+                           'WAIT_OBSTACLE': 3, 
+                           'ENTER_ORBIT': 4, 
+                           'ORBIT': 5, 
+                           'APPROACH': 6, 
+                           'TOUCH': 7, 
+                           'BACK_TO_SHORE': 8, 
+                           'STOP': 9}
+
         # variables initialization
         self.state = DockStage.STOP
         self.target_center = np.zeros(2)
@@ -186,13 +199,24 @@ class DockActionServer(Node):
         self.line_pub = self.create_publisher(Marker, 'line', 10)
         self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 10)
         self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 10)
+        self.usv_state_pub = self.create_publisher(Int16, 'USV_state', 10)
 
         self.control_timer = self.create_timer(self.DT, self._control_cb)
-        
+        self.USV_state_publisher_timer = self.create_timer(0.2, self._usv_state_publisher)
 
         self._action_server = ActionServer(
             self, Dock, 'dock',
             self._execute_callback)
+        
+    def _usv_state_publisher(self): 
+
+        test_state = 'WAIT_OBSTACLE'
+        test_state_msg = self.USV_state_dict[test_state]
+
+        USV_status_msg = Int16()
+        USV_status_msg.data = test_state_msg
+
+        self.usv_state_pub.publish(USV_status_msg)
 
     def _control_cb(self):
         """Control loop, called every 0.1 seconds. Executes current policy action."""
