@@ -95,7 +95,6 @@ class Tracker2D:
     def update(self, Z: np.ndarray) -> None:
         """Update state with new measurement."""
         err = Z - self.H @ self.x
-        print(f'{self.H.shape}')
         S = self.H @ self.P @ self.H.T + self.R
         K = self.P @ self.H.T @ np.linalg.inv(S)
 
@@ -136,6 +135,7 @@ class LidarScan(Node):
         self.tracked_objects_points = []
         self.collision_objects = []
         self.colision_status = 0
+        self.target_detected = False
 
         # parameters for the approach policy
         self.trajectory_relative = [
@@ -166,9 +166,16 @@ class LidarScan(Node):
         # Initial target coordinates
         self.target_vessel_position = [[-1], [21]]
         self.tracker_target = None
+        self.tracked_target_points = None
+
+        # DBSCAN clustering parameters
+        self.epsilon = 0.5
+        self.min_samples = 1
 
     def _laser_cb(self, pointcloud: PointCloud2):
         """ PointCloud2 callback"""
+        # Initialize target_detected = False 
+        self.target_detected = False
         
         # Get the center_line from the PointCloud2
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
@@ -182,7 +189,7 @@ class LidarScan(Node):
         point_cloud_scaled = scaler.fit_transform(points3d.T)
 
         # Apply DBSCAN
-        dbscan = DBSCAN(eps=0.5, min_samples=1)
+        dbscan = DBSCAN(eps=self.epsilon, min_samples=self.min_samples)
         labels = dbscan.fit_predict(point_cloud_scaled) 
 
         """ # Visualize the clusters (optional)
@@ -213,7 +220,7 @@ class LidarScan(Node):
         lines_array_msg = MarkerArray()
         lines_array_msg.markers = []
         updated_tracked_object = np.zeros(len(self.trackers_objects))
-        target_detected = False
+        
 
         for label_idx in label_idxs:
             # Get points from each cluster detected
@@ -243,15 +250,17 @@ class LidarScan(Node):
             # If target detected from the beginning, start tracking it
             if cluster_target_distance < self.distance_threshold: 
                 # Initialize target tracker
-                target_detected = True
+                self.target_detected = True
                 if self.tracker_target == None: 
                     self.tracker_target = Tracker2D(
                         cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                    self.tracked_target_points = cluster_points
                     self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
                 else: 
                     # Update target tracker
                     self.tracker_target.predict()
                     self.tracker_target.update(cluster_2d_pos)
+                    self.tracked_target_points = cluster_points
                     
                     self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
             
@@ -300,7 +309,7 @@ class LidarScan(Node):
 
         ### IF TARGET HAS BEEN OCLUDED, TRY TO FIND IT AGAIN
 
-        if target_detected == False and self.tracker_target != None: 
+        if self.target_detected == False and self.tracker_target != None: 
             # If tracker target is not None, because the target has been detected previously but it is not being detected currently, 
             # check if some of the objects being detected currently could be the target by comparing the minimum distance of the
             # cluster points with the target tracked. 
@@ -317,7 +326,13 @@ class LidarScan(Node):
                     cluster_2d_pos = np.median(cluster_2dpoints, axis=1)[:,None]
                     
                     # Update target tracker with the measurement
-                    self.tracker_target.update(cluster_2d_pos.reshape(2,1))
+                    self.tracker_target.update(cluster_2d_pos.reshape(2,1)) 
+
+                    # Save target points
+                    self.tracked_target_points = cluster_points
+
+                    # Target detected
+                    self.target_detected = True
                     
             self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
@@ -325,8 +340,8 @@ class LidarScan(Node):
         ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
 
         eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
-        print(f"Updated tracked objectss: {updated_tracked_object}")
-        print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
+        """ print(f"Updated tracked objectss: {updated_tracked_object}")
+        print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}") """
         # Remove elements at specified indices using a loop
         if len(list(eliminate_tracked_objects_idxs[0])) > 0:
             for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
@@ -353,14 +368,15 @@ class LidarScan(Node):
                 self.collision_objects[k] = 0
             # Publish a point tracking the obstacle
             self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+1000))
-            print(f" Object {k} tracked: {object_tracked.pos}")
+            #print(f" Object {k} tracked: {object_tracked.pos}")
 
         # If collision_status = True -> Collision detected / False -> Free path, no collisions
         self.colision_status = np.any(np.array(self.collision_objects))
         print(f"Collision status: {self.colision_status}")
+        print(f"Target detected: {self.target_detected}")
 
-            ### CHECK OBJECT-PATH COLLISION
 
+        self._track_line()
 
 
 

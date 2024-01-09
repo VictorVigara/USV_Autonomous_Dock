@@ -92,6 +92,7 @@ class DockActionServer(Node):
         self.tracked_objects_points = []    # Stores the points from the tracked objects
         self.collision_objects = []         # Boolean array 1: obstacle in the path, 0: obstacle outside the path
         self.colision_status = False        # False -> No colision, True -> Obstacles in the path
+        self.target_detected = False        # True if target detected in last measurement
 
         # parameters crop pc2
         self.x_crop = 2.2
@@ -100,6 +101,7 @@ class DockActionServer(Node):
         # Initial target coordinates
         self.target_vessel_position = [[-1], [21]]
         self.tracker_target = None
+        self.tracked_target_points = None
 
         # parameter for target detection
         self.distance_threshold = 1
@@ -259,6 +261,9 @@ class DockActionServer(Node):
 
     def _laser_cb(self, pointcloud: PointCloud2) -> None:
         """Callback for the laser scan topic."""
+
+        # Initialize target_detected = False 
+        self.target_detected = False
         
         ###
         ### GET LASER SCAN FROM PC2
@@ -281,7 +286,6 @@ class DockActionServer(Node):
         lines_array_msg = MarkerArray()
         lines_array_msg.markers = []
         updated_tracked_object = np.zeros(len(self.trackers_objects))
-        target_detected = False
 
         for label_idx in label_idxs:
             # Get points from each cluster detected
@@ -311,15 +315,17 @@ class DockActionServer(Node):
             # If target detected from the beginning, start tracking it
             if cluster_target_distance < self.distance_threshold: 
                 # Initialize target tracker
-                target_detected = True
+                self.target_detected = True
                 if self.tracker_target == None: 
                     self.tracker_target = Tracker2D(
                         cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                    self.tracked_target_points = cluster_points
                     self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
                 else: 
                     # Update target tracker
                     self.tracker_target.predict()
                     self.tracker_target.update(cluster_2d_pos)
+                    self.tracked_target_points = cluster_points
                     
                     self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
             
@@ -368,7 +374,7 @@ class DockActionServer(Node):
 
         ### IF TARGET HAS BEEN OCLUDED, TRY TO FIND IT AGAIN
 
-        if target_detected == False and self.tracker_target != None: 
+        if self.target_detected == False and self.tracker_target != None: 
             # If tracker target is not None, because the target has been detected previously but it is not being detected currently, 
             # check if some of the objects being detected currently could be the target by comparing the minimum distance of the
             # cluster points with the target tracked. 
@@ -386,6 +392,12 @@ class DockActionServer(Node):
                     
                     # Update target tracker with the measurement
                     self.tracker_target.update(cluster_2d_pos.reshape(2,1))
+                    
+                    # Save target points
+                    self.tracked_target_points = cluster_points
+
+                    # Target detected
+                    self.target_detected = True
                     
             self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
@@ -410,8 +422,8 @@ class DockActionServer(Node):
 
         for k, object_tracked in enumerate(self.trackers_objects): 
 
-            if np.any(self.tracked_objects_points[k][1,:] < 50) and np.any(self.tracked_objects_points[k][1,:] > 0) \
-               and np.any(self.tracked_objects_points[k][0,:] > -3) and np.any(self.tracked_objects_points[k][0,:] < 3):
+            if np.any(self.tracked_objects_points[k][1,:] < self.clear_path_length ) and np.any(self.tracked_objects_points[k][1,:] > 0) \
+               and np.any(self.tracked_objects_points[k][0,:] > -self.clear_path_width/2) and np.any(self.tracked_objects_points[k][0,:] < self.clear_path_width/2):
                 color = [255.0, 0.0, 0.0]
                 # Set collision object to 1 if is inside the trajectory
                 self.collision_objects[k] = 1
@@ -420,7 +432,7 @@ class DockActionServer(Node):
                 # Set collision object to 1 if it is outside the path
                 self.collision_objects[k] = 0
             # Publish a point tracking the obstacle
-            self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+1000))
+            self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+100))
             print(f" Object {k} tracked: {object_tracked.pos}")
 
         # If collision_status = True -> Collision detected / False -> Free path, no collisions
