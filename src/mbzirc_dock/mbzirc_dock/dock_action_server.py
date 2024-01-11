@@ -21,7 +21,7 @@ from geometry_msgs.msg import Twist, Point
 from sensor_msgs.msg import LaserScan, PointCloud2, PointField
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
-from std_msgs.msg import Int16
+from std_msgs.msg import Int16, Bool
 
 import math
 
@@ -104,8 +104,9 @@ class DockActionServer(Node):
         self.tracker_target = None
         self.tracked_target_points = None
 
-        # parameter for target detection
+        # Parameter to match the target from the initial position given POI coords
         self.distance_threshold = 1
+        self.ocluded_target_threshold = 1 # Match the last target tracked pos ocluded with a cluster
 
         # parameters for the orbit
         self.r_orbit = 10.0
@@ -158,16 +159,16 @@ class DockActionServer(Node):
         self.touch_precision = 0.3
 
         # States dict
-        self.USV_state_dict  = {'ON_SHORE': 0, 
-                           'TURNING_TO_POI': 1, 
-                           'STRAIGHT_TO_POI': 2, 
-                           'WAIT_OBSTACLE': 3, 
-                           'ENTER_ORBIT': 4, 
-                           'ORBIT': 5, 
-                           'APPROACH': 6, 
-                           'TOUCH': 7, 
-                           'BACK_TO_SHORE': 8, 
-                           'STOP': 9}
+        self.USV_state_dict  = {'ON_SHORE': 0,          # USV starting state 
+                                'TURNING_TO_POI': 1,    # USV facing to POI coordinates
+                                'STRAIGHT_TO_POI': 2,   # USV going straight forward to the POI
+                                'WAIT_OBSTACLE': 3,     # USV waiting because an obstacle is in the path
+                                'ENTER_ORBIT': 4,       # USV entering the POI orbit
+                                'ORBIT': 5,             # USV orbitting the POI to find the largest side    
+                                'APPROACH': 6,          # USV approaching the POI
+                                'TOUCH': 7,             # USV touching the POI
+                                'BACK_TO_SHORE': 8,     # USV coming back to shore
+                                'STOP': 9}              # USV stopped
 
         # variables initialization
         self.state = DockStage.STOP
@@ -187,29 +188,54 @@ class DockActionServer(Node):
             acceleration=np.zeros(2),
             target=np.zeros(2)
         )
+        
+        ###
+        ### SUBSCRIBERS
+        ###
 
+        # Lidar subscriber
         """ self.laser_sub = self.create_subscription(
             LaserScan, 'scan', self._laser_cb, 10) """
         self.laser_sub = self.create_subscription(
             PointCloud2, '/usv/slot6/points', self._laser_cb, 10)
+        
+        # Coordinator subscriber
+        self.USV_to_shore_sub = self.create_subscription(Bool, 'USV_to_shore', self._USV_to_shore_callback, 10)
+        self.POI_coords_sub = self.create_subscription(Point, 'POI_coordinates', self._POI_coords_callback, 10)
+
+        ###
+        ### PUBLISHERS
+        ###
+
+        # Publish velocity commands
         self.twist_pub = self.create_publisher(Twist, 'cmd_vel', 10)
+        
+        # RVIZ publishers
         self.center_pub = self.create_publisher(Marker, 'target_center', 10)
         self.target_pub = self.create_publisher(Marker, 'target', 10)
         self.traj_pub = self.create_publisher(Marker, 'trajectory', 10)
         self.line_pub = self.create_publisher(Marker, 'line', 10)
         self.scan_pub = self.create_publisher(MarkerArray, 'visualization_marker_array', 10)
         self.pc_crop_pub = self.create_publisher(PointCloud2, 'pc_crop', 10)
+
+        # Coordinator publisher with USV state
         self.usv_state_pub = self.create_publisher(Int16, 'USV_state', 10)
+        
+
+        ###
+        ### CREATE TIMERS
+        ###
 
         self.control_timer = self.create_timer(self.DT, self._control_cb)
         self.USV_state_publisher_timer = self.create_timer(0.2, self._usv_state_publisher)
 
+        # Create action server
         self._action_server = ActionServer(
             self, Dock, 'dock',
             self._execute_callback)
         
     def _usv_state_publisher(self): 
-
+        # TO DO: Read current state and publish it
         test_state = 'WAIT_OBSTACLE'
         test_state_msg = self.USV_state_dict[test_state]
 
@@ -218,9 +244,21 @@ class DockActionServer(Node):
 
         self.usv_state_pub.publish(USV_status_msg)
 
+    def _POI_coords_callback(self, POI_coords: Point) -> None:
+        # TO DO: Read POI coordinates
+        print(f"POI coordinates received: {POI_coords}")
+
+    def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
+        # TO DO: Read flag to come back to shore after picking up the boxes
+        print("Received message from the coordinator to come back to shore")
+
+        print(f"Message USV_to_shore: {USV_to_shore}")
+
     def _control_cb(self):
         """Control loop, called every 0.1 seconds. Executes current policy action."""
         try:
+
+            # RVIZ clear path publisher
             if self.colision_status == True: 
                 line_color = [1.0, 0.0, 0.0]
             else: 
@@ -234,9 +272,11 @@ class DockActionServer(Node):
             # Track line using Kalman Filter
             #self._track_line()
 
+
+            # JUST FOR DEBUG PURPOSES
             # Save measurements, predictions and updates to analyze performance
             if self.debug == True:
-                print(self.step_counter)
+                #print(self.step_counter)
                 if self.step_counter > 11000: 
 
                     with open('updated_points.json', 'w') as jsonfile:
@@ -245,18 +285,33 @@ class DockActionServer(Node):
                         json.dump(self.detected_points, jsonfile)
                     with open('predicted_points.json', 'w') as jsonfile:
                         json.dump(self.predicted_points, jsonfile)
+            #
                 
-            #print(self._policy_queue)
+            ##print(self._policy_queue)
             action = self._get_action(self._current_state)
 
-            msg = Twist()
-            msg.linear.x = action.linear_velocity[0]
-            msg.linear.y = action.linear_velocity[1]
-            msg.linear.z = action.linear_velocity[2]
-            msg.angular.x = action.angular_velocity[0]
-            msg.angular.y = action.angular_velocity[1]
-            msg.angular.z = action.angular_velocity[2]
-            self.twist_pub.publish(msg)
+            #print(f"USV State: {self.state}")
+
+            # If no collision detected publish action velocities calculated
+            if self.colision_status == False:
+                msg = Twist()
+                msg.linear.x = action.linear_velocity[0]
+                msg.linear.y = action.linear_velocity[1]
+                msg.linear.z = action.linear_velocity[2]
+                msg.angular.x = action.angular_velocity[0]
+                msg.angular.y = action.angular_velocity[1]
+                msg.angular.z = action.angular_velocity[2]
+                self.twist_pub.publish(msg)
+            else: 
+                # If there is an obstacle in the path, stop the USV until the obstacle goes out the path
+                msg = Twist()
+                msg.linear.x = 0.0
+                msg.linear.y = 0.0
+                msg.linear.z =  0.0
+                msg.angular.x = 0.0
+                msg.angular.y = 0.0
+                msg.angular.z = 0.0
+
         except Exception as e:
             self.get_logger().error(f'Uncaught exception: {traceback.format_exc()}')
 
@@ -332,7 +387,7 @@ class DockActionServer(Node):
             else: 
                 # Calculate distance with target tracker if initialized
                 cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
-            print(f"Object {label_idx}: {cluster_target_distance}")
+            ##print(f"Object {label_idx}: {cluster_target_distance}")
             
             ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
 
@@ -386,8 +441,7 @@ class DockActionServer(Node):
                     self.tracked_objects_points.append(cluster_points)
                     # Initialize tracked obstacle without collision to check it later
                     self.collision_objects.append(0)
-                    
-            
+
             # Fill marker msg for cluster visualization in RVIZ
             """ for i in range(cluster_points.shape[1]): 
                 x = cluster_points[0, i]
@@ -410,7 +464,7 @@ class DockActionServer(Node):
 
                 points2target_distances = np.array([np.linalg.norm(self.tracker_target.pos - point) for point in cluster_2dpoints.T])
                 
-                if np.any(points2target_distances < 1) == True:
+                if np.any(points2target_distances < self.ocluded_target_threshold) == True:
                     # Get median from the cluster
                     cluster_2d_pos = np.median(cluster_2dpoints, axis=1)[:,None]
                     
@@ -425,27 +479,25 @@ class DockActionServer(Node):
                     
             self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
-        
         ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
 
         eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
-        print(f"Updated tracked objectss: {updated_tracked_object}")
-        print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
+        #print(f"Updated tracked objectss: {updated_tracked_object}")
+        #print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
         # Remove elements at specified indices using a loop
         if len(list(eliminate_tracked_objects_idxs[0])) > 0:
             for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
                 self.trackers_objects.pop(index[0])
                 self.tracked_objects_points.pop(index[0])
                 self.collision_objects.pop(index[0])
-            
-
 
         ###
         ### CHECK OBSTACLE COLLISION
         ###
 
         for k, object_tracked in enumerate(self.trackers_objects): 
-
+            
+            # Check if the cluster detected is inside the area defined (rectangle in front of the USV)
             if np.any(self.tracked_objects_points[k][1,:] < self.clear_path_length ) and np.any(self.tracked_objects_points[k][1,:] > 0) \
                and np.any(self.tracked_objects_points[k][0,:] > -self.clear_path_width/2) and np.any(self.tracked_objects_points[k][0,:] < self.clear_path_width/2):
                 color = [255.0, 0.0, 0.0]
@@ -457,16 +509,25 @@ class DockActionServer(Node):
                 self.collision_objects[k] = 0
             # Publish a point tracking the obstacle
             self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+100))
-            print(f" Object {k} tracked: {object_tracked.pos}")
+            #print(f" Object {k} tracked: {object_tracked.pos}")
 
         # If collision_status = True -> Collision detected / False -> Free path, no collisions
         self.colision_status = np.any(np.array(self.collision_objects))
-        print(f"Collision status: {self.colision_status}")
+        #print(f"Collision status: {self.colision_status}")
+        print("///////////////////////////////////////////////////////")
+        print(f"Target tracked: {self.target_detected}")
+        if self.target_detected == True: 
+            print(f"Target pose: {self.tracker_target.pos}")
+
+        for k, object_tracked in enumerate(self.trackers_objects): 
+            print(f" Object {k} tracked: {object_tracked.pos}")
+        print(f"Colision status: {self.colision_status}")
         
         ###
         ### DEMO LINE CLUSTERING
         ###
-        if self.demo == True:
+        # The folowing code was intended to be used to detect the pier for the MBZIRC demo
+        """ if self.demo == True:
             # Filter the target line
             self.best_line = filter_lines(self, self.points, self.prev_angle)
 
@@ -531,7 +592,7 @@ class DockActionServer(Node):
             # Get the center of the line detected
             self.target_center = np.median(self.points, axis=1)
             marker = self.get_marker(self.target_center)
-            #self.center_pub.publish(marker)
+            #self.center_pub.publish(marker) """
     
     def dbscan_clustering(self, points3d): 
         # Standardize the data
@@ -712,7 +773,7 @@ class DockActionServer(Node):
                 self._policy_queue.popleft()
 
             policy = self._policy_queue[0]
-            #print(policy)
+            ##print(policy)
             try:
                 action = policy.get_action(state)
                 if isinstance(policy, TargetPolicy):
