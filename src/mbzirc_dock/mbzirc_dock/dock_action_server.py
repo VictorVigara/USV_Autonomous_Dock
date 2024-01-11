@@ -80,6 +80,22 @@ class DockActionServer(Node):
                           [255.0, 0.0, 255.0],
                           ]
         
+        ###
+        ### PARAMETERS
+        ###
+
+        # States dict
+        self.USV_state_dict  = {'ON_SHORE': 0,          # USV starting state 
+                                'TURNING_TO_POI': 1,    # USV facing to POI coordinates
+                                'STRAIGHT_TO_POI': 2,   # USV going straight forward to the POI
+                                'WAIT_OBSTACLE': 3,     # USV waiting because an obstacle is in the path
+                                'ENTER_ORBIT': 4,       # USV entering the POI orbit
+                                'ORBIT': 5,             # USV orbitting the POI to find the largest side    
+                                'APPROACH': 6,          # USV approaching the POI
+                                'TOUCH': 7,             # USV touching the POI
+                                'BACK_TO_SHORE': 8,     # USV coming back to shore
+                                'STOP': 9}              # USV stopped
+        
         # DBSCAN clustering parameters
         self.epsilon = 0.5
         self.min_samples = 1
@@ -88,25 +104,13 @@ class DockActionServer(Node):
         self.clear_path_width = 6.0
         self.clear_path_length = 50.0
 
-        # Object trackers array
-        self.trackers_objects = []          # Position tracker for detected objects
-        self.tracked_objects_points = []    # Stores the points from the tracked objects
-        self.collision_objects = []         # Boolean array 1: obstacle in the path, 0: obstacle outside the path
-        self.colision_status = False        # False -> No colision, True -> Obstacles in the path
-        self.target_detected = False        # True if target detected in last measurement
+        # Parameter to match the target from the initial position given POI coords
+        self.distance_threshold = 1
+        self.ocluded_target_threshold = 1 # Match the last target tracked pos ocluded with a cluster
 
         # parameters crop pc2
         self.x_crop = 2.2
         self.y_crop = 1.1
-
-        # Initial target coordinates
-        self.target_vessel_position = [[-1], [21]]
-        self.tracker_target = None
-        self.tracked_target_points = None
-
-        # Parameter to match the target from the initial position given POI coords
-        self.distance_threshold = 1
-        self.ocluded_target_threshold = 1 # Match the last target tracked pos ocluded with a cluster
 
         # parameters for the orbit
         self.r_orbit = 10.0
@@ -120,8 +124,6 @@ class DockActionServer(Node):
 
         # Parameters to discard outlier measurements
         self.window_size = 20
-        self.measurements_x = []
-        self.measurements_y = []
         self.th_factor = 2
 
         # parameters for line tracking
@@ -141,9 +143,7 @@ class DockActionServer(Node):
             np.array([[ 0.0,  3.5]]).T,
             np.array([[ 2.0,  3.5]]).T,
         ]
-        self.trajectory_targets = [
-            np.array([[0.0, 0.0]]).T for _ in range(len(self.trajectory_relative))
-        ]
+
         self.trajectory_speeds = [
             2.0,
             2.0,
@@ -158,27 +158,44 @@ class DockActionServer(Node):
         self.v_touch = 0.5
         self.touch_precision = 0.3
 
-        # States dict
-        self.USV_state_dict  = {'ON_SHORE': 0,          # USV starting state 
-                                'TURNING_TO_POI': 1,    # USV facing to POI coordinates
-                                'STRAIGHT_TO_POI': 2,   # USV going straight forward to the POI
-                                'WAIT_OBSTACLE': 3,     # USV waiting because an obstacle is in the path
-                                'ENTER_ORBIT': 4,       # USV entering the POI orbit
-                                'ORBIT': 5,             # USV orbitting the POI to find the largest side    
-                                'APPROACH': 6,          # USV approaching the POI
-                                'TOUCH': 7,             # USV touching the POI
-                                'BACK_TO_SHORE': 8,     # USV coming back to shore
-                                'STOP': 9}              # USV stopped
 
-        # variables initialization
-        self.state = DockStage.STOP
-        self.target_center = np.zeros(2)
-        self.points = np.zeros((2, 1))
+        ### 
+        ### INITIALIZE VARIABLES
+        ###
+
+        # Target detected flag
+        self.target_detected = False        # True if target detected in last measurement
+
+        # Object trackers array
+        self.trackers_objects = []          # Position tracker for detected objects
+        self.tracked_objects_points = []    # Stores the points from the tracked objects
+        self.tracker_target = None          # Tracker for the target vessel
+        self.tracked_target_points = None   # Pointcloud points from the target vessel
+
+        # Colision variables
+        self.collision_objects = []         # Boolean array 1: obstacle in the path, 0: obstacle outside the path
+        self.colision_status = False        # False -> No colision, True -> Obstacles in the path
+
+        # Best line to dock the target vessel
         self.best_line = None
 
+        # Initial target coordinates
+        self.POI_coordinates = Point()
+        self.target_vessel_position = [[-1], [21]]
+        
+        # Initialize trajectory targets
+        self.trajectory_targets = [
+            np.array([[0.0, 0.0]]).T for _ in range(len(self.trajectory_relative))
+        ]
+        
+        # USV mission state
+        self.state = DockStage.STOP
+
+        # Transform variables
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
+        # Policy variables 
         self._default_policy = StopPolicy()
         self._policy_queue: deque[Policy] = deque()
         self._current_state = PolicyState(
@@ -188,6 +205,12 @@ class DockActionServer(Node):
             acceleration=np.zeros(2),
             target=np.zeros(2)
         )
+
+        # Not used
+        self.target_center = np.zeros(2)
+        self.points = np.zeros((2, 1))
+        self.measurements_x = []
+        self.measurements_y = []        
         
         ###
         ### SUBSCRIBERS
@@ -246,7 +269,8 @@ class DockActionServer(Node):
 
     def _POI_coords_callback(self, POI_coords: Point) -> None:
         # TO DO: Read POI coordinates
-        print(f"POI coordinates received: {POI_coords}")
+        self.POI_coordinates = POI_coords
+        print(f"POI coordinates received: {self.POI_coordinates}")
 
     def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
         # TO DO: Read flag to come back to shore after picking up the boxes
