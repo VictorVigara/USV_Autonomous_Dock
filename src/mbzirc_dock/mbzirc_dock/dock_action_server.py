@@ -181,7 +181,8 @@ class DockActionServer(Node):
 
         # Initial target coordinates
         self.POI_coordinates = Point()
-        self.target_vessel_position = [[-1], [21]]
+        self.POI_received = False
+        #self.target_vessel_position = [[-1], [21]]
         
         # Initialize trajectory targets
         self.trajectory_targets = [
@@ -270,6 +271,8 @@ class DockActionServer(Node):
     def _POI_coords_callback(self, POI_coords: Point) -> None:
         # TO DO: Read POI coordinates
         self.POI_coordinates = POI_coords
+        self.target_vessel_position = [[self.POI_coordinates.x], [self.POI_coordinates.y]]
+        self.POI_received = True
         print(f"POI coordinates received: {self.POI_coordinates}")
 
     def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
@@ -379,6 +382,88 @@ class DockActionServer(Node):
         points3d = np.array(center_line).T # 3xN points
         self.points = points3d[:2, :]      
 
+        ###
+        ### POINCLOUD CLUSTERING
+        ###
+        
+        if self.POI_received == True:
+            # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
+            self.pointcloud_clustering(points3d)
+
+        
+        
+        ###
+        ### DEMO LINE CLUSTERING
+        ###
+        # The folowing code was intended to be used to detect the pier for the MBZIRC demo
+        """ if self.demo == True:
+            # Filter the target line
+            self.best_line = filter_lines(self, self.points, self.prev_angle)
+
+            # If no line detected do not update variables
+            if self.best_line == None: 
+                return
+
+            ### Avoid outliers to update kalman filter ###
+            # This is done by saving the last 5 start and end line points and checking 
+            # the distance between them, to avoid outliers updating kalman filter
+
+            end_point_tracked = self.best_line.end
+            start_point_tracked = self.best_line.start
+
+            # Add the new measurement to the list
+            self.measurements_x.append(end_point_tracked[0])
+            self.measurements_y.append(end_point_tracked[1])
+
+            # Ensure the list contains at most 5 measurements_x
+            if len(self.measurements_x) > self.window_size:
+                self.measurements_x.pop(0)  # Remove the oldest measurement
+                self.measurements_y.pop(0)  # Remove the oldest measurement
+            
+            # Calculate the differences_x between the last 5 self.measurements_x
+            differences_x = abs(np.diff(self.measurements_x))
+            differences_y = abs(np.diff(self.measurements_y))
+            
+            # Calculate the median of the differences_x
+            median_diff_x = np.median(differences_x)
+            median_diff_y = np.median(differences_y)
+
+            # Compare the difference between the current measurement and the previous one with the threshold
+            if len(self.measurements_x) > 1:
+                current_diff_x = abs(end_point_tracked[0] - self.measurements_x[-2])
+                current_diff_y = abs(end_point_tracked[1] - self.measurements_y[-2])
+
+                # If last measurement is between the accepted threshold update kalman filter
+                if current_diff_x < median_diff_x * self.th_factor or current_diff_y < median_diff_y * self.th_factor:
+                    self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
+                    self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
+                    #self._visualize_line()
+
+                    if self.debug == True:
+                        self.step_counter += 1
+                        self.detected_points.append([self.step_counter, self.best_line.end[0], self.best_line.end[1]])
+                        self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
+
+            else:
+                # Update kalman filter until last 5 measurements have been saved
+                self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
+                self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
+
+            # Calculate line angle wrt lidar x-axis (pointing forward)
+            x1, y1 = self.best_line.start
+            x2, y2 = self.best_line.end
+            slope = (y2-y1)/(x2-x1)
+            angle_x_axis = np.rad2deg(math.atan(slope))
+
+            # Save the angle to compare it with the next detection
+            self.prev_angle = angle_x_axis
+
+            # Get the center of the line detected
+            self.target_center = np.median(self.points, axis=1)
+            marker = self.get_marker(self.target_center)
+            #self.center_pub.publish(marker) """
+        
+    def pointcloud_clustering(self, points3d): 
         ###
         ### DBSCAN CLUSTERING
         ###
@@ -539,6 +624,7 @@ class DockActionServer(Node):
         self.colision_status = np.any(np.array(self.collision_objects))
         #print(f"Collision status: {self.colision_status}")
         print("///////////////////////////////////////////////////////")
+        print(f"POI coordinates received: {self.POI_coordinates}")
         print(f"Target tracked: {self.target_detected}")
         if self.target_detected == True: 
             print(f"Target pose: {self.tracker_target.pos}")
@@ -546,77 +632,6 @@ class DockActionServer(Node):
         for k, object_tracked in enumerate(self.trackers_objects): 
             print(f" Object {k} tracked: {object_tracked.pos}")
         print(f"Colision status: {self.colision_status}")
-        
-        ###
-        ### DEMO LINE CLUSTERING
-        ###
-        # The folowing code was intended to be used to detect the pier for the MBZIRC demo
-        """ if self.demo == True:
-            # Filter the target line
-            self.best_line = filter_lines(self, self.points, self.prev_angle)
-
-            # If no line detected do not update variables
-            if self.best_line == None: 
-                return
-
-            ### Avoid outliers to update kalman filter ###
-            # This is done by saving the last 5 start and end line points and checking 
-            # the distance between them, to avoid outliers updating kalman filter
-
-            end_point_tracked = self.best_line.end
-            start_point_tracked = self.best_line.start
-
-            # Add the new measurement to the list
-            self.measurements_x.append(end_point_tracked[0])
-            self.measurements_y.append(end_point_tracked[1])
-
-            # Ensure the list contains at most 5 measurements_x
-            if len(self.measurements_x) > self.window_size:
-                self.measurements_x.pop(0)  # Remove the oldest measurement
-                self.measurements_y.pop(0)  # Remove the oldest measurement
-            
-            # Calculate the differences_x between the last 5 self.measurements_x
-            differences_x = abs(np.diff(self.measurements_x))
-            differences_y = abs(np.diff(self.measurements_y))
-            
-            # Calculate the median of the differences_x
-            median_diff_x = np.median(differences_x)
-            median_diff_y = np.median(differences_y)
-
-            # Compare the difference between the current measurement and the previous one with the threshold
-            if len(self.measurements_x) > 1:
-                current_diff_x = abs(end_point_tracked[0] - self.measurements_x[-2])
-                current_diff_y = abs(end_point_tracked[1] - self.measurements_y[-2])
-
-                # If last measurement is between the accepted threshold update kalman filter
-                if current_diff_x < median_diff_x * self.th_factor or current_diff_y < median_diff_y * self.th_factor:
-                    self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
-                    self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
-                    #self._visualize_line()
-
-                    if self.debug == True:
-                        self.step_counter += 1
-                        self.detected_points.append([self.step_counter, self.best_line.end[0], self.best_line.end[1]])
-                        self.updated_points.append([self.step_counter, self.tracked_end.pos[0], self.tracked_end.pos[1]])
-
-            else:
-                # Update kalman filter until last 5 measurements have been saved
-                self.tracked_end.update(np.array(end_point_tracked)[:,np.newaxis])
-                self.tracked_start.update(np.array(start_point_tracked)[:,np.newaxis])
-
-            # Calculate line angle wrt lidar x-axis (pointing forward)
-            x1, y1 = self.best_line.start
-            x2, y2 = self.best_line.end
-            slope = (y2-y1)/(x2-x1)
-            angle_x_axis = np.rad2deg(math.atan(slope))
-
-            # Save the angle to compare it with the next detection
-            self.prev_angle = angle_x_axis
-
-            # Get the center of the line detected
-            self.target_center = np.median(self.points, axis=1)
-            marker = self.get_marker(self.target_center)
-            #self.center_pub.publish(marker) """
     
     def dbscan_clustering(self, points3d): 
         # Standardize the data
