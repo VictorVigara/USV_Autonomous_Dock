@@ -591,18 +591,6 @@ class DockActionServer(Node):
                     lines_array_msg.markers.append(marker)
             self.scan_pub.publish(lines_array_msg) """
             
-    def check_clusters(self, labels): 
-        # Check if any of the cluster belongs to the target: 
-        if self.target_detected: 
-            for k, object_tracked in enumerate(self.trackers_objects): 
-                tracked_object_points = self.tracked_objects_points[k]
-                cluster_2dpoints  = self.points3d[:,np.where(labels == k)[0]][0:2,:]
-                # Calculate distance from cluster to target
-                cluster2target_dist = np.linalg.norm(self.tracker_target.pos - object_tracked.pos)
-                #self.get_logger().info(f"Distance from target to cluster: {cluster2target_dist}")
-                points2target_distances = min(np.array([np.linalg.norm(self.tracker_target.pos - point) for point in tracked_object_points[0:2].T]))
-                #self.get_logger().info(f"MIN Distance from target to cluster: {points2target_distances}")
-            
     def dbscan_clustering(self): 
         # Standardize the data
         scaler = StandardScaler()
