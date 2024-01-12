@@ -381,8 +381,8 @@ class DockActionServer(Node):
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
 
         # Prepare points to process them
-        points3d = np.array(center_line).T # 3xN points
-        self.points = points3d[:2, :]      
+        self.points3d = np.array(center_line).T # 3xN points
+        self.points = self.points3d[:2, :]      
 
         ###
         ### POINCLOUD CLUSTERING
@@ -390,27 +390,23 @@ class DockActionServer(Node):
         
         if self.POI_received == True:
             # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
-            self.pointcloud_clustering(points3d)
+            self.pointcloud_clustering()
 
-        
-        
-        
-        
-    def pointcloud_clustering(self, points3d): 
+    def pointcloud_clustering(self): 
         ###
         ### DBSCAN CLUSTERING
         ###
 
-        labels, label_idxs = self.dbscan_clustering(points3d)
+        labels, label_idxs = self.dbscan_clustering()
 
         # Iterate over all clusters and find the target
-        lines_array_msg = MarkerArray()
-        lines_array_msg.markers = []
+        """ lines_array_msg = MarkerArray()
+        lines_array_msg.markers = [] """
         updated_tracked_object = np.zeros(len(self.trackers_objects))
 
         for label_idx in label_idxs:
             # Get points from each cluster detected
-            cluster_points  = points3d[:,np.where(labels == label_idx)[0]]
+            cluster_points  = self.points3d[:,np.where(labels == label_idx)[0]]
 
             # Get median from each cluster
             cluster_median_pos = np.median(cluster_points, axis=1)
@@ -502,7 +498,7 @@ class DockActionServer(Node):
 
             for label_idx in label_idxs:
                 # Get points from each cluster detected
-                cluster_2dpoints  = points3d[:,np.where(labels == label_idx)[0]][0:2,:]
+                cluster_2dpoints  = self.points3d[:,np.where(labels == label_idx)[0]][0:2,:]
 
                 points2target_distances = np.array([np.linalg.norm(self.tracker_target.pos - point) for point in cluster_2dpoints.T])
                 
@@ -566,10 +562,10 @@ class DockActionServer(Node):
             self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
         self.get_logger().info(f"Colision status: {self.colision_status}")
     
-    def dbscan_clustering(self, points3d): 
+    def dbscan_clustering(self): 
         # Standardize the data
         scaler = StandardScaler()
-        point_cloud_scaled = scaler.fit_transform(points3d.T)
+        point_cloud_scaled = scaler.fit_transform(self.points3d.T)
 
         # Apply DBSCAN
         dbscan = DBSCAN(eps=self.epsilon, min_samples=self.min_samples)
