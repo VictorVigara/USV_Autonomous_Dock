@@ -97,7 +97,7 @@ class DockActionServer(Node):
                                 'STOP': 9}              # USV stopped
         
         # DBSCAN clustering parameters
-        self.epsilon = 0.5
+        self.epsilon = 2
         self.min_samples = 1
 
         # Object avoidance parameters
@@ -273,15 +273,16 @@ class DockActionServer(Node):
         self.POI_coordinates = POI_coords
         self.target_vessel_position = [[self.POI_coordinates.x], [self.POI_coordinates.y]]
         self.POI_received = True
-        print(f"POI coordinates received: {self.POI_coordinates}")
+        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
 
     def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
         # TO DO: Read flag to come back to shore after picking up the boxes
-        print("Received message from the coordinator to come back to shore")
+        self.get_logger().info("Received message from the coordinator to come back to shore")
 
-        print(f"Message USV_to_shore: {USV_to_shore}")
+        self.get_logger().info(f"Message USV_to_shore: {USV_to_shore}")
 
     def _control_cb(self):
+        print("CONTROL CALLBACK")
         """Control loop, called every 0.1 seconds. Executes current policy action."""
         try:
 
@@ -297,7 +298,8 @@ class DockActionServer(Node):
             self._current_state.target = self.target_center
 
             # Track line using Kalman Filter
-            #self._track_line()
+            #if self.target_detected:
+                #self._track_line()
 
 
             # JUST FOR DEBUG PURPOSES
@@ -554,15 +556,15 @@ class DockActionServer(Node):
         # If collision_status = True -> Collision detected / False -> Free path, no collisions
         self.colision_status = np.any(np.array(self.collision_objects))
         #print(f"Collision status: {self.colision_status}")
-        print("///////////////////////////////////////////////////////")
-        print(f"POI coordinates received: {self.POI_coordinates}")
-        print(f"Target tracked: {self.target_detected}")
+        self.get_logger().info("///////////////////////////////////////////////////////")
+        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
+        self.get_logger().info(f"Target tracked: {self.target_detected}")
         if self.target_detected == True: 
-            print(f"Target pose: {self.tracker_target.pos}")
+            self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
 
         for k, object_tracked in enumerate(self.trackers_objects): 
-            print(f" Object {k} tracked: {object_tracked.pos}")
-        print(f"Colision status: {self.colision_status}")
+            self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
+        self.get_logger().info(f"Colision status: {self.colision_status}")
     
     def dbscan_clustering(self, points3d): 
         # Standardize the data
@@ -593,7 +595,7 @@ class DockActionServer(Node):
                 angle = 90 - np.rad2deg(np.arccos(z/d))
 
                 # Save points from center scan
-                if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_crop) or (x < -self.x_crop) or (x > -self.x_crop and x < self.x_crop and (y > self.y_crop or y < -self.y_crop))): 
+                if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > 0.1) or (x < -3) or (x > -3 and x < 0 and (y > 0 or y < -4))): 
                     scan_line.append([x, y, z])
                     
         pc2_cropped = PointCloud2()
@@ -607,7 +609,7 @@ class DockActionServer(Node):
         pc2_cropped.point_step = 12  # 4 (x) + 4 (y) + 4 (z) bytes per point
         pc2_cropped.row_step = pc2_cropped.point_step * len(scan_line)
         pc2_cropped.data = np.array(scan_line, dtype=np.float32).tobytes()
-        self.pc_crop_pub.publish(pc2_cropped)
+        self.pc_crop_pub.publish(pc2_cropped) 
 
         return np.array(scan_line)
 
@@ -617,18 +619,18 @@ class DockActionServer(Node):
         """ if self.state == DockStage.STOP:
             return """
 
-        #lines = detect_lines(self.points, 4, 0.1, self.get_logger())
+        lines = detect_lines(self.tracked_target_points[0:2, :], 4, 0.1, self.get_logger())
         
         if self.best_line == None: 
             return
 
-        """ if len(lines) == 0:
+        if len(lines) == 0:
             return
 
         self.best_line = lines[0]
         for line in lines:
             if line.length() > self.best_line.length():
-                self.best_line = line """
+                self.best_line = line
 
         """ if self.best_line.length() < self.line_thres_min and self.best_line.length() > self.line_thres_max:
             self.get_logger().debug(f'Line not found')
@@ -809,7 +811,7 @@ class DockActionServer(Node):
         """Visualizes the tracked line."""
         msg = Marker()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = self.BASE_LINK
+        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
         msg.scale.x = 0.1
         msg.type = Marker.LINE_LIST
         msg.points = []
