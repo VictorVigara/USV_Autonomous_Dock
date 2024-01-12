@@ -99,6 +99,7 @@ class DockActionServer(Node):
         # DBSCAN clustering parameters
         self.epsilon = 2
         self.min_samples = 1
+        self.lidar_cluster_min_points = 5
 
         # Object avoidance parameters
         self.clear_path_width = 6.0
@@ -416,11 +417,13 @@ class DockActionServer(Node):
         # Check obstacle collision in the path in front of the vessel
         self.check_obstacle_collision()
 
-        
         # If collision_status = True -> Collision detected / False -> Free path, no collisions
         self.colision_status = np.any(np.array(self.collision_objects))
+
+
+
         #print(f"Collision status: {self.colision_status}")
-        self.get_logger().info("///////////////////////////////////////////////////////")
+        """ self.get_logger().info("///////////////////////////////////////////////////////")
         self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
         self.get_logger().info(f"Target tracked: {self.target_detected}")
         if self.target_detected == True: 
@@ -428,7 +431,7 @@ class DockActionServer(Node):
 
         for k, object_tracked in enumerate(self.trackers_objects): 
             self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
-        self.get_logger().info(f"Colision status: {self.colision_status}")
+        self.get_logger().info(f"Colision status: {self.colision_status}") """
 
     def check_obstacle_collision(self): 
         ###
@@ -512,80 +515,94 @@ class DockActionServer(Node):
             # Check if target is detected
             cluster_2d_pos = cluster_median_pos[0:2, None]
 
-            ###
-            ### CHECK IF THE CLUSTER IS THE TARGET OR AN OBSTACLE
-            ###
+            if cluster_points.shape[1] > self.lidar_cluster_min_points:
 
-            # If target tracker not initialized, calculate distance with target received
-            if self.tracker_target == None:
-                # self.target_vessel_position VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
-                cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
-            else: 
-                # Calculate distance with target tracker if initialized
-                cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
-            ##print(f"Object {label_idx}: {cluster_target_distance}")
-            
-            ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
+                ###
+                ### CHECK IF THE CLUSTER IS THE TARGET OR AN OBSTACLE
+                ###
 
-            # If target detected from the beginning, start tracking it
-            if cluster_target_distance < self.distance_threshold: 
-                # Initialize target tracker
-                self.target_detected = True
-                if self.tracker_target == None: 
-                    self.tracker_target = Tracker2D(
-                        cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
-                    self.tracked_target_points = cluster_points
-                    self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                # If target tracker not initialized, calculate distance with target received
+                if self.tracker_target == None:
+                    # self.target_vessel_position VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
+                    cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
                 else: 
-                    # Update target tracker
-                    self.tracker_target.predict()
-                    self.tracker_target.update(cluster_2d_pos)
-                    self.tracked_target_points = cluster_points
-                    
-                    self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
-            
-            ### IF THE CLUSTER IS AN OBSTACLE, UPDATE MEASUREMENT
-            else: 
+                    # Calculate distance with target tracker if initialized
+                    cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
+                ##print(f"Object {label_idx}: {cluster_target_distance}")
                 
-                object_tracked = False
-                if len(self.trackers_objects) > 0: 
-                    
-                    for object_tracker_idx in range(len(self.trackers_objects)): 
-                        cluster_object_distance = np.linalg.norm(self.trackers_objects[object_tracker_idx].pos - cluster_2d_pos[:,0])
+                ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
 
-                        # Check if the object is already being tracked and update with measurement
-                        if cluster_object_distance < 1: 
-                            self.trackers_objects[object_tracker_idx].predict()
-                            self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
-                            self.tracked_objects_points[object_tracker_idx] = cluster_points
-                            object_tracked = True
-                            updated_tracked_object[object_tracker_idx] = 1
-                            break
+                # If target detected from the beginning, start tracking it
+                if cluster_target_distance < self.distance_threshold: 
+                    # Initialize target tracker
+                    self.target_detected = True
+                    if self.tracker_target == None: 
+                        self.tracker_target = Tracker2D(
+                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                        self.tracked_target_points = cluster_points
+                        self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                    else: 
+                        # Update target tracker
+                        self.tracker_target.predict()
+                        self.tracker_target.update(cluster_2d_pos)
+                        self.tracked_target_points = cluster_points
+                        
+                        self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                
+                ### IF THE CLUSTER IS AN OBSTACLE, UPDATE MEASUREMENT
+                else: 
                     
-                    # If the object is not being tracked, initialize tracker
-                    if object_tracked == False: 
+                    object_tracked = False
+                    if len(self.trackers_objects) > 0: 
+                        
+                        for object_tracker_idx in range(len(self.trackers_objects)): 
+                            cluster_object_distance = np.linalg.norm(self.trackers_objects[object_tracker_idx].pos - cluster_2d_pos[:,0])
+
+                            # Check if the object is already being tracked and update with measurement
+                            if cluster_object_distance < 1: 
+                                self.trackers_objects[object_tracker_idx].predict()
+                                self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
+                                self.tracked_objects_points[object_tracker_idx] = cluster_points
+                                object_tracked = True
+                                updated_tracked_object[object_tracker_idx] = 1
+                                break
+                        
+                        # If the object is not being tracked, initialize tracker
+                        if object_tracked == False: 
+                            self.trackers_objects.append(Tracker2D(
+                                cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                            self.tracked_objects_points.append(cluster_points)
+                            # Initialize tracked obstacle without collision to check it later
+                            self.collision_objects.append(0)
+                    
+                    # start tracking the object if the tracker list has not been initialized
+                    else: 
                         self.trackers_objects.append(Tracker2D(
-                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                                cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
                         self.tracked_objects_points.append(cluster_points)
                         # Initialize tracked obstacle without collision to check it later
                         self.collision_objects.append(0)
-                
-                # start tracking the object if the tracker list has not been initialized
-                else: 
-                    self.trackers_objects.append(Tracker2D(
-                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
-                    self.tracked_objects_points.append(cluster_points)
-                    # Initialize tracked obstacle without collision to check it later
-                    self.collision_objects.append(0)
 
-            # Fill marker msg for cluster visualization in RVIZ
-            """ for i in range(cluster_points.shape[1]): 
-                x = cluster_points[0, i]
-                y = cluster_points[1, i]
-                marker = self.get_marker([x, y], self.cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
-                lines_array_msg.markers.append(marker)
-        self.scan_pub.publish(lines_array_msg) """
-    
+                # Fill marker msg for cluster visualization in RVIZ
+                """ for i in range(cluster_points.shape[1]): 
+                    x = cluster_points[0, i]
+                    y = cluster_points[1, i]
+                    marker = self.get_marker([x, y], self.cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
+                    lines_array_msg.markers.append(marker)
+            self.scan_pub.publish(lines_array_msg) """
+            
+    def check_clusters(self, labels): 
+        # Check if any of the cluster belongs to the target: 
+        if self.target_detected: 
+            for k, object_tracked in enumerate(self.trackers_objects): 
+                tracked_object_points = self.tracked_objects_points[k]
+                cluster_2dpoints  = self.points3d[:,np.where(labels == k)[0]][0:2,:]
+                # Calculate distance from cluster to target
+                cluster2target_dist = np.linalg.norm(self.tracker_target.pos - object_tracked.pos)
+                #self.get_logger().info(f"Distance from target to cluster: {cluster2target_dist}")
+                points2target_distances = min(np.array([np.linalg.norm(self.tracker_target.pos - point) for point in tracked_object_points[0:2].T]))
+                #self.get_logger().info(f"MIN Distance from target to cluster: {points2target_distances}")
+            
     def dbscan_clustering(self): 
         # Standardize the data
         scaler = StandardScaler()
