@@ -404,11 +404,67 @@ class DockActionServer(Node):
         lines_array_msg.markers = [] """
         updated_tracked_object = np.zeros(len(self.trackers_objects))
 
-        # Itareate over DBSCAN mask to get target and obstacle clusters
+        # Itarate over DBSCAN mask to get target and obstacle clusters
         self.detect_target_and_obstacles(labels, label_idxs, updated_tracked_object)
 
-        
+        # Redetect target if olcuded by an obstacle moving in front of the USV
+        self.redetect_target_if_ocluded(labels, label_idxs)
 
+        # Remove tracked objects that have not been detected
+        self.remove_not_detected_objects(updated_tracked_object)
+        
+        # Check obstacle collision in the path in front of the vessel
+        self.check_obstacle_collision()
+
+        
+        # If collision_status = True -> Collision detected / False -> Free path, no collisions
+        self.colision_status = np.any(np.array(self.collision_objects))
+        #print(f"Collision status: {self.colision_status}")
+        self.get_logger().info("///////////////////////////////////////////////////////")
+        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
+        self.get_logger().info(f"Target tracked: {self.target_detected}")
+        if self.target_detected == True: 
+            self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
+
+        for k, object_tracked in enumerate(self.trackers_objects): 
+            self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
+        self.get_logger().info(f"Colision status: {self.colision_status}")
+
+    def check_obstacle_collision(self): 
+        ###
+        ### CHECK OBSTACLE COLLISION
+        ###
+
+        for k, object_tracked in enumerate(self.trackers_objects): 
+            
+            # Check if the cluster detected is inside the area defined (rectangle in front of the USV)
+            if np.any(self.tracked_objects_points[k][1,:] < self.clear_path_length ) and np.any(self.tracked_objects_points[k][1,:] > 0) \
+               and np.any(self.tracked_objects_points[k][0,:] > -self.clear_path_width/2) and np.any(self.tracked_objects_points[k][0,:] < self.clear_path_width/2):
+                color = [255.0, 0.0, 0.0]
+                # Set collision object to 1 if is inside the trajectory
+                self.collision_objects[k] = 1
+            else: 
+                color = [0.0, 255.0, 0.0]
+                # Set collision object to 1 if it is outside the path
+                self.collision_objects[k] = 0
+            # Publish a point tracking the obstacle
+            self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+100))
+            #print(f" Object {k} tracked: {object_tracked.pos}")s
+
+    def remove_not_detected_objects(self, updated_tracked_object): 
+        ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
+
+        eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
+        #print(f"Updated tracked objectss: {updated_tracked_object}")
+        #print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
+        # Remove elements at specified indices using a loop
+        if len(list(eliminate_tracked_objects_idxs[0])) > 0:
+            for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
+                self.trackers_objects.pop(index[0])
+                self.tracked_objects_points.pop(index[0])
+                self.collision_objects.pop(index[0])
+
+    def redetect_target_if_ocluded(self, labels, label_idxs): 
         ### IF TARGET HAS BEEN OCLUDED, TRY TO FIND IT AGAIN
 
         if self.target_detected == False and self.tracker_target != None: 
@@ -440,50 +496,6 @@ class DockActionServer(Node):
                     
             self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
-        ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
-
-        eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
-        #print(f"Updated tracked objectss: {updated_tracked_object}")
-        #print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
-        # Remove elements at specified indices using a loop
-        if len(list(eliminate_tracked_objects_idxs[0])) > 0:
-            for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
-                self.trackers_objects.pop(index[0])
-                self.tracked_objects_points.pop(index[0])
-                self.collision_objects.pop(index[0])
-
-        ###
-        ### CHECK OBSTACLE COLLISION
-        ###
-
-        for k, object_tracked in enumerate(self.trackers_objects): 
-            
-            # Check if the cluster detected is inside the area defined (rectangle in front of the USV)
-            if np.any(self.tracked_objects_points[k][1,:] < self.clear_path_length ) and np.any(self.tracked_objects_points[k][1,:] > 0) \
-               and np.any(self.tracked_objects_points[k][0,:] > -self.clear_path_width/2) and np.any(self.tracked_objects_points[k][0,:] < self.clear_path_width/2):
-                color = [255.0, 0.0, 0.0]
-                # Set collision object to 1 if is inside the trajectory
-                self.collision_objects[k] = 1
-            else: 
-                color = [0.0, 255.0, 0.0]
-                # Set collision object to 1 if it is outside the path
-                self.collision_objects[k] = 0
-            # Publish a point tracking the obstacle
-            self.center_pub.publish(self.get_marker(object_tracked.pos, color = color, scale = 0.3, id_ = k+100))
-            #print(f" Object {k} tracked: {object_tracked.pos}")
-
-        # If collision_status = True -> Collision detected / False -> Free path, no collisions
-        self.colision_status = np.any(np.array(self.collision_objects))
-        #print(f"Collision status: {self.colision_status}")
-        self.get_logger().info("///////////////////////////////////////////////////////")
-        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
-        self.get_logger().info(f"Target tracked: {self.target_detected}")
-        if self.target_detected == True: 
-            self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
-
-        for k, object_tracked in enumerate(self.trackers_objects): 
-            self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
-        self.get_logger().info(f"Colision status: {self.colision_status}")
 
     def detect_target_and_obstacles(self, labels, label_idxs, updated_tracked_object): 
         ''' Function that iterates over the mask created by DBSCAN and search 
