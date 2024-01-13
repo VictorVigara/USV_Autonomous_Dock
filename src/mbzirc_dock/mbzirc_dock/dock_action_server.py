@@ -9,8 +9,11 @@ import numpy as np
 import rclpy
 from scipy.spatial.transform import Rotation
 
+import cv2 as cv
+
 from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
+from skimage.transform import (hough_line, hough_line_peaks)
 
 from rclpy.action import ActionServer
 from rclpy.action.server import ServerGoalHandle
@@ -100,6 +103,15 @@ class DockActionServer(Node):
         self.epsilon = 2
         self.min_samples = 1
         self.lidar_cluster_min_points = 5
+
+        ## Line detection parameters
+        self.grid_resolution = 0.1       # Resolution of the grid (adjust based on your needs)
+        self.dilate_kernel_size = 3      # Kernel size to apply dilate to laser scan image to detect lines
+        self.angle_difference = 10       # Angle difference between previous best_line detected and the current one
+                                         # to avoid selecting a different best line detected that is not the target
+        self.points_in_line_th_1 = 0.2   # Threshold to select points that belong to the first line detected
+        self.points_in_line_th_2 = 0.05  # Threshold to select points that belong to the final line
+
 
         # Object avoidance parameters
         self.clear_path_width = 6.0
@@ -373,10 +385,6 @@ class DockActionServer(Node):
 
         # Initialize target_detected = False 
         self.target_detected = False
-        
-        ###
-        ### GET LASER SCAN FROM PC2
-        ###
 
         # Get the center_line from the PointCloud2 and delete vessel points
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
@@ -392,6 +400,17 @@ class DockActionServer(Node):
         if self.POI_received == True:
             # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
             self.pointcloud_clustering()
+
+            if self.target_detected == True: 
+                # If the target has been detected, look for the side lines
+                self.target_line_clustering()
+
+
+    def target_line_clustering(self):
+        ''' Cluster the lines detected in the target vessel'''
+
+        # Apply hough lines to an image created with the scan
+        self.find_lines(self.tracked_target_points[:2, :])
 
     def pointcloud_clustering(self): 
         ###
@@ -574,6 +593,7 @@ class DockActionServer(Node):
                             self.tracked_objects_points.append(cluster_points)
                             # Initialize tracked obstacle without collision to check it later
                             self.collision_objects.append(0)
+                            updated_tracked_object = np.append(updated_tracked_object, 0)
                     
                     # start tracking the object if the tracker list has not been initialized
                     else: 
@@ -582,6 +602,7 @@ class DockActionServer(Node):
                         self.tracked_objects_points.append(cluster_points)
                         # Initialize tracked obstacle without collision to check it later
                         self.collision_objects.append(0)
+                        updated_tracked_object = np.append(updated_tracked_object, 0)
 
                 # Fill marker msg for cluster visualization in RVIZ
                 """ for i in range(cluster_points.shape[1]): 
@@ -975,3 +996,33 @@ class DockActionServer(Node):
             self.target_center = np.median(self.points, axis=1)
             marker = self.get_marker(self.target_center)
             #self.center_pub.publish(marker)
+
+
+    def find_lines(self, points): 
+        # Calculate the grid size based on the range of coordinates
+        min_x, min_y = np.min(points, axis=1)
+        max_x, max_y = np.max(points, axis=1)
+
+        grid_size_x = int((max_x - min_x) / self.grid_resolution) + 1
+        grid_size_y = int((max_y - min_y) / self.grid_resolution) + 1
+
+        # Create an empty grid
+        occupancy_grid = np.zeros((grid_size_x, grid_size_y), dtype=np.uint8)
+
+        # Map laser scan points to the grid
+        for x, y in points.T:  # Transpose 'points' to loop over columns
+            x_index = int((x - min_x) / self.grid_resolution)
+            y_index = int((y - min_y) / self.grid_resolution)
+            occupancy_grid[x_index, y_index] = 255  # Set as occupied
+
+        # Create image to be processed
+        self.scan_image = occupancy_grid
+
+        # Dilate image to join continuous points that define a line
+        kernel = np.ones((self.dilate_kernel_size,self.dilate_kernel_size),np.uint8)
+        self.scan_image = cv.dilate(self.scan_image,kernel,iterations = 1)
+
+        # Classic straight-line Hough transform
+        self.h_hl, self.theta_hl, self.d_hl = hough_line(self.scan_image)
+
+        self.get_logger().info(f"Hough params: {self.h_hl}, {self.theta_hl}, {self.d_hl}")
