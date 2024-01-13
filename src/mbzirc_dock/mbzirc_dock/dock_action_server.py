@@ -34,7 +34,7 @@ from tf2_ros.transform_listener import TransformListener
 from mbzirc_interfaces.action import Dock
 
 from mbzirc_dock.approach_policy import ApproachPolicy
-from mbzirc_dock.line_detection import detect_lines, filter_lines
+from mbzirc_dock.line_detection import detect_lines, filter_lines, est_line, all_points_valid, distance_point_to_line
 from mbzirc_dock.orbit_policy import OrbitPolicy
 from mbzirc_dock.policy import Policy, PolicyAction, PolicyState, PolicyCanceledException, PolicyOutOfBoundsException
 from mbzirc_dock.stop_policy import StopPolicy
@@ -305,9 +305,9 @@ class DockActionServer(Node):
             else: 
                 line_color = [0.0,1.0, 0.0]
 
-            self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0, color = line_color)
+            """ self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0, color = line_color)
             self.publish_line(start=[-self.clear_path_width/2, 0.0], end=[-self.clear_path_width/2, self.clear_path_length], id = 1, color = line_color)
-
+ """
             self._current_state.target = self.target_center
 
             # Track line using Kalman Filter
@@ -409,8 +409,17 @@ class DockActionServer(Node):
     def target_line_clustering(self):
         ''' Cluster the lines detected in the target vessel'''
 
+        points = self.tracked_target_points[:2, :]
+
+        # Get the min and max points
+        min_x, min_y = np.min(points, axis=1)
+        max_x, max_y = np.max(points, axis=1)
+
         # Apply hough lines to an image created with the scan
-        self.find_lines(self.tracked_target_points[:2, :])
+        self.find_lines(points)
+
+        # Filter lines detected from hough lines
+        lines_estimated, points_target_lines = self.detected_lines_filter(points, min_x, min_y)
 
     def pointcloud_clustering(self): 
         ###
@@ -682,8 +691,8 @@ class DockActionServer(Node):
             self.get_logger().debug(f'Line not found')
             return """
 
-        if self.tracked_start is not None:
-            self._visualize_line()
+        """ if self.tracked_start is not None:
+            self._visualize_line() """
 
         #lower, higher = self._order_line_endpoints(self.best_line.start, self.best_line.end)
         """ lower = self.best_line.start
@@ -853,7 +862,7 @@ class DockActionServer(Node):
 
         return msg
 
-    def _visualize_line(self) -> None:
+    def _visualize_line(self, first_point, last_point) -> None:
         """Visualizes the tracked line."""
         msg = Marker()
         msg.header.stamp = self.get_clock().now().to_msg()
@@ -861,13 +870,13 @@ class DockActionServer(Node):
         msg.scale.x = 0.1
         msg.type = Marker.LINE_LIST
         msg.points = []
-        msg.color.r = 1.0
-        msg.color.g = 0.5
-        msg.color.b = 0.5
+        msg.color.r = 0.0
+        msg.color.g = 1.0
+        msg.color.b = 0.0
         msg.color.a = 1.0
 
-        start_ = Point(x=self.tracked_start.pos[0], y=self.tracked_start.pos[1], z=0.0)
-        end_ = Point(x=self.tracked_end.pos[0], y=self.tracked_end.pos[1], z=0.0)
+        start_ = Point(x=first_point[0], y=first_point[1], z=0.0)
+        end_ = Point(x=last_point[0], y=last_point[1], z=0.0)
 
         """ start_ = Point(x=self.best_line.start[0], y=self.best_line.start[1], z=0.0)
         end_ = Point(x=self.best_line.end[0], y=self.best_line.end[1], z=0.0) """
@@ -1026,3 +1035,135 @@ class DockActionServer(Node):
         self.h_hl, self.theta_hl, self.d_hl = hough_line(self.scan_image)
 
         self.get_logger().info(f"Hough params: {self.h_hl}, {self.theta_hl}, {self.d_hl}")
+
+    def detected_lines_filter(self, points, min_x, min_y): 
+        ''' Iterate over the hough lines detected and filter them to get the ones desired'''
+        
+        # Get width and height of the scan image created
+        width, height = self.scan_image.shape[1], self.scan_image.shape[0]
+        
+        #min_line_dist = 9999999
+
+        # Obtain first and last point of each line detected in the image
+        lines_estimated = []
+        points_target_lines = []
+        for _, angle, dist in zip(*hough_line_peaks(self.h_hl, self.theta_hl, self.d_hl)):
+            # First and last line point in image frame
+            y0 = (dist - 0 * np.cos(angle)) / np.sin(angle)
+            y1 = (dist - (self.scan_image.shape[1] - 1) * np.cos(angle)) / np.sin(angle)
+            x0 = 0
+            x1 = self.scan_image.shape[1] - 1
+
+            # Plot for debugging 
+            """ ax[2].plot([x1, x0], [y1, y0])
+            ax[2].set_xlim(0, width)
+            ax[2].set_ylim(height, 0)  # Note: Y-axis is inverted in the typical image coordinate system """
+
+            # Convert line points detected to laser scan frame
+            p1 = [y0*self.grid_resolution+min_x, x0*self.grid_resolution+min_y]
+            p2 = [y1*self.grid_resolution+min_x, x1*self.grid_resolution+min_y]
+
+            # Create line with first and last point
+            line = [p1, p2]
+
+            # Visualize the line detected by hough lines (find_lines function)
+            #line_msg = self._visualize_line(line[0], line[1], id=0)
+
+
+            ### LINES DETECTED FILTER: Apply pca to estimate a line an select valid points
+            ###                        within a thershold 
+
+            ### 1st Filter: Get points that are below points_in_line_th_1 from the hough line
+
+            # Get all laser points that belongs to the line within a threshold
+            valid_points = self.points_on_line_with_threshold(points, line, self.points_in_line_th_1)
+
+            # Convert points to an array
+            valid_points_array = np.transpose(np.array(valid_points))
+            
+            # Continue with the loop if no valid points
+            if len(valid_points_array) == 0: 
+                continue
+            
+            ### 2nd Filter: Estimate previous line and apply a second threshold points_in_line_th_2
+
+            # Estimate line from scan points using PCA
+            valid_points_eq = est_line(valid_points_array)
+
+            # Get inliers from that line within a threshold
+            _, inliers, _ = all_points_valid(valid_points_eq, valid_points_array, threshold=self.points_in_line_th_2)
+            
+            # Update line cluster eliminating outliers
+            valid_points_array = inliers[:2,:]
+
+            # Continue with the loop if no valid points
+            if len(valid_points_array) == 0: 
+                continue
+
+            valid_points_eq = est_line(valid_points_array)
+
+            # Get the points from the cluster
+            x = list(inliers[0])
+            y = list(inliers[1])
+            z = list(inliers[2])
+            points_target_line = []
+            for i in range(len(x)): 
+                points_target_line.append([x[i], y[i], z[i]])
+
+            points_target_lines.append(points_target_line)
+
+            
+            ### ORDER DETECTED POINTS AND GET THE BEGINNING AND THE END LINE POINTs
+
+            # Compute the orthogonal vector [-B, A]
+            orthogonal_vector = np.array([-valid_points_eq[1], valid_points_eq[0]])
+
+            # Project all points onto the orthogonal vector and sort them
+            projections = np.dot(valid_points_array.T, orthogonal_vector)
+            sorted_indices = np.argsort(projections)
+
+            # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
+            first_point = valid_points_array[:, sorted_indices[0]]
+            last_point = valid_points_array[:, sorted_indices[-1]]  
+
+            # Visualize the filtered line
+            line_msg = self._visualize_line(first_point, last_point)
+
+            # Get x axis line angle
+            x1, y1 = first_point
+            x2, y2 = last_point
+            slope = (y2-y1)/(x2-x1)
+            angle_x_axis = np.rad2deg(math.atan(slope))
+
+            #lower, higher = self._order_line_endpoints(first_point, last_point)
+            h = np.linalg.norm(last_point)
+            l = np.linalg.norm(first_point)
+            r = np.linalg.norm(last_point - first_point)
+            curr_angle = np.arccos((r ** 2 + l ** 2 - h ** 2) / (2 * r * l))
+
+            """ 
+            line_i = Line(eq= valid_points_eq, start=first_point, end=last_point)
+
+            line_i = Line(eq= valid_points_eq, start=first_point, end=last_point)
+
+            if self.prev_ang == None: 
+                self.prev_ang = angle_x_axis
+
+            print(f"Prev angle: {self.prev_ang}")
+            print(f"Curr angle: {angle_x_axis}")
+            print(f"Ang diff:   {abs(angle_x_axis - self.prev_ang)}")
+
+            if np.linalg.norm(line_i.center()) < min_line_dist and abs(angle_x_axis - self.prev_ang) < 45: 
+                min_line_dist = np.linalg.norm(line_i.center())
+                self.best_line = line_i """
+            
+        return lines_estimated, points_target_lines
+    
+    def points_on_line_with_threshold(self, point_set, line, threshold):
+        result = []
+        for i in range(point_set.shape[1]):
+            point = [point_set[0,i], point_set[1,i]]
+            distance = distance_point_to_line(point, line)
+            if distance <= threshold:
+                result.append(point)
+        return result
