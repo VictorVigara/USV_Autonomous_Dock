@@ -41,6 +41,7 @@ from mbzirc_dock.stop_policy import StopPolicy
 from mbzirc_dock.target_policy import TargetPolicy
 from mbzirc_dock.touch_policy import TouchPolicy
 from mbzirc_dock.tracker import Tracker2D
+from mbzirc_dock.line import Line
 
 
 class DockStage(enum.Enum):
@@ -106,7 +107,7 @@ class DockActionServer(Node):
 
         ## Line detection parameters
         self.grid_resolution = 0.1       # Resolution of the grid (adjust based on your needs)
-        self.dilate_kernel_size = 3      # Kernel size to apply dilate to laser scan image to detect lines
+        self.dilate_kernel_size = 1      # Kernel size to apply dilate to laser scan image to detect lines
         self.angle_difference = 10       # Angle difference between previous best_line detected and the current one
                                          # to avoid selecting a different best line detected that is not the target
         self.points_in_line_th_1 = 0.2   # Threshold to select points that belong to the first line detected
@@ -307,7 +308,7 @@ class DockActionServer(Node):
 
             """ self.publish_line(start=[self.clear_path_width/2, 0.0], end=[self.clear_path_width/2, self.clear_path_length], id = 0, color = line_color)
             self.publish_line(start=[-self.clear_path_width/2, 0.0], end=[-self.clear_path_width/2, self.clear_path_length], id = 1, color = line_color)
- """
+            """
             self._current_state.target = self.target_center
 
             # Track line using Kalman Filter
@@ -405,7 +406,6 @@ class DockActionServer(Node):
                 # If the target has been detected, look for the side lines
                 self.target_line_clustering()
 
-
     def target_line_clustering(self):
         ''' Cluster the lines detected in the target vessel'''
 
@@ -419,7 +419,157 @@ class DockActionServer(Node):
         self.find_lines(points)
 
         # Filter lines detected from hough lines
-        lines_estimated, points_target_lines = self.detected_lines_filter(points, min_x, min_y)
+        filtered_lines = self.detected_lines_filter(points, min_x, min_y)
+
+        vessel_sides = self.get_vessel_sides(filtered_lines)
+
+        
+
+    def get_vessel_sides(self, filtered_lines):
+
+        if len(filtered_lines)>0:
+            discarded_lines = []
+            best_line = filtered_lines[0]
+            best_n_points = filtered_lines[0].n_points()
+            for idx, line in enumerate(filtered_lines): 
+                line_length = line.length()
+                if line_length > 2: 
+                    if line.n_points() > best_n_points:
+                        best_line = line
+                    else:
+                        discarded_lines.append(line)
+                else: 
+                    discarded_lines.append(line)
+
+            # compare best line with  the others to find 90 degrees (back side)
+            """ start_point1 = best_line.start
+            end_point1 = best_line.end
+            for line in discarded_lines: 
+                start_point2 = line.start
+                end_point2 = line.end
+                angle = angle = self.angle_between_lines(start_point1, end_point1, start_point2, end_point2)
+
+                if angle < 95 and angle > 85: 
+                    best_line_2 = line
+                    self._visualize_line(list(line.start), list(line.end), id=0) """
+
+            line_msg = self._visualize_line(list(best_line.start), list(best_line.end), id=1) 
+
+            # Get points belonging to perpendicular detected side to detect largest and shortest vessel sides
+            self.get_logger().info(f"Tracker points shape: {self.tracked_target_points.shape}")
+            valid_points_array = self.get_second_vessel_side(best_line, self.tracked_target_points[:2, :])
+    
+    def get_second_vessel_side(self, best_line, points):
+        ''' Get perpendicular line to a line containing a point'''
+
+        # Try to find second line through the best line start point
+        best_line_2 = self.find_second_vessel_side(best_line, best_line.start, points)
+
+        # If second side not found, try with best line end point
+        if best_line_2 == None: 
+            best_line_2 = self.find_second_vessel_side(best_line, best_line.end, points)
+
+        # Publish line to rviz if founded
+        if best_line_2 != None:
+            self._visualize_line(list(best_line_2.start), list(best_line_2.end), id=15)
+            """ lines_array_msg = MarkerArray()
+            lines_array_msg.markers = []
+            for i in range(len(valid_points_array[0])): 
+                x = valid_points_array[0][i]
+                y = valid_points_array[1][i]
+                marker = self.get_marker([x, y], [0.0, 1.0, 0.0], scale=0.1, id_=int(i))
+                lines_array_msg.markers.append(marker)
+            self.scan_pub.publish(lines_array_msg) """
+    
+    def find_second_vessel_side(self, best_line, point, points): 
+        ''' Try to find the second side of the vessel given the first found side
+            and one of the extreme points of the side found'''
+        # Initialize best_line_2
+        best_line_2 = None
+
+        # Caculate perpendicular line containing the start  of the best line        
+        side_lin_eq = self.get_perpendicular_line(best_line.line_eq(), point) 
+        
+        _, inliers, _ = all_points_valid(line=np.array(side_lin_eq), points=points, threshold=0.2)
+
+        # Get inhomogeneous coordinates
+        valid_points_array = inliers[:2,:]
+
+        # Discard points belonging to best_line
+        valid_points_filter = ~np.isin(valid_points_array, best_line.points())
+        valid_points_array = valid_points_array[:,valid_points_filter[0]]
+        valid_points_array = np.hstack((valid_points_array, point.reshape(-1, 1)))
+
+        if valid_points_array.shape[1] != 0: 
+                # Fit line to valid_points_array
+                valid_points_eq = est_line(valid_points_array)
+
+                # Get first and last line points
+                first_point, last_point = self.get_first_last_line_points(valid_points_array, valid_points_eq)
+                
+                # Calculate angle between lines
+                angle = angle = self.angle_between_lines(best_line.start, best_line.end, first_point, last_point)
+
+                if angle > 85 and angle < 95: 
+                    best_line_2 = Line(eq=valid_points_eq, start = first_point, end = last_point, pts=valid_points_array)
+
+        return best_line_2
+    
+    def get_first_last_line_points(self, valid_points_array, valid_points_eq):
+        # Compute the orthogonal vector [-B, A]
+        orthogonal_vector = np.array([-valid_points_eq[1], valid_points_eq[0]])
+
+        # Project all points onto the orthogonal vector and sort them
+        projections = np.dot(valid_points_array.T, orthogonal_vector)
+        sorted_indices = np.argsort(projections)
+
+        # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
+        first_point = valid_points_array[:, sorted_indices[0]]
+        last_point = valid_points_array[:, sorted_indices[-1]] 
+
+        return first_point, last_point
+    
+    def get_perpendicular_line(self, line_eq, point): 
+        ''' Get perpendicular line given a line eq and a point'''
+
+        # Get line params
+        a, b, c = line_eq
+        
+        # Get point
+        x, y = point
+        
+        # Calculate the slope of the original line
+        slope_original = -a / b
+
+        # Calculate the slope of the perpendicular line
+        slope_perpendicular = -1 / slope_original
+
+        # Calculate the intercept of the perpendicular line
+        c_perpendicular = y - slope_perpendicular * x
+
+        # Coefficients of the perpendicular line equation
+        a_perpendicular = slope_perpendicular
+        b_perpendicular = -1
+        c_perpendicular = c_perpendicular
+
+        return [a_perpendicular, b_perpendicular, c_perpendicular]
+
+    def angle_between_lines(self, start_point1, end_point1, start_point2, end_point2):
+        vector1 = np.array([end_point1[0] - start_point1[0], end_point1[1] - start_point1[1]])
+        vector2 = np.array([end_point2[0] - start_point2[0], end_point2[1] - start_point2[1]])
+
+        dot_product = np.dot(vector1, vector2)
+        magnitude_v1 = np.linalg.norm(vector1)
+        magnitude_v2 = np.linalg.norm(vector2)
+
+        cosine_theta = dot_product / (magnitude_v1 * magnitude_v2)
+
+        # Ensure the value is within the valid range for arccosine
+        cosine_theta = np.clip(cosine_theta, -1.0, 1.0)
+
+        theta = np.arccos(cosine_theta)
+        angle_degrees = np.degrees(theta)
+        return angle_degrees
 
     def pointcloud_clustering(self): 
         ###
@@ -862,9 +1012,10 @@ class DockActionServer(Node):
 
         return msg
 
-    def _visualize_line(self, first_point, last_point) -> None:
+    def _visualize_line(self, first_point, last_point, id) -> None:
         """Visualizes the tracked line."""
         msg = Marker()
+        msg.id = id
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
         msg.scale.x = 0.1
@@ -1045,8 +1196,8 @@ class DockActionServer(Node):
         #min_line_dist = 9999999
 
         # Obtain first and last point of each line detected in the image
-        lines_estimated = []
-        points_target_lines = []
+
+        filtered_lines = []
         for _, angle, dist in zip(*hough_line_peaks(self.h_hl, self.theta_hl, self.d_hl)):
             # First and last line point in image frame
             y0 = (dist - 0 * np.cos(angle)) / np.sin(angle)
@@ -1110,8 +1261,6 @@ class DockActionServer(Node):
             for i in range(len(x)): 
                 points_target_line.append([x[i], y[i], z[i]])
 
-            points_target_lines.append(points_target_line)
-
             
             ### ORDER DETECTED POINTS AND GET THE BEGINNING AND THE END LINE POINTs
 
@@ -1127,7 +1276,9 @@ class DockActionServer(Node):
             last_point = valid_points_array[:, sorted_indices[-1]]  
 
             # Visualize the filtered line
-            line_msg = self._visualize_line(first_point, last_point)
+            #line_msg = self._visualize_line(first_point, last_point)
+            line_i = Line(eq= valid_points_eq, start=first_point, end=last_point, pts=valid_points_array)
+            filtered_lines.append(line_i)
 
             # Get x axis line angle
             x1, y1 = first_point
@@ -1157,7 +1308,7 @@ class DockActionServer(Node):
                 min_line_dist = np.linalg.norm(line_i.center())
                 self.best_line = line_i """
             
-        return lines_estimated, points_target_lines
+        return filtered_lines
     
     def points_on_line_with_threshold(self, point_set, line, threshold):
         result = []
