@@ -20,16 +20,18 @@ from rclpy.action.server import ServerGoalHandle
 from rclpy.node import Node
 from rclpy.time import Time
 
-from geometry_msgs.msg import Twist, Point
-from sensor_msgs.msg import LaserScan, PointCloud2, PointField
+from geometry_msgs.msg import Twist, Point, Vector3
+from sensor_msgs.msg import LaserScan, PointCloud2, PointField, Imu
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2 #used to read points 
-from std_msgs.msg import Int16, Bool
+from std_msgs.msg import Int16, Bool, Float32
 
 import math
 
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
+
+from tf_transformations import euler_from_quaternion
 
 from mbzirc_interfaces.action import Dock
 
@@ -45,12 +47,19 @@ from mbzirc_dock.line import Line
 
 
 class DockStage(enum.Enum):
-    STOP = enum.auto()
-    ENTER_ORBIT = enum.auto()
-    ORBIT = enum.auto()
-    APPROACH = enum.auto()
-    TOUCH = enum.auto()
-
+    ON_SHORE = enum.auto()                  # USV starting state
+    LEAVE_GATE = enum.auto()                # Go straight few meters to leave the gate
+    TURNING_TO_POI = enum.auto()            # USV facing to POI coordinates
+    STRAIGHT_TO_POI_BLIND = enum.auto()     # USV going straight forward to the POI without POI detection
+    STRAIGHT_TO_POI_CAMERA = enum.auto()    # USV going straight forward to the camera detected POI
+    STRAIGHT_TO_POI_LIDAR = enum.auto()     # USV going straight forward to the lidar detected POI
+    WAIT_OBSTACLE = enum.auto()             # USV waiting because an obstacle is in the path
+    ENTER_ORBIT = enum.auto()               # USV entering the POI orbit
+    ORBIT = enum.auto()                     # USV orbitting the POI to find the largest side
+    APPROACH = enum.auto()                  # USV approaching the POI
+    TOUCH = enum.auto()                     # USV touching the POI
+    BACK_TO_SHORE = enum.auto()             # USV coming back to shore
+    STOP = enum.auto()                      # USV stopped            
 
 class DockActionServer(Node):
     BASE_LINK = 'world'
@@ -84,10 +93,6 @@ class DockActionServer(Node):
                           [255.0, 0.0, 255.0],
                           ]
         
-        ###
-        ### PARAMETERS
-        ###
-
         # States dict
         self.USV_state_dict  = {'ON_SHORE': 0,          # USV starting state 
                                 'TURNING_TO_POI': 1,    # USV facing to POI coordinates
@@ -99,6 +104,22 @@ class DockActionServer(Node):
                                 'TOUCH': 7,             # USV touching the POI
                                 'BACK_TO_SHORE': 8,     # USV coming back to shore
                                 'STOP': 9}              # USV stopped
+        
+        ###
+        ### PARAMETERS
+        ###
+
+        # LEAVE GATE 
+        self.leave_gate_vel = 1.0       # Velocity to leave the gate (m/s)
+
+        # TURNING TO POI 
+        self.turning_threshold = 3      # Threshold within turning angle reached to start next stage (degrees)
+
+        # STRAIGHT TO POI BLIND
+        self.straight_to_poi_blind_vel = 1.0    # Velocity to go straight to POI until camera detects de POI
+
+        # STRAIGHT TO POI CAMERA
+        self.straight_to_poi_camera_vel = 1.0   # Velocity to go straight to POI when camera detects de POI
         
         # DBSCAN clustering parameters
         self.epsilon = 2
@@ -179,6 +200,12 @@ class DockActionServer(Node):
         ### INITIALIZE VARIABLES
         ###
 
+        # TURNING TO POI variables
+        self.USV_control_msg_sent = False
+
+        # Lidar target detected
+        self.POI_lidar_detected = False
+
         # Target detected flag
         self.target_detected = False        # True if target detected in last measurement
 
@@ -197,11 +224,16 @@ class DockActionServer(Node):
 
         # Initial target coordinates
         self.POI_initial_coords = None
-        self.POI_received = False
+        self.POI_initial_received = False
+
+        # USV feedback
+        self.yaw_USV = None     
+        self.yaw_USV_received = False       
 
         # Camera target coordinates
         self.POI_camera_coords = None
         self.POI_camera_received = False
+        self.POI_camera_angle = None
         
         # Initialize trajectory targets
         self.trajectory_targets = [
@@ -209,7 +241,7 @@ class DockActionServer(Node):
         ]
         
         # USV mission state
-        self.state = DockStage.STOP
+        self.state = DockStage.ON_SHORE
 
         # Transform variables
         self.tf_buffer = Buffer()
@@ -230,24 +262,29 @@ class DockActionServer(Node):
         self.target_center = np.zeros(2)
         self.points = np.zeros((2, 1))
         self.measurements_x = []
-        self.measurements_y = []        
+        self.measurements_y = []  
+
+        # Test 
+
         
         ###
         ### SUBSCRIBERS
         ###
 
+        # Test subscribers (Not needed in real life)
+        self.imu_sub = self.create_subscription(Imu, '/usv/imu/data', self._imu_callback, 10)
         # Lidar subscriber
-        """ self.laser_sub = self.create_subscription(
-            LaserScan, 'scan', self._laser_cb, 10) """
-        self.laser_sub = self.create_subscription(
-            PointCloud2, '/usv/slot6/points', self._laser_cb, 10)
+        self.laser_sub = self.create_subscription(PointCloud2, '/usv/slot6/points', self._laser_cb, 10)
         
         # Coordinator subscriber
         self.USV_to_shore_sub = self.create_subscription(Bool, 'USV_to_shore', self._USV_to_shore_callback, 10)
-        self.POI_initial_coords_sub = self.create_subscription(Point, 'POI_coordinates', self._POI_initial_coords_callback, 10)
-        self.POI_camera_coords_sub = self.create_subscription(Point, 'POI_camera_coordinates', self._POI_camera_coords_callback, 10)
-        # Camera detection subscriber
+        self.POI_initial_coords_sub = self.create_subscription(Point, 'POI_initial_coordinates', self._POI_initial_coords_callback, 10)
         
+        # Camera detection subscriber
+        self.POI_camera_coords_sub = self.create_subscription(Point, 'POI_camera_coordinates', self._POI_camera_coords_callback, 10)
+
+        # USV angle subscriber
+        self.yaw_USV_sub = self.create_subscription(Float32, 'yaw_USV', self._yaw_USV_callback, 10)
 
         ###
         ### PUBLISHERS
@@ -255,7 +292,10 @@ class DockActionServer(Node):
 
         # Publish velocity commands
         self.twist_pub = self.create_publisher(Twist, 'cmd_vel', 10)
-        
+
+        # Publish turn angle and velocity to control the USV (x: angle, y: velocity)
+        self.usv_control_pub = self.create_publisher(Vector3, 'usv_control', 10)
+
         # RVIZ publishers
         self.center_pub = self.create_publisher(Marker, 'target_center', 10)
         self.target_pub = self.create_publisher(Marker, 'target', 10)
@@ -276,37 +316,173 @@ class DockActionServer(Node):
         self.USV_state_publisher_timer = self.create_timer(0.2, self._usv_state_publisher)
 
         # Create action server
-        self._action_server = ActionServer(
+        """ self._action_server = ActionServer(
             self, Dock, 'dock',
-            self._execute_callback)
+            self._execute_callback) """
         
-    def _usv_state_publisher(self): 
-        # TO DO: Read current state and publish it
-        test_state = 'WAIT_OBSTACLE'
-        test_state_msg = self.USV_state_dict[test_state]
 
-        USV_status_msg = Int16()
-        USV_status_msg.data = test_state_msg
+    ### 
+    ### CALLBACKS
+    ###
 
-        self.usv_state_pub.publish(USV_status_msg)
+    def _yaw_USV_callback(self, yaw_msg: Float32) -> None: 
 
+        self.yaw_USV = yaw_msg.data
+        self.yaw_USV_received = True
+        
     def _POI_initial_coords_callback(self, POI_initial_coords_msg: Point) -> None:
         # Read POI coordinates
         self.POI_initial_coords = [[POI_initial_coords_msg.x], [POI_initial_coords_msg.y]]
-        self.POI_received = True
+        self.POI_initial_received = True
+
+        # TO DO: Calculate POI angle
+        self.POI_initial_angle = 60.0  # deg
         self.get_logger().info(f"POI coordinates received: {POI_initial_coords_msg}")
 
     def _POI_camera_coords_callback(self, POI_camera_coords_msg: Point) -> None:
         # Read POI coordinates
         self.POI_camera_coords = [[POI_camera_coords_msg.x], [POI_camera_coords_msg.y]]
         self.POI_camera_received = True
+
+        # TO DO: Calculate POI angle
+        self.POI_camera_angle = 0.0  # deg
         self.get_logger().info(f"Target camera coordinates received: {self.POI_camera_coords}")
+        self.get_logger().info(f"Target camera angle calculated: {self.POI_camera_angle}")
+
 
     def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
         # TO DO: Read flag to come back to shore after picking up the boxes
         self.get_logger().info("Received message from the coordinator to come back to shore")
 
         self.get_logger().info(f"Message USV_to_shore: {USV_to_shore}")
+
+    # TEST CALLBACKS
+    def _imu_callback(self, imu_msg) -> None: 
+        orientation_list = [imu_msg.orientation.x, imu_msg.orientation.y, imu_msg.orientation.z, imu_msg.orientation.w]
+        _, _, self.yaw_USV = np.rad2deg(euler_from_quaternion(orientation_list))
+
+        #self.get_logger().info(f"Yaw received: {self.yaw_USV}")
+
+
+    ###
+    ### STATE MACHINE
+    ###
+
+    def _usv_state_publisher(self): 
+
+        # Initial state is ON_SHORE until we receive the POI_initial_coordinates msg
+
+        ### ON_SHORE ###############################################################
+
+        if self.state == DockStage.ON_SHORE and self.POI_initial_received:
+            self.state = DockStage.LEAVE_GATE
+
+
+        ### LEAVE_GATE ###############################################################
+
+        if self.state == DockStage.LEAVE_GATE:
+            # Go straight until we leave the gate (angle = 0.0 / velocity = self.leave_gate_vel)
+
+            angle = 0.0     # deg     
+            velocity = self.leave_gate_vel  # m/s
+            
+            usv_control_msg = Vector3()
+            usv_control_msg.x = angle
+            usv_control_msg.y = velocity
+            self.usv_control_pub.publish(usv_control_msg)
+
+            # TO DO: Condition to finish the state
+            # Check with lidar distance to the closest points that are not the boat, so 
+            # we know that when they are farther than the distance to from the lidar to
+            # the USV end point we know we are in the sea
+
+            time.sleep(2)
+            self.state = DockStage.TURNING_TO_POI
+            # Set the initial turning yaw for the next state
+            self.initial_turn_yaw = self.yaw_USV
+            self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
+
+
+        ### TURNING_TO_POI ###############################################################
+        
+        if self.state == DockStage.TURNING_TO_POI: 
+            # Turn (angle = POI direction / velocity = 0.0)
+
+            # Send the POI angle once to the USV controller to turn until it reaches it
+            if self.USV_control_msg_sent == False: 
+                angle = self.POI_initial_angle     # deg   
+                velocity = 0.0  # m/s
+                
+                self.pulish_USV_control_msg(angle, velocity)
+
+                # Set flag to True to not send the command again during this state
+                self.USV_control_msg_sent = True
+
+            # Calculate current turned angle
+            
+            self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw} / Current yaw = {self.yaw_USV}")
+            current_turn = abs(self.initial_turn_yaw - self.yaw_USV)
+            self.get_logger().info(f"Turning to POI: {current_turn}")
+            
+
+            ## TO DO : Finish the state when target angle reached (Could be done with the following statement)
+            # Keep turning until current turn (difference between curr ang and the init ang) close to POI_initial_angle
+            if current_turn < (self.POI_initial_angle + self.turning_threshold) and current_turn > (self.POI_initial_angle - self.turning_threshold):
+
+                # Once the POI angle is reached, change state
+                self.state = DockStage.STRAIGHT_TO_POI_BLIND
+
+                # Set flag to True to send the following command for the next state
+                self.USV_control_msg_sent = False
+
+
+        ### STRAIGHT_TO_POI_BLIND ###############################################################
+                        
+        if self.state == DockStage.STRAIGHT_TO_POI_BLIND: 
+            # Go straight until POI detected by camera (angle = 0.0 / velocity = )
+
+            # Send the straight command once to the USV controller to gi straight until the camera detects the POI
+            # Quit the if statement if message needs to be sent every loop 
+            if self.USV_control_msg_sent == False: 
+                
+                self.pulish_USV_control_msg(angle = 0.0, velocity = self.straight_to_poi_blind_vel)
+
+                # Set flag to True to not send the command again during this state
+                self.USV_control_msg_sent = True
+            
+            # Once camera detects the POI, change the state
+            if self.POI_camera_received: 
+                self.state = DockStage.STRAIGHT_TO_POI_CAMERA
+
+                # Set flag to True to send the following command for the next state
+                self.USV_control_msg_sent = False
+
+
+        ### STRAIGHT_TO_POI_CAMERA ###############################################################
+                
+        if self.state == DockStage.STRAIGHT_TO_POI_CAMERA and self.POI_camera_received:
+
+            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
+
+            if self.POI_lidar_detected == True: 
+                self.state = DockStage.STRAIGHT_TO_POI_LIDAR
+
+        
+        ### STRAIGHT_TO_POI_LIDAR ###############################################################
+        
+        if self.state == DockStage.STRAIGHT_TO_POI_LIDAR and self.POI_lidar_detected: 
+
+            # TO DO: Calculate POI angle from target cluster
+
+            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
+
+
+
+
+        self.get_logger().info(f"CURRENT STATE: {self.state}")
+
+
+
 
     def _control_cb(self):
         print("CONTROL CALLBACK")
@@ -414,13 +590,21 @@ class DockActionServer(Node):
             ### POINCLOUD CLUSTERING
             ###
             
-            if self.POI_received == True:
+            if self.POI_initial_received == True:
                 # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
                 self.pointcloud_clustering()
 
                 if self.target_detected == True: 
                     # If the target has been detected, look for the side lines
                     self.target_line_clustering()
+
+
+    def pulish_USV_control_msg(self, angle, velocity): 
+        usv_control_msg = Vector3()
+        usv_control_msg.x = float(angle)
+        usv_control_msg.y = float(velocity)
+        self.usv_control_pub.publish(usv_control_msg)
+
 
     def target_line_clustering(self):
         ''' Cluster the lines detected in the target vessel'''
@@ -628,6 +812,8 @@ class DockActionServer(Node):
 
         for k, object_tracked in enumerate(self.trackers_objects): 
             self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
+            angle = np.rad2deg(math.asin(object_tracked.pos[0]/object_tracked.pos[1]))
+            self.get_logger().info(f" Object {k} tracked angle: {angle}")
         self.get_logger().info(f"Colision status: {self.colision_status}")
 
     def check_obstacle_collision(self): 
