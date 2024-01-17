@@ -131,12 +131,14 @@ class DockActionServer(Node):
         self.v_orbit = 2.0
 
         # parameters for the line detection
+        # NOT IN USE
         self.line_thres_min = 0.7
         self.line_thres_max = 1
         self.angle_threshold = np.deg2rad(50) # 150
         self.prev_angle = None
 
         # Parameters to discard outlier measurements
+        # NOT IN USE
         self.window_size = 20
         self.th_factor = 2
 
@@ -194,9 +196,12 @@ class DockActionServer(Node):
         self.best_line = None
 
         # Initial target coordinates
-        self.POI_coordinates = Point()
+        self.POI_initial_coords = None
         self.POI_received = False
-        #self.target_vessel_position = [[-1], [21]]
+
+        # Camera target coordinates
+        self.POI_camera_coords = None
+        self.POI_camera_received = False
         
         # Initialize trajectory targets
         self.trajectory_targets = [
@@ -239,7 +244,10 @@ class DockActionServer(Node):
         
         # Coordinator subscriber
         self.USV_to_shore_sub = self.create_subscription(Bool, 'USV_to_shore', self._USV_to_shore_callback, 10)
-        self.POI_coords_sub = self.create_subscription(Point, 'POI_coordinates', self._POI_coords_callback, 10)
+        self.POI_initial_coords_sub = self.create_subscription(Point, 'POI_coordinates', self._POI_initial_coords_callback, 10)
+        self.POI_camera_coords_sub = self.create_subscription(Point, 'POI_camera_coordinates', self._POI_camera_coords_callback, 10)
+        # Camera detection subscriber
+        
 
         ###
         ### PUBLISHERS
@@ -282,12 +290,17 @@ class DockActionServer(Node):
 
         self.usv_state_pub.publish(USV_status_msg)
 
-    def _POI_coords_callback(self, POI_coords: Point) -> None:
-        # TO DO: Read POI coordinates
-        self.POI_coordinates = POI_coords
-        self.target_vessel_position = [[self.POI_coordinates.x], [self.POI_coordinates.y]]
+    def _POI_initial_coords_callback(self, POI_initial_coords_msg: Point) -> None:
+        # Read POI coordinates
+        self.POI_initial_coords = [[POI_initial_coords_msg.x], [POI_initial_coords_msg.y]]
         self.POI_received = True
-        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
+        self.get_logger().info(f"POI coordinates received: {POI_initial_coords_msg}")
+
+    def _POI_camera_coords_callback(self, POI_camera_coords_msg: Point) -> None:
+        # Read POI coordinates
+        self.POI_camera_coords = [[POI_camera_coords_msg.x], [POI_camera_coords_msg.y]]
+        self.POI_camera_received = True
+        self.get_logger().info(f"Target camera coordinates received: {self.POI_camera_coords}")
 
     def _USV_to_shore_callback(self, USV_to_shore: Bool) -> None: 
         # TO DO: Read flag to come back to shore after picking up the boxes
@@ -392,19 +405,22 @@ class DockActionServer(Node):
 
         # Prepare points to process them
         self.points3d = np.array(center_line).T # 3xN points
-        self.points = self.points3d[:2, :]      
 
-        ###
-        ### POINCLOUD CLUSTERING
-        ###
-        
-        if self.POI_received == True:
-            # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
-            self.pointcloud_clustering()
+        if self.points3d.shape[0] != 0:
+            #self.get_logger().info(f"Points3d: {self.points3d.shape}")
+            self.points = self.points3d[:2, :]      
 
-            if self.target_detected == True: 
-                # If the target has been detected, look for the side lines
-                self.target_line_clustering()
+            ###
+            ### POINCLOUD CLUSTERING
+            ###
+            
+            if self.POI_received == True:
+                # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
+                self.pointcloud_clustering()
+
+                if self.target_detected == True: 
+                    # If the target has been detected, look for the side lines
+                    self.target_line_clustering()
 
     def target_line_clustering(self):
         ''' Cluster the lines detected in the target vessel'''
@@ -427,6 +443,7 @@ class DockActionServer(Node):
 
     def get_vessel_sides(self, filtered_lines):
 
+        # If there are several lines, select best line as the largest with more points
         if len(filtered_lines)>0:
             discarded_lines = []
             best_line = filtered_lines[0]
@@ -456,8 +473,10 @@ class DockActionServer(Node):
             line_msg = self._visualize_line(list(best_line.start), list(best_line.end), id=1) 
 
             # Get points belonging to perpendicular detected side to detect largest and shortest vessel sides
-            self.get_logger().info(f"Tracker points shape: {self.tracked_target_points.shape}")
             valid_points_array = self.get_second_vessel_side(best_line, self.tracked_target_points[:2, :])
+
+        else: 
+            self.get_logger().info("LINE NOT DETECTED")
     
     def get_second_vessel_side(self, best_line, points):
         ''' Get perpendicular line to a line containing a point'''
@@ -601,15 +620,15 @@ class DockActionServer(Node):
 
 
         #print(f"Collision status: {self.colision_status}")
-        """ self.get_logger().info("///////////////////////////////////////////////////////")
-        self.get_logger().info(f"POI coordinates received: {self.POI_coordinates}")
+        self.get_logger().info("///////////////////////////////////////////////////////")
+        self.get_logger().info(f"POI coordinates received: {self.POI_initial_coords}")
         self.get_logger().info(f"Target tracked: {self.target_detected}")
         if self.target_detected == True: 
             self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
 
         for k, object_tracked in enumerate(self.trackers_objects): 
             self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
-        self.get_logger().info(f"Colision status: {self.colision_status}") """
+        self.get_logger().info(f"Colision status: {self.colision_status}")
 
     def check_obstacle_collision(self): 
         ###
@@ -680,7 +699,7 @@ class DockActionServer(Node):
 
     def detect_target_and_obstacles(self, labels, label_idxs, updated_tracked_object): 
         ''' Function that iterates over the mask created by DBSCAN and search 
-            for the target as weel as the possible obstacles'''
+            for the target as well as the possible obstacles'''
         
         # Iterate over the DBSCAN mask
         for label_idx in label_idxs:
@@ -699,10 +718,12 @@ class DockActionServer(Node):
                 ### CHECK IF THE CLUSTER IS THE TARGET OR AN OBSTACLE
                 ###
 
+                # TO DO: Implement target vessel position control from camera (or angle control) and lidar camera matching
+
                 # If target tracker not initialized, calculate distance with target received
                 if self.tracker_target == None:
-                    # self.target_vessel_position VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
-                    cluster_target_distance = np.linalg.norm(self.target_vessel_position - cluster_2d_pos)
+                    # self.POI_coords VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
+                    cluster_target_distance = np.linalg.norm(self.POI_initial_coords - cluster_2d_pos)
                 else: 
                     # Calculate distance with target tracker if initialized
                     cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
@@ -1184,8 +1205,6 @@ class DockActionServer(Node):
 
         # Classic straight-line Hough transform
         self.h_hl, self.theta_hl, self.d_hl = hough_line(self.scan_image)
-
-        self.get_logger().info(f"Hough params: {self.h_hl}, {self.theta_hl}, {self.d_hl}")
 
     def detected_lines_filter(self, points, min_x, min_y): 
         ''' Iterate over the hough lines detected and filter them to get the ones desired'''
