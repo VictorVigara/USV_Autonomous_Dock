@@ -315,7 +315,7 @@ class LidarScan(Node):
                         self.tracked_objects_points.append(cluster_points)
                         # Initialize tracked obstacle without collision to check it later
                         self.collision_objects.append(0)
-                        updated_tracked_object = np.append(updated_tracked_object, 0)
+                        updated_tracked_object = np.append(updated_tracked_object, 1)
                 
                 # start tracking the object if the tracker list has not been initialized
                 else: 
@@ -324,7 +324,7 @@ class LidarScan(Node):
                     self.tracked_objects_points.append(cluster_points)
                     # Initialize tracked obstacle without collision to check it later
                     self.collision_objects.append(0)
-                    updated_tracked_object = np.append(updated_tracked_object, 0)
+                    updated_tracked_object = np.append(updated_tracked_object, 1)
                     
             
             # Fill marker msg for cluster visualization in RVIZ
@@ -367,15 +367,17 @@ class LidarScan(Node):
         
         ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
 
-        eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
+        eliminate_tracked_objects_idxs = list(np.where(updated_tracked_object == 0)[0])
+        eliminate_tracked_objects_idxs.sort(reverse=True)
+        
         """ print(f"Updated tracked objectss: {updated_tracked_object}")
         print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}") """
         # Remove elements at specified indices using a loop
-        if len(list(eliminate_tracked_objects_idxs[0])) > 0:
-            for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
-                self.trackers_objects.pop(index[0])
-                self.tracked_objects_points.pop(index[0])
-                self.collision_objects.pop(index[0])
+        if len(eliminate_tracked_objects_idxs) > 0:
+            for index in eliminate_tracked_objects_idxs:
+                self.trackers_objects.pop(index)
+                self.tracked_objects_points.pop(index)
+                self.collision_objects.pop(index)
             
 
 

@@ -840,20 +840,20 @@ class DockActionServer(Node):
     def remove_not_detected_objects(self, updated_tracked_object): 
         ### REMOVE TRACKED OBJECTS THAT HAVE NOT BEEN DETECTED
 
-        eliminate_tracked_objects_idxs = np.where(updated_tracked_object == 0)
-        #print(f"Updated tracked objectss: {updated_tracked_object}")
-        #print(f"Eliminate idxs: {eliminate_tracked_objects_idxs}")
+        eliminate_tracked_objects_idxs = list(np.where(updated_tracked_object == 0)[0])
+        eliminate_tracked_objects_idxs.sort(reverse=True)
+        
         # Remove elements at specified indices using a loop
-        if len(list(eliminate_tracked_objects_idxs[0])) > 0:
-            for index in sorted(eliminate_tracked_objects_idxs, reverse=True):
-                self.trackers_objects.pop(index[0])
-                self.tracked_objects_points.pop(index[0])
-                self.collision_objects.pop(index[0])
+        if len(eliminate_tracked_objects_idxs) > 0:
+            for index in eliminate_tracked_objects_idxs:
+                self.trackers_objects.pop(index)
+                self.tracked_objects_points.pop(index)
+                self.collision_objects.pop(index)
 
     def redetect_target_if_ocluded(self, labels, label_idxs): 
         ### IF TARGET HAS BEEN OCLUDED, TRY TO FIND IT AGAIN
 
-        if self.target_detected == False and self.tracker_target != None: 
+        if self.POI_lidar_detected == False and self.tracker_target != None: 
             # If tracker target is not None, because the target has been detected previously but it is not being detected currently, 
             # check if some of the objects being detected currently could be the target by comparing the minimum distance of the
             # cluster points with the target tracked. 
