@@ -110,19 +110,21 @@ class DockActionServer(Node):
         ###
 
         # LEAVE GATE 
-        self.leave_gate_vel = 1.0       # Velocity to leave the gate (m/s)
+        self.leave_gate_vel = 400.0       # Velocity to leave the gate (m/s)
 
         # TURNING TO POI 
         self.turning_threshold = 3      # Threshold within turning angle reached to start next stage (degrees)
 
         # STRAIGHT TO POI BLIND
-        self.straight_to_poi_blind_vel = 1.0    # Velocity to go straight to POI until camera detects de POI
+        self.straight_to_poi_blind_vel = 400.0    # Velocity to go straight to POI until camera detects de POI
 
         # STRAIGHT TO POI CAMERA
-        self.straight_to_poi_camera_vel = 1.0   # Velocity to go straight to POI when camera detects de POI
+        self.straight_to_poi_camera_vel = 400.0   # Velocity to go straight to POI when camera detects de POI
 
         # STRAIGHT TO POI LIDAR
-        self.match_POI_cam_lid_angle = 4        # Angle range to match camera and lidar detection
+        self.match_POI_cam_lid_angle = 30     # Angle range to match camera and lidar detection
+        self.straight_to_poi_lidar_vel = 300.0
+        self.stop_distance_to_target = 30.0
         
         # DBSCAN clustering parameters
         self.epsilon = 2
@@ -241,7 +243,7 @@ class DockActionServer(Node):
         # Camera target coordinates
         self.POI_camera_coords = None
         self.POI_camera_received = False
-        self.POI_camera_angle = None
+        self.POI_camera_angle = 0.0
         
         # Initialize trajectory targets
         self.trajectory_targets = [
@@ -273,12 +275,12 @@ class DockActionServer(Node):
         self.measurements_y = []  
 
         # Test 
-        self.test_turning_POI = False
-        self.test_straight_to_poi_blind = True
+        self.test_turning_POI = True
         self.x_max = 0
         self.y_max = 0
         self.x_min = 0
         self.y_min = 0
+        self.yaw_not_received = True
 
         
         ###
@@ -410,14 +412,13 @@ class DockActionServer(Node):
             # we know that when they are farther than the distance to from the lidar to
             # the USV end point we know we are in the sea
 
-            time.sleep(2)
-            if self.test_turning_POI: 
-                self.state = DockStage.TURNING_TO_POI
-                # Set the initial turning yaw for the next state
+            time.sleep(10)
+            self.state = DockStage.TURNING_TO_POI
+            # Set the initial turning yaw for the next state
+            if self.yaw_not_received == False:
                 self.initial_turn_yaw = self.yaw_USV
                 self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
-            else: 
-                self.state = DockStage.STRAIGHT_TO_POI_BLIND
+
 
 
         ### TURNING_TO_POI ###############################################################
@@ -427,6 +428,7 @@ class DockActionServer(Node):
 
             # Send the POI angle once to the USV controller to turn until it reaches it
             if self.USV_control_msg_sent == False: 
+                # TO DO: Calculate  angle POI initial coords(hardcoded to 60)
                 angle = self.POI_initial_angle     # deg   
                 velocity = 0.0  # m/s
                 
@@ -437,14 +439,9 @@ class DockActionServer(Node):
 
             # Calculate current turned angle
             
-            self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw} / Current yaw = {self.yaw_USV}")
-            current_turn = abs(self.initial_turn_yaw - self.yaw_USV)
-            self.get_logger().info(f"Turning to POI: {current_turn}")
-            
-
-            ## TO DO : Finish the state when target angle reached (Could be done with the following statement)
-            # Keep turning until current turn (difference between curr ang and the init ang) close to POI_initial_angle
-            if current_turn < (self.POI_initial_angle + self.turning_threshold) and current_turn > (self.POI_initial_angle - self.turning_threshold):
+            if self.yaw_not_received: 
+                # If angle topic ont received, wait some seconds until the usv turns
+                time.sleep(15)
 
                 # Once the POI angle is reached, change state
                 self.state = DockStage.STRAIGHT_TO_POI_BLIND
@@ -452,10 +449,27 @@ class DockActionServer(Node):
                 # Set flag to True to send the following command for the next state
                 self.USV_control_msg_sent = False
 
+            else: 
+                # THIS IS WHAT SHOULD BE DONE IF SUBSCRIBED TO ANGLE TOPIC
+                self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw} / Current yaw = {self.yaw_USV}")
+                current_turn = abs(self.initial_turn_yaw - self.yaw_USV)
+                self.get_logger().info(f"Turning to POI: {current_turn}")
+                
+
+                ## TO DO : Finish the state when target angle reached (Could be done with the following statement)
+                # Keep turning until current turn (difference between curr ang and the init ang) close to POI_initial_angle
+                if current_turn < (self.POI_initial_angle + self.turning_threshold) and current_turn > (self.POI_initial_angle - self.turning_threshold):
+
+                    # Once the POI angle is reached, change state
+                    self.state = DockStage.STRAIGHT_TO_POI_BLIND
+
+                    # Set flag to True to send the following command for the next state
+                    self.USV_control_msg_sent = False
+
 
         ### STRAIGHT_TO_POI_BLIND ###############################################################
                         
-        if self.state == DockStage.STRAIGHT_TO_POI_BLIND or self.test_straight_to_poi_blind: 
+        if self.state == DockStage.STRAIGHT_TO_POI_BLIND: 
             # Go straight until POI detected by camera (angle = 0.0 / velocity = )
 
             # Send the straight command once to the USV controller to gi straight until the camera detects the POI
@@ -468,12 +482,11 @@ class DockActionServer(Node):
                 self.USV_control_msg_sent = True
             
             # Once camera detects the POI, change the state
-            if self.POI_camera_received: 
-                self.state = DockStage.STRAIGHT_TO_POI_CAMERA
+            self.POI_camera_received = True
+            self.state = DockStage.STRAIGHT_TO_POI_CAMERA
 
-                # Set flag to True to send the following command for the next state
-                self.USV_control_msg_sent = False
-                self.test_straight_to_poi_blind = False
+            # Set flag to True to send the following command for the next state
+            self.USV_control_msg_sent = False
 
 
         ### STRAIGHT_TO_POI_CAMERA ###############################################################
@@ -497,8 +510,17 @@ class DockActionServer(Node):
 
             # TO DO: Calculate POI angle from target cluster
 
-            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
+            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_lidar_vel) 
             self.lidar_msg_received = False
+
+            distance_to_target = math.sqrt(self.tracker_target.pos[0]**2 + self.tracker_target.pos[1]**2)
+            self.get_logger().info(f"DISTANCE TO THE TARGET: {distance_to_target}")
+
+            if distance_to_target < self.stop_distance_to_target: 
+                self.state = DockStage.STOP
+        
+        if self.state == DockStage.STOP: 
+            self.pulish_USV_control_msg(angle = 0.0, velocity = 0.0) 
 
 
         self.get_logger().info(f"CURRENT STATE: {self.state}")
@@ -832,6 +854,10 @@ class DockActionServer(Node):
         #print(f"Collision status: {self.colision_status}")
         if self.tracker_target != None: 
             self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
+        if len(self.trackers_objects)>0:
+            for k, object_tracked in enumerate(self.trackers_objects):
+                self.get_logger().info(f"Object pose: {object_tracked.pos}")
+        
         """self.get_logger().info("///////////////////////////////////////////////////////")
         self.get_logger().info(f"Target tracked: {self.POI_lidar_detected}")
         if self.POI_lidar_detected == True: 
@@ -1005,7 +1031,9 @@ class DockActionServer(Node):
                 angle = 360-self.atan(x,y) 
         return angle
     
-    def atan(self, x, y): 
+    def atan(self, x, y):
+        y = x
+        x = -y
         return np.rad2deg(math.atan(x/y))
                 
     def update_objects_measurements(self, cluster_2d_pos, cluster_points, updated_tracked_object): 
