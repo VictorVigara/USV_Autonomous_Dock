@@ -120,6 +120,9 @@ class DockActionServer(Node):
 
         # STRAIGHT TO POI CAMERA
         self.straight_to_poi_camera_vel = 1.0   # Velocity to go straight to POI when camera detects de POI
+
+        # STRAIGHT TO POI LIDAR
+        self.match_POI_cam_lid_angle = 4        # Angle range to match camera and lidar detection
         
         # DBSCAN clustering parameters
         self.epsilon = 2
@@ -202,6 +205,9 @@ class DockActionServer(Node):
 
         # TURNING TO POI variables
         self.USV_control_msg_sent = False
+
+        # Lidar subscriber
+        self.lidar_msg_received = False
 
         # Lidar target detected
         self.POI_lidar_detected = False
@@ -466,17 +472,21 @@ class DockActionServer(Node):
 
             if self.POI_lidar_detected == True: 
                 self.state = DockStage.STRAIGHT_TO_POI_LIDAR
+                self.POI_camera_received = False
+
+        # TO DO: Maybe, if we are in STRAIGHT_TO_POI_CAMERA and we do not receive POI_camera _received, come back to
+        # POI_STRAIGHT_BLIND or another state to look for the target moving the camera. And then when detected again 
+        # change to STRAIGHT TO POI CAMERA
 
         
         ### STRAIGHT_TO_POI_LIDAR ###############################################################
         
-        if self.state == DockStage.STRAIGHT_TO_POI_LIDAR and self.POI_lidar_detected: 
+        if self.state == DockStage.STRAIGHT_TO_POI_LIDAR and self.POI_lidar_detected and self.lidar_msg_received: 
 
             # TO DO: Calculate POI angle from target cluster
 
             self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
-
-
+            self.lidar_msg_received = False
 
 
         self.get_logger().info(f"CURRENT STATE: {self.state}")
@@ -574,7 +584,8 @@ class DockActionServer(Node):
         """Callback for the laser scan topic."""
 
         # Initialize target_detected = False 
-        self.target_detected = False
+        #self.target_detected = False
+        self.POI_lidar_detected = False
 
         # Get the center_line from the PointCloud2 and delete vessel points
         center_line = self._pc2_to_scan(pointcloud=pointcloud, ang_threshold=[1, -1])
@@ -594,9 +605,12 @@ class DockActionServer(Node):
                 # Cluster the whole pointcloud looking for the POI and detecting obstacles. Manage obstacle avoidance
                 self.pointcloud_clustering()
 
-                if self.target_detected == True: 
+                if self.POI_lidar_detected == True: 
                     # If the target has been detected, look for the side lines
                     self.target_line_clustering()
+        
+        # Set flag to True when receiveing a pointcloud
+        self.lidar_msg_received = True
 
 
     def pulish_USV_control_msg(self, angle, velocity): 
@@ -804,16 +818,21 @@ class DockActionServer(Node):
 
 
         #print(f"Collision status: {self.colision_status}")
-        self.get_logger().info("///////////////////////////////////////////////////////")
-        self.get_logger().info(f"POI coordinates received: {self.POI_initial_coords}")
-        self.get_logger().info(f"Target tracked: {self.target_detected}")
-        if self.target_detected == True: 
+        """self.get_logger().info("///////////////////////////////////////////////////////")
+        self.get_logger().info(f"Target tracked: {self.POI_lidar_detected}")
+        if self.POI_lidar_detected == True: 
             self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
 
         for k, object_tracked in enumerate(self.trackers_objects): 
             self.get_logger().info(f" Object {k} tracked: {object_tracked.pos}")
-            angle = np.rad2deg(math.asin(object_tracked.pos[0]/object_tracked.pos[1]))
-            self.get_logger().info(f" Object {k} tracked angle: {angle}")
+            try: 
+                angle = np.rad2deg(math.asin(object_tracked.pos[0]/object_tracked.pos[1]))
+            except:
+                test = self.get_logger().info(f"Asin: {object_tracked.pos[0]/object_tracked.pos[1]}")
+                self.get_logger().info(f" Error: {test}")
+                time.sleep(20)
+                    
+            self.get_logger().info(f" Object {k} tracked angle: {angle}") """
         self.get_logger().info(f"Colision status: {self.colision_status}")
 
     def check_obstacle_collision(self): 
@@ -878,7 +897,7 @@ class DockActionServer(Node):
                     self.tracked_target_points = cluster_points
 
                     # Target detected
-                    self.target_detected = True
+                    self.POI_lidar_detected = True
                     
             self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
 
@@ -894,81 +913,75 @@ class DockActionServer(Node):
 
             # Get median from each cluster
             cluster_median_pos = np.median(cluster_points, axis=1)
-
-            # Check if target is detected
             cluster_2d_pos = cluster_median_pos[0:2, None]
-
+            
+            # Check if the cluster has a minimum number of points
             if cluster_points.shape[1] > self.lidar_cluster_min_points:
-
-                ###
-                ### CHECK IF THE CLUSTER IS THE TARGET OR AN OBSTACLE
-                ###
-
-                # TO DO: Implement target vessel position control from camera (or angle control) and lidar camera matching
-
-                # If target tracker not initialized, calculate distance with target received
-                if self.tracker_target == None:
-                    # self.POI_coords VARIABLE SHOULD BE RECEIVED AS A MESSAGE !!!!!!!!!!!!!!!!!!!!
-                    cluster_target_distance = np.linalg.norm(self.POI_initial_coords - cluster_2d_pos)
-                else: 
-                    # Calculate distance with target tracker if initialized
-                    cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
-                ##print(f"Object {label_idx}: {cluster_target_distance}")
                 
-                ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
+                # If POI camera received
+                if self.POI_camera_received: 
 
-                # If target detected from the beginning, start tracking it
-                if cluster_target_distance < self.distance_threshold: 
-                    # Initialize target tracker
-                    self.target_detected = True
-                    if self.tracker_target == None: 
-                        self.tracker_target = Tracker2D(
-                            cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
-                        self.tracked_target_points = cluster_points
-                        self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                    # If tracker_target not initialized, try to find the target matching camera and lidar target angle detection
+                    if self.tracker_target == None:
+
+                        # Calculate cluster angle
+                        try: 
+                            cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
+                        except: 
+                            test_angle = cluster_2d_pos[0]/cluster_2d_pos[1]
+                            self.get_logger().info(f"coords2: {cluster_2d_pos[0]}, {cluster_2d_pos[1]}")
+                            self.get_logger().info(f"Angle: {test_angle}")
+                            time.sleep(20)
+
+                        # Compare camera target detected angle with cluster detected angle
+                        POI_angle_difference = self.POI_camera_angle - cluster_angle
+                        self.get_logger().info(f"POI_angle_diif: {POI_angle_difference}")
+                        # Initialize target tracker if angle threshold 
+                        if POI_angle_difference < self.match_POI_cam_lid_angle or POI_angle_difference > -self.match_POI_cam_lid_angle: 
+                            # Initialize target tracker
+                            self.tracker_target = Tracker2D(cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode)
+                            self.tracked_target_points = cluster_points
+                            self.center_pub.publish(self.get_marker(self.tracker_target.pos, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                            self.POI_lidar_detected = True
+                        # Update cluster as an object if it is not the target
+                        else: 
+                            # Update cluster as an object
+                            updated_tracked_object = self.update_objects_measurements(cluster_2d_pos, cluster_points, updated_tracked_object)
+                    
+                    # Once we have the target, compare distances to update target every time
                     else: 
-                        # Update target tracker
-                        self.tracker_target.predict()
-                        self.tracker_target.update(cluster_2d_pos)
-                        self.tracked_target_points = cluster_points
-                        
-                        self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+
+                        # Calculate cluster angle
+                        try: 
+                            cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
+                        except: 
+                            test_angle = cluster_2d_pos[0]/cluster_2d_pos[1]
+                            self.get_logger().info(f"coords1: {cluster_2d_pos[0]}, {cluster_2d_pos[1]}")
+                            self.get_logger().info(f"Angle: {test_angle}")
+                            time.sleep(20)
+                        # Calculate distance with target tracker if initialized
+                        cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
                 
-                ### IF THE CLUSTER IS AN OBSTACLE, UPDATE MEASUREMENT
-                else: 
-                    
-                    object_tracked = False
-                    if len(self.trackers_objects) > 0: 
-                        
-                        for object_tracker_idx in range(len(self.trackers_objects)): 
-                            cluster_object_distance = np.linalg.norm(self.trackers_objects[object_tracker_idx].pos - cluster_2d_pos[:,0])
+                        ### IF THE CLUSTER IS THE TARGET, UPDATE MEASUREMENT
 
-                            # Check if the object is already being tracked and update with measurement
-                            if cluster_object_distance < 1: 
-                                self.trackers_objects[object_tracker_idx].predict()
-                                self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
-                                self.tracked_objects_points[object_tracker_idx] = cluster_points
-                                object_tracked = True
-                                updated_tracked_object[object_tracker_idx] = 1
-                                break
-                        
-                        # If the object is not being tracked, initialize tracker
-                        if object_tracked == False: 
-                            self.trackers_objects.append(Tracker2D(
-                                cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
-                            self.tracked_objects_points.append(cluster_points)
-                            # Initialize tracked obstacle without collision to check it later
-                            self.collision_objects.append(0)
-                            updated_tracked_object = np.append(updated_tracked_object, 0)
-                    
-                    # start tracking the object if the tracker list has not been initialized
-                    else: 
-                        self.trackers_objects.append(Tracker2D(
-                                cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
-                        self.tracked_objects_points.append(cluster_points)
-                        # Initialize tracked obstacle without collision to check it later
-                        self.collision_objects.append(0)
-                        updated_tracked_object = np.append(updated_tracked_object, 0)
+                        # If target match update position
+                        if cluster_target_distance < self.distance_threshold: 
+                            self.get_logger().info(f"TARGET Angle: {cluster_angle}")
+                            # Update target tracker
+                            self.tracker_target.predict()
+                            self.tracker_target.update(cluster_2d_pos)
+                            self.tracked_target_points = cluster_points
+                            
+                            self.center_pub.publish(self.get_marker(self.tracker_target.pos.T, color = [0.0, 0.0, 255.0], scale = 0.3, id_ = 99999))
+                            self.POI_lidar_detected = True
+                        # If cluster is not the target, update objects 
+                        else: 
+                            # Update cluster as an object
+                            updated_tracked_object = self.update_objects_measurements(cluster_2d_pos, cluster_points, updated_tracked_object)
+
+                else: 
+                    # Update cluster as an object
+                    updated_tracked_object = self.update_objects_measurements(cluster_2d_pos, cluster_points, updated_tracked_object)
 
                 # Fill marker msg for cluster visualization in RVIZ
                 """ for i in range(cluster_points.shape[1]): 
@@ -977,7 +990,57 @@ class DockActionServer(Node):
                     marker = self.get_marker([x, y], self.cluster_colors[int(label_idx)], scale=0.1, id_=int(i))
                     lines_array_msg.markers.append(marker)
             self.scan_pub.publish(lines_array_msg) """
+                
+        return updated_tracked_object
+    
+    def get_object_orientation(self, x,y):  #left hand rule for simulated data
+        if x>0 and y>0:
+                angle = self.atan(x,y)
+        if y<0:
+                angle = 180+self.atan(x,y)
+        if x<0 and y>0: 
+                angle = 360-self.atan(x,y) 
+        return angle
+    
+    def atan(self, x, y): 
+        return np.rad2deg(math.atan(x/y))
+                
+    def update_objects_measurements(self, cluster_2d_pos, cluster_points, updated_tracked_object): 
+        object_tracked = False
+        if len(self.trackers_objects) > 0: 
             
+            for object_tracker_idx in range(len(self.trackers_objects)): 
+                cluster_object_distance = np.linalg.norm(self.trackers_objects[object_tracker_idx].pos - cluster_2d_pos[:,0])
+
+                # Check if the object is already being tracked and update with measurement
+                if cluster_object_distance < 1: 
+                    self.trackers_objects[object_tracker_idx].predict()
+                    self.trackers_objects[object_tracker_idx].update(cluster_2d_pos)
+                    self.tracked_objects_points[object_tracker_idx] = cluster_points
+                    object_tracked = True
+                    updated_tracked_object[object_tracker_idx] = 1
+                    break
+            
+            # If the object is not being tracked, initialize tracker
+            if object_tracked == False: 
+                self.trackers_objects.append(Tracker2D(
+                    cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+                self.tracked_objects_points.append(cluster_points)
+                # Initialize tracked obstacle without collision to check it later
+                self.collision_objects.append(0)
+                updated_tracked_object = np.append(updated_tracked_object, 1)
+        
+        # start tracking the object if the tracker list has not been initialized
+        else: 
+            self.trackers_objects.append(Tracker2D(
+                    cluster_2d_pos[:,0], self.P0, self.R0, self.Q0, self.DT, self.mode))
+            self.tracked_objects_points.append(cluster_points)
+            # Initialize tracked obstacle without collision to check it later
+            self.collision_objects.append(0)
+            updated_tracked_object = np.append(updated_tracked_object, 1)
+
+        return updated_tracked_object
+
     def dbscan_clustering(self): 
         # Standardize the data
         scaler = StandardScaler()
@@ -1453,7 +1516,7 @@ class DockActionServer(Node):
             valid_points_array = inliers[:2,:]
 
             # Continue with the loop if no valid points
-            if len(valid_points_array) == 0: 
+            if valid_points_array.shape[1] == 0: 
                 continue
 
             valid_points_eq = est_line(valid_points_array)
@@ -1468,17 +1531,10 @@ class DockActionServer(Node):
 
             
             ### ORDER DETECTED POINTS AND GET THE BEGINNING AND THE END LINE POINTs
-
-            # Compute the orthogonal vector [-B, A]
-            orthogonal_vector = np.array([-valid_points_eq[1], valid_points_eq[0]])
-
-            # Project all points onto the orthogonal vector and sort them
-            projections = np.dot(valid_points_array.T, orthogonal_vector)
-            sorted_indices = np.argsort(projections)
-
-            # The first point is the one with the smallest projection value, and the last point is the one with the largest projection value
-            first_point = valid_points_array[:, sorted_indices[0]]
-            last_point = valid_points_array[:, sorted_indices[-1]]  
+            if valid_points_array.shape[1] == 0: 
+                continue
+                
+            first_point, last_point = self.get_first_last_line_points(valid_points_array, valid_points_eq)
 
             # Visualize the filtered line
             #line_msg = self._visualize_line(first_point, last_point)
