@@ -1,1 +1,1 @@
-ros2 topic pub --once /POI_coordinates geometry_msgs/msg/Point "{x: -2, y: 11.2, z: 0.0}"
+ros2 topic pub --once /POI_initial_coordinates geometry_msgs/msg/Point "{x: -2, y: 11.2, z: 0.0}"

@@ -1,0 +1,1 @@
+ros2 topic pub /POI_camera_coordinates geometry_msgs/msg/Point "{x: 0.0, y: 0.0, z: 0.0}"
