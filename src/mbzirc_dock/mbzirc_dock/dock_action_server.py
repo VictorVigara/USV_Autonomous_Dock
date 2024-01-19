@@ -147,8 +147,10 @@ class DockActionServer(Node):
         self.ocluded_target_threshold = 1 # Match the last target tracked pos ocluded with a cluster
 
         # parameters crop pc2
-        self.x_crop = 2.2
-        self.y_crop = 1.1
+        self.x_max_crop = 3.82
+        self.x_min_crop = -3.37
+        self.y_min_crop = -1.25
+        self.y_max_crop = 1.25
 
         # parameters for the orbit
         self.r_orbit = 10.0
@@ -271,6 +273,12 @@ class DockActionServer(Node):
         self.measurements_y = []  
 
         # Test 
+        self.test_turning_POI = False
+        self.test_straight_to_poi_blind = True
+        self.x_max = 0
+        self.y_max = 0
+        self.x_min = 0
+        self.y_min = 0
 
         
         ###
@@ -280,7 +288,7 @@ class DockActionServer(Node):
         # Test subscribers (Not needed in real life)
         self.imu_sub = self.create_subscription(Imu, '/usv/imu/data', self._imu_callback, 10)
         # Lidar subscriber
-        self.laser_sub = self.create_subscription(PointCloud2, '/usv/slot6/points', self._laser_cb, 10)
+        self.laser_sub = self.create_subscription(PointCloud2, '/cloud_all_fields_fullframe', self._laser_cb, 10)
         
         # Coordinator subscriber
         self.USV_to_shore_sub = self.create_subscription(Bool, 'USV_to_shore', self._USV_to_shore_callback, 10)
@@ -299,7 +307,7 @@ class DockActionServer(Node):
         # Publish velocity commands
         self.twist_pub = self.create_publisher(Twist, 'cmd_vel', 10)
 
-        # Publish turn angle and velocity to control the USV (x: angle, y: velocity)
+        # Publish turn angle and velocity to control the USV (x: angle, y: velocity, z: status)
         self.usv_control_pub = self.create_publisher(Vector3, 'usv_control', 10)
 
         # RVIZ publishers
@@ -403,10 +411,13 @@ class DockActionServer(Node):
             # the USV end point we know we are in the sea
 
             time.sleep(2)
-            self.state = DockStage.TURNING_TO_POI
-            # Set the initial turning yaw for the next state
-            self.initial_turn_yaw = self.yaw_USV
-            self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
+            if self.test_turning_POI: 
+                self.state = DockStage.TURNING_TO_POI
+                # Set the initial turning yaw for the next state
+                self.initial_turn_yaw = self.yaw_USV
+                self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
+            else: 
+                self.state = DockStage.STRAIGHT_TO_POI_BLIND
 
 
         ### TURNING_TO_POI ###############################################################
@@ -444,7 +455,7 @@ class DockActionServer(Node):
 
         ### STRAIGHT_TO_POI_BLIND ###############################################################
                         
-        if self.state == DockStage.STRAIGHT_TO_POI_BLIND: 
+        if self.state == DockStage.STRAIGHT_TO_POI_BLIND or self.test_straight_to_poi_blind: 
             # Go straight until POI detected by camera (angle = 0.0 / velocity = )
 
             # Send the straight command once to the USV controller to gi straight until the camera detects the POI
@@ -462,6 +473,7 @@ class DockActionServer(Node):
 
                 # Set flag to True to send the following command for the next state
                 self.USV_control_msg_sent = False
+                self.test_straight_to_poi_blind = False
 
 
         ### STRAIGHT_TO_POI_CAMERA ###############################################################
@@ -818,6 +830,8 @@ class DockActionServer(Node):
 
 
         #print(f"Collision status: {self.colision_status}")
+        if self.tracker_target != None: 
+            self.get_logger().info(f"Target pose: {self.tracker_target.pos}")
         """self.get_logger().info("///////////////////////////////////////////////////////")
         self.get_logger().info(f"Target tracked: {self.POI_lidar_detected}")
         if self.POI_lidar_detected == True: 
@@ -833,7 +847,7 @@ class DockActionServer(Node):
                 time.sleep(20)
                     
             self.get_logger().info(f" Object {k} tracked angle: {angle}") """
-        self.get_logger().info(f"Colision status: {self.colision_status}")
+        #self.get_logger().info(f"Colision status: {self.colision_status}")
 
     def check_obstacle_collision(self): 
         ###
@@ -925,17 +939,11 @@ class DockActionServer(Node):
                     if self.tracker_target == None:
 
                         # Calculate cluster angle
-                        try: 
-                            cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
-                        except: 
-                            test_angle = cluster_2d_pos[0]/cluster_2d_pos[1]
-                            self.get_logger().info(f"coords2: {cluster_2d_pos[0]}, {cluster_2d_pos[1]}")
-                            self.get_logger().info(f"Angle: {test_angle}")
-                            time.sleep(20)
+                        cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
 
                         # Compare camera target detected angle with cluster detected angle
                         POI_angle_difference = self.POI_camera_angle - cluster_angle
-                        self.get_logger().info(f"POI_angle_diif: {POI_angle_difference}")
+                        self.get_logger().info(f"POI_cluster_angle: {cluster_angle}")
                         # Initialize target tracker if angle threshold 
                         if POI_angle_difference < self.match_POI_cam_lid_angle or POI_angle_difference > -self.match_POI_cam_lid_angle: 
                             # Initialize target tracker
@@ -952,13 +960,8 @@ class DockActionServer(Node):
                     else: 
 
                         # Calculate cluster angle
-                        try: 
-                            cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
-                        except: 
-                            test_angle = cluster_2d_pos[0]/cluster_2d_pos[1]
-                            self.get_logger().info(f"coords1: {cluster_2d_pos[0]}, {cluster_2d_pos[1]}")
-                            self.get_logger().info(f"Angle: {test_angle}")
-                            time.sleep(20)
+                        cluster_angle = self.get_object_orientation(cluster_2d_pos[0], cluster_2d_pos[1])
+
                         # Calculate distance with target tracker if initialized
                         cluster_target_distance = np.linalg.norm(self.tracker_target.pos - cluster_2d_pos[:,0])
                 
@@ -1064,13 +1067,25 @@ class DockActionServer(Node):
             x = p[0]
             y = p[1]
             z = p[2]
+
+            # Commented code used to know parameters to crop the USV from the pc
+            """ if x > self.x_max: 
+                self.x_max = x
+            if y > self.y_max: 
+                self.y_max = y
+
+            if x < self.x_min: 
+                self.x_min = x
+            if y < self.y_min: 
+                self.y_min = y """
+                
             d = math.sqrt(x**2 + y**2 + z**2)
             if d != 0: 
                 # Calculate vertical angle
                 angle = 90 - np.rad2deg(np.arccos(z/d))
 
                 # Save points from center scan
-                if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > 0.1) or (x < -3) or (x > -3 and x < 0 and (y > 0 or y < -4))): 
+                if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_max_crop) or (x < self.x_min_crop) or (x > self.x_min_crop and x < self.x_max_crop and (y > self.y_max_crop or y < self.y_min_crop))): 
                     scan_line.append([x, y, z])
                     
         pc2_cropped = PointCloud2()
@@ -1268,7 +1283,7 @@ class DockActionServer(Node):
 
         msg = Marker()
         msg.header.stamp = stamp
-        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
+        msg.header.frame_id = 'world'
         msg.type = Marker.SPHERE
         msg.id = id_
         msg.pose.position.x = point[0]
@@ -1287,7 +1302,7 @@ class DockActionServer(Node):
         msg = Marker()
         msg.id = id
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
+        msg.header.frame_id = 'world'
         msg.scale.x = 0.1
         msg.type = Marker.LINE_LIST
         msg.points = []
@@ -1312,7 +1327,7 @@ class DockActionServer(Node):
         msg = Marker()
         msg.id = id
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'usv/sensor_6/sensor_link/lidar'
+        msg.header.frame_id = 'world'
     
         msg.scale.x = 0.1
         msg.type = Marker.LINE_LIST
