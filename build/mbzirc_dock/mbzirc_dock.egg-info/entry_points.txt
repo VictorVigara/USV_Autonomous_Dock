@@ -1,2 +1,0 @@
-[console_scripts]
-dock_server = mbzirc_dock.main:main
