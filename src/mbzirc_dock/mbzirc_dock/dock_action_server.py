@@ -110,10 +110,12 @@ class DockActionServer(Node):
         ###
 
         # LEAVE GATE 
-        self.leave_gate_vel = 1.0       # Velocity to leave the gate (m/s)
+        self.leave_gate_vel = 1.0           # Velocity to leave the gate (m/s)
+        self.closest_point = 9999.0
+        self.leave_gate_min_distance = 8.0  # Min distance to the closest point from the starting gate to start turning to the POI
 
         # TURNING TO POI 
-        self.turning_threshold = 3      # Threshold within turning angle reached to start next stage (degrees)
+        self.turning_threshold = 3          # Threshold within turning angle reached to start next stage (degrees)
 
         # STRAIGHT TO POI BLIND
         self.straight_to_poi_blind_vel = 1.0    # Velocity to go straight to POI until camera detects de POI
@@ -410,14 +412,22 @@ class DockActionServer(Node):
             # we know that when they are farther than the distance to from the lidar to
             # the USV end point we know we are in the sea
 
-            time.sleep(2)
-            if self.test_turning_POI: 
-                self.state = DockStage.TURNING_TO_POI
-                # Set the initial turning yaw for the next state
-                self.initial_turn_yaw = self.yaw_USV
-                self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
-            else: 
-                self.state = DockStage.STRAIGHT_TO_POI_BLIND
+            # Calculate the closest USV point (backside corners)
+
+            self.center_pub.publish(self.get_marker([0.0, 0.0], color = [255.0, 0.0, 0.0], scale = 0.3, id_ = 15))
+
+            if self.lidar_msg_received: 
+
+                if self.closest_point > self.leave_gate_min_distance:
+                    
+                    self.center_pub.publish(self.get_marker([0.0, 0.0], color = [0.0, 255.0, 0.0], scale = 0.3, id_ = 15))
+                    if self.test_turning_POI: 
+                        self.state = DockStage.TURNING_TO_POI
+                        # Set the initial turning yaw for the next state
+                        self.initial_turn_yaw = self.yaw_USV
+                        self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
+                    else: 
+                        self.state = DockStage.STRAIGHT_TO_POI_BLIND
 
 
         ### TURNING_TO_POI ###############################################################
@@ -455,7 +465,7 @@ class DockActionServer(Node):
 
         ### STRAIGHT_TO_POI_BLIND ###############################################################
                         
-        if self.state == DockStage.STRAIGHT_TO_POI_BLIND or self.test_straight_to_poi_blind: 
+        if self.state == DockStage.STRAIGHT_TO_POI_BLIND: 
             # Go straight until POI detected by camera (angle = 0.0 / velocity = )
 
             # Send the straight command once to the USV controller to gi straight until the camera detects the POI
@@ -604,6 +614,7 @@ class DockActionServer(Node):
 
         # Prepare points to process them
         self.points3d = np.array(center_line).T # 3xN points
+
 
         if self.points3d.shape[0] != 0:
             #self.get_logger().info(f"Points3d: {self.points3d.shape}")
@@ -1061,7 +1072,7 @@ class DockActionServer(Node):
     def _pc2_to_scan(self, pointcloud: PointCloud2, ang_threshold = [-0.5, 5]): 
         """Get an horizontal scan from a PointCloud2"""
         scan_line = []
-        
+        self.closest_point = 9999.0
         for p in point_cloud2.read_points(pointcloud, field_names = ("x", "y", "z"), skip_nans=True):
             # Get XYZ coordinates to calculate vertical angle and filter by vertical scans
             x = p[0]
@@ -1081,13 +1092,21 @@ class DockActionServer(Node):
                 
             d = math.sqrt(x**2 + y**2 + z**2)
             if d != 0: 
+                
                 # Calculate vertical angle
                 angle = 90 - np.rad2deg(np.arccos(z/d))
 
                 # Save points from center scan
                 if (angle < ang_threshold[0] and angle > ang_threshold[1]) and ((x > self.x_max_crop) or (x < self.x_min_crop) or (x > self.x_min_crop and x < self.x_max_crop and (y > self.y_max_crop or y < self.y_min_crop))): 
                     scan_line.append([x, y, z])
-                    
+                
+                
+                # For the whole pc2 without the USV, save the closest point used to know when we are out of the starting gate
+                if (x > self.x_max_crop) or (x < self.x_min_crop) or (x > self.x_min_crop and x < self.x_max_crop and (y > self.y_max_crop or y < self.y_min_crop)): 
+                    dist_i = math.sqrt(x**2 + y**2)
+                    if dist_i < self.closest_point: 
+                        self.closest_point = dist_i
+
         pc2_cropped = PointCloud2()
         pc2_cropped.header = pointcloud.header
         pc2_cropped.height = 1
