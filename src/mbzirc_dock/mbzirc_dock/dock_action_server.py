@@ -31,7 +31,6 @@ import math
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
-from tf_transformations import euler_from_quaternion
 
 from mbzirc_interfaces.action import Dock
 
@@ -295,8 +294,6 @@ class DockActionServer(Node):
         ### SUBSCRIBERS
         ###
 
-        # Test subscribers (Not needed in real life)
-        self.imu_sub = self.create_subscription(Imu, '/usv/imu/data', self._imu_callback, 10)
         # Lidar subscriber
         self.laser_sub = self.create_subscription(PointCloud2, '/cloud_all_fields_fullframe', self._laser_cb, 10)
         
@@ -381,9 +378,7 @@ class DockActionServer(Node):
         self.get_logger().info(f"Message USV_to_shore: {USV_to_shore}")
 
     # TEST CALLBACKS
-    def _imu_callback(self, imu_msg) -> None: 
-        orientation_list = [imu_msg.orientation.x, imu_msg.orientation.y, imu_msg.orientation.z, imu_msg.orientation.w]
-        _, _, self.yaw_USV = np.rad2deg(euler_from_quaternion(orientation_list))
+
 
         #self.get_logger().info(f"Yaw received: {self.yaw_USV}")
 
