@@ -116,7 +116,7 @@ class DockActionServer(Node):
         self.closest_point = 9999.0
         self.leave_gate_min_distance = 8.0  # Min distance to the closest point from the starting gate to start turning to the POI
 
-        # TURNING TO POI 
+        # TURNING TO POI (NOT USED NOW)
         self.turning_threshold = 3          # Threshold within turning angle reached to start next stage (degrees)
 
         # STRAIGHT TO POI BLIND
@@ -242,6 +242,8 @@ class DockActionServer(Node):
         # Initial target coordinates
         self.POI_initial_coords = None
         self.POI_initial_received = False
+        self.POI_initial_angle = None
+
 
         # USV feedback
         self.yaw_USV = None     
@@ -294,12 +296,14 @@ class DockActionServer(Node):
         ### SUBSCRIBERS
         ###
 
+        # Test subscribers (Not needed in real life)
+        #self.imu_sub = self.create_subscription(Imu, '/usv/imu/data', self._imu_callback, 10)
         # Lidar subscriber
         self.laser_sub = self.create_subscription(PointCloud2, '/cloud_all_fields_fullframe', self._laser_cb, 10)
         
         # Coordinator subscriber
         self.USV_to_shore_sub = self.create_subscription(Bool, USV_COMMAND_DOCK_TOPIC, self._USV_to_shore_callback, 10)
-        self.POI_initial_coords_sub = self.create_subscription(Point, USV_ASSIGN_POI_TOPIC, self._POI_initial_coords_callback, 10)
+        self.POI_initial_coords_sub = self.create_subscription(Vector3, USV_ASSIGN_POI_TOPIC, self._POI_initial_coords_callback, 10)
         
         # Camera detection subscriber
         self.POI_camera_coords_sub = self.create_subscription(Point, 'POI_camera_coordinates', self._POI_camera_coords_callback, 10)
@@ -351,7 +355,7 @@ class DockActionServer(Node):
         self.yaw_USV = yaw_msg.data
         self.yaw_USV_received = True
         
-    def _POI_initial_coords_callback(self, POI_initial_coords_msg: Point) -> None:
+    def _POI_initial_coords_callback(self, POI_initial_coords_msg: Vector3) -> None:
         # Read POI coordinates
         self.POI_initial_coords = [[POI_initial_coords_msg.x], [POI_initial_coords_msg.y]]
         self.POI_initial_received = True
@@ -396,14 +400,10 @@ class DockActionServer(Node):
         if self.state == DockStage.ON_SHORE and self.POI_initial_received:
             self.state = DockStage.LEAVE_GATE
 
-
         ### LEAVE_GATE ###############################################################
 
         if self.state == DockStage.LEAVE_GATE:
             # Go straight until we leave the gate (angle = 0.0 / velocity = self.leave_gate_vel)
-
-            
-
             if self.USV_control_msg_sent == False: 
                 
                 angle = 0.0     # deg     
@@ -509,15 +509,16 @@ class DockActionServer(Node):
 
         ### STRAIGHT_TO_POI_CAMERA ###############################################################
                 
-        if self.state == DockStage.STRAIGHT_TO_POI_CAMERA and self.POI_camera_received:
+        if self.state == DockStage.STRAIGHT_TO_POI_CAMERA:
             
+            if self.USV_control_msg_sent == False: 
+                
+                ## DELETE FOLLOWING LINE ONCE CAMERA IS IMPLEMENTED
+                self.POI_camera_angle = 0.0 
+                self.publish_USV_control_msg(angle = self.POI_initial_angle, velocity = self.straight_to_poi_camera_vel) 
 
-            ## DELETE FOLLOWING LINE ONCE CAMERA IS IMPLEMENTED
-            self.POI_camera_angle = 0.0 
-            self.publish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
-
-            # Set flag to True to not send the command again during this state
-            self.USV_control_msg_sent = True
+                # Set flag to True to not send the command again during this state
+                self.USV_control_msg_sent = True
 
             if self.POI_lidar_detected == True: 
                 self.state = DockStage.STRAIGHT_TO_POI_LIDAR
