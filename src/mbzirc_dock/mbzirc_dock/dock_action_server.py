@@ -357,9 +357,9 @@ class DockActionServer(Node):
         self.POI_initial_received = True
 
         # TO DO: Calculate POI angle
-        self.POI_initial_angle = 60.0  # deg
+        self.POI_initial_angle = self.get_object_orientation(POI_initial_coords_msg.x, POI_initial_coords_msg.y) #  rad
         self.get_logger().info(f"POI coordinates received: {POI_initial_coords_msg}")
-
+        self.get_logger().info(f"POI angle received (deg): {self.POI_initial_angle}")
     def _POI_camera_coords_callback(self, POI_camera_coords_msg: Point) -> None:
         # Read POI coordinates
         self.POI_camera_coords = [[POI_camera_coords_msg.x], [POI_camera_coords_msg.y]]
@@ -436,30 +436,43 @@ class DockActionServer(Node):
 
             # Send the POI angle once to the USV controller to turn until it reaches it
             if self.USV_control_msg_sent == False: 
+                # TO DO: Calculate  angle POI initial coords(hardcoded to 60)
                 angle = self.POI_initial_angle     # deg   
                 velocity = 0.0  # m/s
                 
-                self.pulish_USV_control_msg(angle, velocity)
+                self.publish_USV_control_msg(angle, velocity)
 
                 # Set flag to True to not send the command again during this state
                 self.USV_control_msg_sent = True
 
             # Calculate current turned angle
             
-            self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw} / Current yaw = {self.yaw_USV}")
-            current_turn = abs(self.initial_turn_yaw - self.yaw_USV)
-            self.get_logger().info(f"Turning to POI: {current_turn}")
-            
 
-            ## TO DO : Finish the state when target angle reached (Could be done with the following statement)
-            # Keep turning until current turn (difference between curr ang and the init ang) close to POI_initial_angle
-            if current_turn < (self.POI_initial_angle + self.turning_threshold) and current_turn > (self.POI_initial_angle - self.turning_threshold):
+            if self.yaw_not_received: 
+                # If angle topic ont received, wait some seconds until the usv turns
+                time.sleep(5)
 
                 # Once the POI angle is reached, change state
                 self.state = DockStage.STRAIGHT_TO_POI_BLIND
 
                 # Set flag to True to send the following command for the next state
                 self.USV_control_msg_sent = False
+
+            else: 
+                self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw} / Current yaw = {self.yaw_USV}")
+                current_turn = abs(self.initial_turn_yaw - self.yaw_USV)
+                self.get_logger().info(f"Turning to POI: {current_turn}")
+                
+
+                ## TO DO : Finish the state when target angle reached (Could be done with the following statement)
+                # Keep turning until current turn (difference between curr ang and the init ang) close to POI_initial_angle
+                if current_turn < (self.POI_initial_angle + self.turning_threshold) and current_turn > (self.POI_initial_angle - self.turning_threshold):
+
+                    # Once the POI angle is reached, change state
+                    self.state = DockStage.STRAIGHT_TO_POI_BLIND
+
+                    # Set flag to True to send the following command for the next state
+                    self.USV_control_msg_sent = False
 
 
         ### STRAIGHT_TO_POI_BLIND ###############################################################
@@ -509,19 +522,19 @@ class DockActionServer(Node):
             self.lidar_msg_received = False
 
 
-        self.get_logger().info(f"CURRENT STATE: {self.state}")
+            distance_to_target = math.sqrt(self.tracker_target.pos[0]**2 + self.tracker_target.pos[1]**2)
+            self.get_logger().info(f"DISTANCE TO THE TARGET: {distance_to_target}")
 
-        distance_to_target = math.sqrt(self.tracker_target.pos[0]**2 + self.tracker_target.pos[1]**2)
-        self.get_logger().info(f"DISTANCE TO THE TARGET: {distance_to_target}")
-
-        if distance_to_target < self.stop_distance_to_target: 
-            self.state = DockStage.STOP
+            if distance_to_target < self.stop_distance_to_target: 
+                self.state = DockStage.STOP
         
 
         ### STOP ###############################################################
         if self.state == DockStage.STOP: 
             self.publish_USV_control_msg(angle = 0.0, velocity = 0.0) 
 
+
+        self.get_logger().info(f"CURRENT STATE: {self.state}")
 
 
 
