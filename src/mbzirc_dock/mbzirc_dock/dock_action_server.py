@@ -110,7 +110,7 @@ class DockActionServer(Node):
         ###
 
         # LEAVE GATE 
-        self.leave_gate_vel = 1.0           # Velocity to leave the gate (m/s)
+        self.leave_gate_vel = 400.0           # Velocity to leave the gate (m/s)
         self.closest_point = 9999.0
         self.leave_gate_min_distance = 8.0  # Min distance to the closest point from the starting gate to start turning to the POI
 
@@ -118,14 +118,17 @@ class DockActionServer(Node):
         self.turning_threshold = 3          # Threshold within turning angle reached to start next stage (degrees)
 
         # STRAIGHT TO POI BLIND
-        self.straight_to_poi_blind_vel = 1.0    # Velocity to go straight to POI until camera detects de POI
+        self.straight_to_poi_blind_vel = 400.0    # Velocity to go straight to POI until camera detects de POI
 
         # STRAIGHT TO POI CAMERA
-        self.straight_to_poi_camera_vel = 1.0   # Velocity to go straight to POI when camera detects de POI
+        self.straight_to_poi_camera_vel = 400.0   # Velocity to go straight to POI when camera detects de POI
+        
 
         # STRAIGHT TO POI LIDAR
-        self.match_POI_cam_lid_angle = 4        # Angle range to match camera and lidar detection
-        
+        self.match_POI_cam_lid_angle = 30        # Angle range to match camera and lidar detection
+        self.straight_to_poi_lidar_vel = 300.0
+        self.stop_distance_to_target = 30.0
+
         # DBSCAN clustering parameters
         self.epsilon = 2
         self.min_samples = 1
@@ -207,6 +210,8 @@ class DockActionServer(Node):
         ### INITIALIZE VARIABLES
         ###
 
+        # Current USV yaw
+        self.USV_absolute_yaw = 0.0  # counterclockwise
         # TURNING TO POI variables
         self.USV_control_msg_sent = False
 
@@ -276,11 +281,11 @@ class DockActionServer(Node):
 
         # Test 
         self.test_turning_POI = False
-        self.test_straight_to_poi_blind = True
         self.x_max = 0
         self.y_max = 0
         self.x_min = 0
         self.y_min = 0
+        self.yaw_not_received = True
 
         
         ###
@@ -401,11 +406,7 @@ class DockActionServer(Node):
 
             angle = 0.0     # deg     
             velocity = self.leave_gate_vel  # m/s
-            
-            usv_control_msg = Vector3()
-            usv_control_msg.x = angle
-            usv_control_msg.y = velocity
-            self.usv_control_pub.publish(usv_control_msg)
+            self.publish_USV_control_msg(angle, velocity)
 
             # TO DO: Condition to finish the state
             # Check with lidar distance to the closest points that are not the boat, so 
@@ -424,8 +425,6 @@ class DockActionServer(Node):
                     if self.test_turning_POI: 
                         self.state = DockStage.TURNING_TO_POI
                         # Set the initial turning yaw for the next state
-                        self.initial_turn_yaw = self.yaw_USV
-                        self.get_logger().info(f"Initial turn yaw = {self.initial_turn_yaw}")
                     else: 
                         self.state = DockStage.STRAIGHT_TO_POI_BLIND
 
@@ -472,7 +471,7 @@ class DockActionServer(Node):
             # Quit the if statement if message needs to be sent every loop 
             if self.USV_control_msg_sent == False: 
                 
-                self.pulish_USV_control_msg(angle = 0.0, velocity = self.straight_to_poi_blind_vel)
+                self.publish_USV_control_msg(angle = self.POI_initial_angle, velocity = self.straight_to_poi_blind_vel)
 
                 # Set flag to True to not send the command again during this state
                 self.USV_control_msg_sent = True
@@ -483,14 +482,13 @@ class DockActionServer(Node):
 
                 # Set flag to True to send the following command for the next state
                 self.USV_control_msg_sent = False
-                self.test_straight_to_poi_blind = False
 
 
         ### STRAIGHT_TO_POI_CAMERA ###############################################################
                 
         if self.state == DockStage.STRAIGHT_TO_POI_CAMERA and self.POI_camera_received:
 
-            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
+            self.publish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
 
             if self.POI_lidar_detected == True: 
                 self.state = DockStage.STRAIGHT_TO_POI_LIDAR
@@ -507,11 +505,22 @@ class DockActionServer(Node):
 
             # TO DO: Calculate POI angle from target cluster
 
-            self.pulish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
+            self.publish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_lidar_vel) 
             self.lidar_msg_received = False
 
 
         self.get_logger().info(f"CURRENT STATE: {self.state}")
+
+        distance_to_target = math.sqrt(self.tracker_target.pos[0]**2 + self.tracker_target.pos[1]**2)
+        self.get_logger().info(f"DISTANCE TO THE TARGET: {distance_to_target}")
+
+        if distance_to_target < self.stop_distance_to_target: 
+            self.state = DockStage.STOP
+        
+
+        ### STOP ###############################################################
+        if self.state == DockStage.STOP: 
+            self.publish_USV_control_msg(angle = 0.0, velocity = 0.0) 
 
 
 
@@ -636,9 +645,16 @@ class DockActionServer(Node):
         self.lidar_msg_received = True
 
 
-    def pulish_USV_control_msg(self, angle, velocity): 
+    def publish_USV_control_msg(self, angle, velocity): 
+        ''' Get relative turn angle in degrees and thrust and send
+            absolute angle to the USV'''
+
+        # Sum up the desired angle to the absolute USV yaw
+        self.USV_absolute_yaw += angle
+
+        USV_control_angle = np.deg2rad(self.USV_absolute_yaw)
         usv_control_msg = Vector3()
-        usv_control_msg.x = float(angle)
+        usv_control_msg.x = float(USV_control_angle)
         usv_control_msg.y = float(velocity)
         self.usv_control_pub.publish(usv_control_msg)
 
