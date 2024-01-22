@@ -32,7 +32,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
 
-from mbzirc_interfaces.action import Dock
+#from mbzirc_interfaces.action import Dock
 
 from mbzirc_dock.approach_policy import ApproachPolicy
 from mbzirc_dock.line_detection import detect_lines, filter_lines, est_line, all_points_valid, distance_point_to_line
@@ -267,7 +267,7 @@ class DockActionServer(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
         # Policy variables 
-        self._default_policy = StopPolicy()
+        """ self._default_policy = StopPolicy()
         self._policy_queue: deque[Policy] = deque()
         self._current_state = PolicyState(
             time=self.get_clock().now(),
@@ -275,7 +275,7 @@ class DockActionServer(Node):
             velocity=np.zeros(2),
             acceleration=np.zeros(2),
             target=np.zeros(2)
-        )
+        ) """
 
         # Not used
         self.target_center = np.zeros(2)
@@ -337,7 +337,7 @@ class DockActionServer(Node):
         ### CREATE TIMERS
         ###
 
-        self.control_timer = self.create_timer(self.DT, self._control_cb)
+        #self.control_timer = self.create_timer(self.DT, self._control_cb)
         self.USV_state_publisher_timer = self.create_timer(0.2, self._usv_state_publisher)
 
         # Create action server
@@ -621,8 +621,8 @@ class DockActionServer(Node):
         except Exception as e:
             self.get_logger().error(f'Uncaught exception: {traceback.format_exc()}')
 
-    def _execute_callback(self, goal_handle: ServerGoalHandle) -> Dock.Result:
-        """Callback for the action server."""
+    """ def _execute_callback(self, goal_handle: ServerGoalHandle) -> Dock.Result:
+        Callback for the action server.
         try:
             self.get_logger().info('Executing goal...')
 
@@ -642,7 +642,7 @@ class DockActionServer(Node):
         except Exception as e:
             self.get_logger().error(f'Uncaught exception: {traceback.format_exc()}')
             goal_handle.abort()
-            return Dock.Result(success=False)
+            return Dock.Result(success=False) """
 
     def _laser_cb(self, pointcloud: PointCloud2) -> None:
         """Callback for the laser scan topic."""
