@@ -422,7 +422,7 @@ class DockActionServer(Node):
             self.get_logger().info(f"CURRENT STATE: {self.state}")
 
             time.sleep(15)
-            self.state = DockStage.STRAIGHT_TO_POI_BLIND
+            self.state = DockStage.STRAIGHT_TO_POI_CAMERA
             self.USV_control_msg_sent = False
 
             ## COMMENTED BECAUSE OF THE NEW STRUCTURE
@@ -514,8 +514,8 @@ class DockActionServer(Node):
             if self.USV_control_msg_sent == False: 
                 
                 ## DELETE FOLLOWING LINE ONCE CAMERA IS IMPLEMENTED
-                self.POI_camera_angle = 0.0 
-                self.publish_USV_control_msg(angle = self.POI_initial_angle, velocity = self.straight_to_poi_camera_vel) 
+                self.POI_camera_angle = self.POI_initial_angle
+                self.publish_USV_control_msg(angle = self.POI_camera_angle, velocity = self.straight_to_poi_camera_vel) 
 
                 # Set flag to True to not send the command again during this state
                 self.USV_control_msg_sent = True
@@ -1061,18 +1061,24 @@ class DockActionServer(Node):
         return updated_tracked_object
     
     def get_object_orientation(self, x,y):  #right hand rule for simulated data
-        if x>0 and y>0:
+        if x>0 and y>=0:
             angle = self.atan(x,y)
+        if x == 0 and y > 0: 
+            angle = 90.0
+        if y == 0 and x < 0: 
+            angle = 180
+        if x == 0 and y < 0: 
+            angle = -90
         if (x<0 and y>0) or (x<0 and y<0):
             angle = 180 + self.atan(x, y)  
         if (x>0 and y<0): 
             angle = 360 + self.atan(x, y)
-        
-        if angle>180 and angle<360: 
-            angle = -(360-angle)
 
-        return angle
+        if angle > 180 and angle < 360: 
+            angle = -(360 - angle)
             
+        return angle
+
     def atan(self, x, y): 
         return np.rad2deg(math.atan(y/x))
 
