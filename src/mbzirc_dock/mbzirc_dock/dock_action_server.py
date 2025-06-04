@@ -241,7 +241,7 @@ class DockActionServer(Node):
             if line.length() > best_line.length():
                 best_line = line
 
-        if best_line.length() < self.line_thres_min and best_line.length() > self.line_thres_max:
+        if best_line.length() < self.line_thres_min or best_line.length() > self.line_thres_max:
             self.get_logger().debug(f'Line not found')
             return
 
